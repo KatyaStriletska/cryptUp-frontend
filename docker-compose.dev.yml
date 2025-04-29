@@ -1,0 +1,17 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile.dev
+    container_name: venture-launch-frontend
+    networks:
+      - venture-launch-network
+    env_file: ./.env.dev
+    ports:
+      - ${INTERNAL_FRONTEND_PORT}:3000
+    volumes:
+      - ./frontend/src:/app/src
+
+networks:
+  venture-launch-network:
+    driver: bridge
