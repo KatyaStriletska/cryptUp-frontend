@@ -23,6 +23,7 @@ import useWeb3Auth from '../../../hooks/web3auth.hooks';
 import Spinner from 'components/atoms/Spinner/Spinner';
 import { ProjectLaunch } from 'types/project-launch.types';
 import axios from 'axios';
+import Label from 'components/atoms/Label';
 
 export interface EditProjectLaunchModalProps extends ModalProps {
   projectLaunch: ProjectLaunch;
@@ -154,7 +155,7 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
           ),
           team: (
             await Promise.all(
-              projectLaunch.team.map((member: any) =>
+              (JSON.parse(projectLaunch.team?.length || '[]')).map((member: any) =>
                 member.image
                   ? axios.get(`/file?file=${member.image}`, { responseType: 'blob' })
                   : { data: null },
@@ -194,7 +195,7 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
     }
 
     if ((data.fundraiseAmount ?? 0) <= 0) {
-      setState({ ...state, error: 'Project launch fundraiseAmount must be greater than 0.' });
+      setState({ ...state, error: 'Project launch fundraise Amount must be greater than 0.' });
       return false;
     }
 
@@ -974,12 +975,7 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   </div>
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='launch_project_round_details_round'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
-                    Round
-                  </label>
+                  <Label htmlFor='launch_project_round_details_round'>Round</Label>
                   <select
                     className='border border-stone-400 p-3 rounded-lg font-sans text-stone-800 placeholder:text-stone-400 font-semibold bg-transparent'
                     value={state.data.roundDetails.round}
@@ -1003,12 +999,9 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   </select>
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='launch_project_round_details_deal_structure'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
+                  <Label htmlFor='launch_project_round_details_deal_structure'>
                     Deal structure
-                  </label>
+                  </Label>
                   <select
                     className='border border-stone-400 p-3 rounded-lg font-sans text-stone-800 placeholder:text-stone-400 font-semibold bg-transparent'
                     value={state.data.roundDetails.dealStructure}
@@ -1031,12 +1024,9 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   </select>
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='launch_project_round_details_token_price'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
+                  <Label htmlFor='launch_project_round_details_token_price'>
                     Token price (in USD)(Optional)
-                  </label>
+                  </Label>
                   <input
                     type='number'
                     id='launch_project_round_details_token_price'
@@ -1061,12 +1051,9 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   />
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='launch_project_round_details_valuation'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
+                  <Label htmlFor='launch_project_round_details_valuation'>
                     Valuation (in USD)(Optional)
-                  </label>
+                  </Label>
                   <input
                     type='number'
                     id='launch_project_round_details_valuation'
@@ -1090,12 +1077,9 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   />
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='launch_project_round_details_token_price'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
+                  <Label htmlFor='launch_project_round_details_token_price'>
                     Unlock at TGE (in %)(Optional)
-                  </label>
+                  </Label>
                   <input
                     type='number'
                     id='launch_project_round_details_unlock_at_tge'
@@ -1121,12 +1105,9 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   />
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='launch_project_round_details_lockup'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
+                  <Label htmlFor='launch_project_round_details_lockup'>
                     Lockup (Months)(Optional)
-                  </label>
+                  </Label>
                   <input
                     type='number'
                     id='launch_project_round_details_lockup'
@@ -1151,12 +1132,9 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   />
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='launch_project_round_details_vesting'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
+                  <Label htmlFor='launch_project_round_details_vesting'>
                     Vesting (Months)(Optional)
-                  </label>
+                  </Label>
                   <input
                     type='number'
                     id='launch_project_round_details_vesting'

@@ -20,10 +20,11 @@ import { io } from 'socket.io-client';
 import { selectMessages } from '../../redux/slices/message.slice';
 import { Chat } from '../../types/chat.types';
 import Spinner from '../../components/atoms/Spinner/Spinner';
+import Title from 'components/atoms/Title';
 
 type MessageCenterPageFilters = 'all' | 'favourite' | 'archived';
 
-const MessageCenterPage: FC = ({}) => {
+const MessageCenterPage: FC = () => {
   const chats = useAppSelector(selectChats);
   const socket = useAppSelector(selectSocket);
   const messages = useAppSelector(selectMessages);
@@ -339,9 +340,9 @@ const MessageCenterPage: FC = ({}) => {
   };
 
   return (
-    <div className='flex flex-col py-5 px-6 flex-1'>
+    <div className='flex flex-col py-5 px-6 flex-1 min-h-screen'>
+      <Title>Message Center</Title>
       <div className='flex justify-between items-center mb-14'>
-        <h3 className='px-2 text-3xl font-serif'>Message Center</h3>
         <div className='flex gap-1 rounded-full p-2 border bg-white'>
           <span
             className={`font-medium px-5 py-1 rounded-full cursor-pointer transition-all duration-300 ${filters === 'all' ? 'bg-zinc-900 text-white hover:bg-zinc-700' : 'hover:bg-stone-100'}`}

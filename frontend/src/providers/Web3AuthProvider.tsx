@@ -79,7 +79,7 @@ const ConnectWalletModal: FC<ConnectWalletModalProps> = ({ onClose }) => {
   return createPortal(
     <Modal title='Connect wallet' onClose={onClose} className='max-w-xl'>
       <div className='flex flex-col px-10 py-8'>
-        <p className='font-mono mb-8'>
+        <p className='font-mono mb-8 text-white'>
           You cannot perform this action because the wallet is not connected. Please, connect your
           wallet and proceed the action again
         </p>

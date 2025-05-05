@@ -11,6 +11,8 @@ import {
 } from '../../redux/slices/project-launch.slice';
 import LaunchProjectModal from '../../components/organisms/LaunchProjectModal/LaunchProjectModal';
 import Spinner from 'components/atoms/Spinner/Spinner';
+import Title from 'components/atoms/Title';
+import { PlusIcon } from 'components/atoms/Icons/Icons';
 
 const ProjectsPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -40,6 +42,14 @@ const ProjectsPage: FC = () => {
 
   return isLoaded ? (
     <>
+      {projects.length > 0 && authenticatedUser?.role.includes(UserRoleEnum.Startup) && (
+        <button
+          onClick={() => setIsLaunchProjectModalVisible(true)}
+          className='fixed z-50 p-2 font-bold text-white transition-all duration-300 rounded-full shadow-lg bg-purple-dark bottom-8 right-8 hover:scale-110 hover:bg-[#4f16b4]'
+        >
+          <PlusIcon className='w-16 h-16' />
+        </button>
+      )}
       {isLaunchProjectModalVisible &&
         createPortal(
           <LaunchProjectModal
@@ -48,18 +58,18 @@ const ProjectsPage: FC = () => {
           />,
           document.getElementById('root')!,
         )}
-      <div className='flex flex-col py-5 px-6 flex-1'>
-        <div className='flex justify-between items-center mb-5'>
-          <h3 className='px-2 text-3xl font-serif'>Projects</h3>
+      <div className='flex flex-col py-5 px-6 flex-1 min-h-screen'>
+        <Title>Projects</Title>
+        {/* <div className='flex justify-between items-center mb-5'>
           {projects.length > 0 && authenticatedUser?.role.includes(UserRoleEnum.Startup) && (
             <Button
               onClick={() => setIsLaunchProjectModalVisible(true)}
-              className='border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white font-medium px-10 text-lg py-1.5 transition-[0.3s_ease] rounded-full'
+              className='text-white font-semibold font-medium px-10 text-lg py-1.5 transition-[0.3s_ease] rounded-2xl'
             >
               Launch project
             </Button>
           )}
-        </div>
+        </div> */}
         <div className='flex flex-col flex-1'>
           {!projects.length ? (
             <div className='flex mt-5 flex-1'>
@@ -71,7 +81,7 @@ const ProjectsPage: FC = () => {
                     </h4>
                     <Button
                       onClick={() => setIsLaunchProjectModalVisible(true)}
-                      className='border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white font-medium px-10 text-lg py-1.5 transition-[0.3s_ease] rounded-full'
+                      className='border-transparent text-white font-bold px-10 text-lg py-1.5 transition-[0.3s_ease] rounded-full'
                     >
                       Launch a new project
                     </Button>
@@ -90,8 +100,8 @@ const ProjectsPage: FC = () => {
       </div>
     </>
   ) : (
-    <div className='max-w-[1440px] flex flex-col items-center justify-center flex-1 gap-5 w-full'>
-      <Spinner className='size-12 text-gray-200 animate-spin fill-zinc-900' />
+    <div className='flex flex-col items-center justify-center flex-1 gap-5 w-full min-h-[80vh] mb-12'>
+      <Spinner centerScreen={false} className='size-12 text-gray-200 animate-spin' />
       <p className='text-center font-mono'>Loading the home page for you</p>
     </div>
   );

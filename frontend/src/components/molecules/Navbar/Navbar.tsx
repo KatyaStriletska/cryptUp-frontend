@@ -1,5 +1,5 @@
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { FC, useEffect, useState } from 'react';
+import { FC, HTMLAttributes, useEffect, useRef, useState } from 'react';
 import { NavbarLink } from '../../templates/PageWithNavigationTemplate';
 import { v4 as uuid } from 'uuid';
 import { AppRoutes } from '../../../types/enums/app-routes.enum';
@@ -7,8 +7,9 @@ import { BurgerMenuIcon, ExitIcon, UserCircleIcon, UserIcon } from '../../atoms/
 import { useAuth } from '../../../hooks/auth.hooks';
 import Button from '../../atoms/Button/Button';
 
-export interface NavbarProps {
+export interface NavbarProps extends HTMLAttributes<HTMLDivElement> {
   links: NavbarLink[];
+  showLogo?: boolean;
 }
 
 const DesktopNavbar: FC<NavbarProps> = ({ links }) => {
@@ -146,12 +147,101 @@ const MobileNavbar: FC<NavbarProps> = ({ links }) => {
   );
 };
 
-export const Navbar: FC<NavbarProps> = ({ links }) => {
+export const Navbar: FC<NavbarProps> = ({ links, showLogo = true, ...props }) => {
+  const {
+    authenticatedUser,
+    signOut,
+    // userImageUrl,
+    // setUserImageUrl,
+    // userImageError,
+    // setUserImageError,
+    // fetchUserInboxCount,
+  } = useAuth();
+  // const { formatMessage } = useIntl();
+  const navigate = useNavigate();
+  const ref = useRef(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    // if (!userImageUrl && !userImageError && authenticatedUser) {
+    //   setUserImageUrl(
+    //     getSupabasePublicUrl(`users/${authenticatedUser.id}/avatar?lastmod=${Date.now()}`),
+    //   );
+    //   setUserImageError(false);
+    // }
+    // fetchUserInboxCount();
+  }, [authenticatedUser]);
+
+  useEffect(() => {
+    if (ref.current) {
+      const element = ref.current as HTMLElement;
+      const scrollListener = () => setScrolled(element.offsetTop > 0);
+
+      document.addEventListener('scroll', scrollListener);
+
+      return () => {
+        document.removeEventListener('scroll', scrollListener);
+      };
+    }
+  }, [ref.current]);
+
   return (
-    <nav className='flex p-3 items-center py-10 justify-between z-50'>
-      <DesktopNavbar links={links} />
-      <MobileNavbar links={links} />
-    </nav>
+    <div
+      {...props}
+      className={`${props.className ? props.className : `flex w-full sticky top-0`} ${scrolled ? 'bg-zinc-900 backdrop-blur-xl bg-opacity-5' : ''}`}
+      ref={ref}
+    >
+      <div className='flex items-center justify-between w-full px-32'>
+        <div className='flex min-w-[150px] items-center'>
+          {showLogo && (
+            <Link to={AppRoutes.Root}>
+              <img src='/logo.png' className='w-[100px]' alt='Logo' />
+            </Link>
+          )}
+        </div>
+
+        {/* {authenticatedUser ? ( */}
+          <>
+            <div className='flex min-w-[150px] space-x-10 items-center text-white'>
+            {links.map(link => (
+          <NavLink
+            key={uuid()}
+            to={link.to}
+            className={({ isActive, isPending }) =>
+              isActive
+                ? 'py-1.5 text-2xl font-serif font-bold mx-4 transition-[0.3s_ease]'
+                : isPending
+                  ? 'py-1.5 text-2xl font-serif mx-4 transition-[0.3s_ease]'
+                  : 'py-1.5 text-2xl font-serif mx-4 transition-[0.3s_ease]'
+            }
+          >
+            {link.name}
+          </NavLink>
+        ))}
+        {authenticatedUser && (
+          <Link
+            to={AppRoutes.Profile}
+            className='flex items-center justify-center bg-gray-400 font-sans ps-5 me-3 text-white rounded-full'
+          >
+            <span>{authenticatedUser.username}</span>
+            <span className='ms-2 rounded-full bg-gray-500 p-2.5'>
+              <UserIcon className='size-4' />
+            </span>
+          </Link>
+        )}
+              <button
+                onClick={() => {
+                  signOut();
+                  navigate(AppRoutes.SignIn);
+                }}
+                className='inline-flex text-center items-center justify-center rounded-xl ring-1 ring-green-primary px-5 py-2 text-green-primary font-[900] text-lg hover:bg-green-primary hover:text-dark-primary transition-all duration-300'
+              >
+                {/* {formatMessage({ id: 'navbar.logout' })} */} Sign out
+              </button>
+            </div>
+          </>
+      </div>
+    </div>
   );
 };
 

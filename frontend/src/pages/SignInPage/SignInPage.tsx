@@ -19,6 +19,7 @@ export interface SignInFormState {
   error?: string; 
   isLoaded: boolean;
   isLoggedIn: boolean;
+  isLoading: false;
 }
 
 const initialState: SignInFormState = {
@@ -28,6 +29,7 @@ const initialState: SignInFormState = {
   },
   isLoaded: false,
   isLoggedIn: false,
+  isLoading: false,
 };
 
 const SignInPage: FC = () => {
@@ -234,6 +236,82 @@ const SignInPage: FC = () => {
         <img src='/solana-black-logo.png' className='w-72' />
       </div>
     </div>
+
+    // <main className='flex flex-col items-center bg-white dark:bg-dark-primary'>
+    //   <form
+    //     onSubmit={event => {
+    //       if (!state.isLoading) {
+    //         handleSubmit(event);
+    //       }
+    //     }}
+    //     className='flex flex-col flex-1 w-full max-w-xl p-10 mt-10 rounded-2xl'
+    //   >
+    //     <h5 className='text-3xl text-center text-white'>
+    //     {formatMessage({id:"sign.inOr"})}{' '}
+    //       <Link to={ApplicationRoutes.SignUp} className='underline'>
+    //       {formatMessage({id:"create.account"})}
+    //       </Link>
+    //     </h5>
+    //     <div className='flex flex-col mt-10 space-y-4'>
+    //       {state.error?.message && (
+    //         <span className='inline-flex items-center justify-between px-3 py-2 text-red-500 border border-red-200 rounded-lg bg-red-50'>
+    //           {state.error?.message}
+    //           <span
+    //             className='inline-flex p-2 transition-all duration-300 cursor-pointer hover:text-red-600'
+    //             onClick={() => setState({ ...state, error: null })}
+    //           >
+    //             <XMarkIcon className='size-3 stroke-[5px]' />
+    //           </span>
+    //         </span>
+    //       )}
+    //       <TextInput
+    //         type='email'
+    //         className='!p-4 text-2xl min-[1920px]:text-3xl font-mono font-normal'
+    //         placeholder={formatMessage({ id: 'email' })}
+    //         value={state.data.email}
+    //         onChange={e =>
+    //           setState(prevState => ({
+    //             ...prevState,
+    //             data: { ...prevState.data, email: e.target.value },
+    //           }))
+    //         }
+    //       />
+    //       <TextInput
+    //         type='password'
+    //         className='!p-4 text-2xl min-[1920px]:text-3xl font-mono font-normal'
+    //         placeholder={formatMessage({ id: 'password' })}
+    //         value={state.data.password}
+    //         onChange={e =>
+    //           setState(prevState => ({
+    //             ...prevState,
+    //             data: { ...prevState.data, password: e.target.value },
+    //           }))
+    //         }
+    //       />
+    //     </div>
+    //     <div className='grid grid-cols-1'>
+    //       <Button
+    //         type='submit'
+    //         size='lg'
+    //         className='mt-10 rounded-3xl'
+    //         uppercase
+    //         isLoading={state.isLoading}
+    //       >
+    //        {formatMessage({id:"sign.in"})}
+    //       </Button>
+    //     </div>
+    //     <h5 className='text-white text-2xl min-[1920px]:text-3xl text-center my-10'>{formatMessage({ id: 'or' })}</h5>
+    //     <div className='flex flex-col self-center text-white gap-7'>
+    //       <span
+    //         className='inline-flex items-center gap-5 cursor-pointer'
+    //         onClick={() => handleSignInWithOAuthProvider(OAuth2Providers.Google)}
+    //       >
+    //         <GoogleIcon className='size-8' />
+    //         <span className='text-white text-2xl font-[400] underline'>{formatMessage({id:"continue.google"})}</span>
+    //       </span>
+    //     </div>
+    //   </form>
+    // </main>
   );
 };
 

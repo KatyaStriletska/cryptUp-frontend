@@ -1,20 +1,31 @@
+import { CrossIcon } from 'components/atoms/Icons/Icons';
+import { useOutsideClick } from 'hooks/dom.hooks';
 import { FC, HTMLAttributes, ReactNode, useEffect } from 'react';
-import Button from '../../atoms/Button/Button';
-import { useOutsideClick } from '../../../hooks/dom.hooks';
-import { CloseIcon } from '../../atoms/Icons/Icons';
 
-export interface ModalProps extends HTMLAttributes<HTMLElement> {
-  title: string;
+export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   onClose?: (...args: any[]) => any;
   onProcess?: (...args: any[]) => any;
-  children?: ReactNode | ReactNode[];
+  title?: string;
+  titleClassName?: string;
+  actions?: ReactNode;
+  closeOnOutsideClick?: boolean;
 }
 
-const Modal: FC<ModalProps> = ({ children, title, onClose, className }) => {
-  const modalRef = useOutsideClick(() => onClose?.());
+const Modal: FC<ModalProps> = ({
+  title,
+  className,
+  titleClassName,
+  onClose,
+  children,
+  actions,
+  closeOnOutsideClick = true,
+  ...props
+}) => {
+  const ref = useOutsideClick(() => onClose?.());
 
   useEffect(() => {
     const body = document.querySelector('body');
+
     if (body) {
       body.style.overflow = 'hidden';
 
@@ -25,29 +36,35 @@ const Modal: FC<ModalProps> = ({ children, title, onClose, className }) => {
   }, []);
 
   return (
-    <div
-      tabIndex={-1}
-      className='overflow-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full max-h-screen bg-neutral-900 bg-opacity-50'
-    >
+    <div className='fixed top-0 bottom-0 left-0 right-0 bg-dark-primary bg-opacity-20 flex flex-col items-center justify-center z-[100] modal box-border'>
       <div
-        ref={modalRef}
-        className={`modal left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 relative py-10 flex flex-1 w-full ${className}`}
+        className={`max-h-[80%] relative box-border flex flex-col w-full ${className}`}
+        {...props}
       >
-        <div className='max-h-[calc(100vh-2.5rem)] w-full flex flex-col relative bg-white rounded-lg shadow m-5'>
-          <div className='flex items-center justify-between px-10 py-6 border-b rounded-t border-neutral-300'>
-            <h3 className={`text-[22px] sm:text-[26px] font-medium text-gray-900 font-serif`}>
-              {title}
-            </h3>
-            <Button
-              type='button'
-              className='text-neutral-600 bg-transparent rounded-lg ms-auto inline-flex justify-center p-2 hover:bg-gray-100 hover:text-gray-900 items-center'
-              onClick={onClose}
-            >
-              <CloseIcon className='stroke-2 size-4' />
-              <span className='sr-only'>Close modal</span>
-            </Button>
+        <div
+          className='bg-grey-tertiary backdrop-blur-xl rounded-[4rem] bg-opacity-20 relative w-full flex flex-col px-16 py-10 box-border max-h-full border border-stone-100 border-opacity-10'
+          {...(closeOnOutsideClick && { ref })}
+        >
+          <div className='relative flex flex-col max-h-full'>
+            <div className='flex items-center text-white'>
+              {!!title?.length && (
+                <h3
+                  className={`text-3xl font-[700] font-mono flex-1 text-center px-12 ${titleClassName}`}
+                >
+                  {title}
+                </h3>
+              )}
+              <CrossIcon
+                className='absolute right-0 transition-all duration-300 cursor-pointer size-12 hover:text-green-primary'
+                onClick={() => onClose?.()}
+              />
+            </div>
+            <div className='relative flex flex-col flex-1 overflow-y-scroll pe-5 -me-5 with-scrollbar modal-content'>
+              {children}
+            </div>
+
+            <div>{actions}</div>
           </div>
-          <div className='space-y-4 overflow-y-auto relative with-scrollbar'>{children}</div>
         </div>
       </div>
     </div>

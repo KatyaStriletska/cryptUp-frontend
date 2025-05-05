@@ -1,13 +1,3 @@
-.wallet-adapter-button.wallet-adapter-button-trigger {
-  border: 2px solid black;
-  font-family: system-ui;
-  @apply !inline-flex hover:!border-transparent w-full text-center items-center justify-center hover:!bg-zinc-900 !bg-transparent !border-2 !border-zinc-900 !text-zinc-900 hover:!text-white !px-10 !py-3 !h-auto !leading-normal !transition-all !duration-300 !rounded-full !font-medium;
-}
-
-.wallet-adapter-button.wallet-adapter-button-trigger .wallet-adapter-button-start-icon {
-  display: none;
-}
-
 ::-webkit-scrollbar {
   width: 0;
 }
@@ -40,12 +30,130 @@
   @apply bg-neutral-300 rounded-lg bg-clip-padding;
 }
 
-input,
-select,
-textarea {
-  @apply focus:outline focus:outline-transparent focus:ring-2 focus:ring-stone-400;
+::-webkit-calendar-picker-indicator {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 24 24"><path fill="white" d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>');
 }
 
-body {
-  background-color: #f5f5f5;
+@import './styles/react-toastify-styles.css';
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.with-scrollbar::-webkit-scrollbar {
+  width: 14px;
+}
+
+.with-scrollbar::-webkit-scrollbar-thumb {
+  border: 4px solid rgba(0, 0, 0, 0);
+  @apply bg-green-primary rounded-lg bg-clip-padding;
+}
+
+.without-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.with-scrollbar-sm::-webkit-scrollbar {
+  width: 2px;
+  transform: translateX(-50%);
+}
+
+.with-scrollbar-sm::-webkit-scrollbar-thumb {
+  border: 6px solid rgba(0, 0, 0, 0);
+  @apply bg-green-primary rounded-lg bg-clip-padding;
+}
+
+.border-gradient-primary  {
+  --b: 2px;  /* border width*/
+
+  color: #313149;
+  padding: calc(var(--b));
+  position:relative !important;
+  z-index:0;
+}
+
+.border-gradient-primary-3  {
+  --b: 3px;  /* border width*/
+
+  color: #313149;
+  padding: calc(var(--b));
+  position:relative !important;
+  z-index:0;
+}
+
+.border-gradient-primary-3::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  padding: var(--b);
+  background: var(--c,linear-gradient(90deg, #23B8FF 0%, #8F4FFF 50.5%, #D423F9 100%)); 
+  mask: 
+    linear-gradient(#000 0 0) exclude, 
+    linear-gradient(#000 0 0) content-box;
+}
+
+
+.border-gradient-primary::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  padding: var(--b);
+  background: var(--c,linear-gradient(90deg, #23B8FF 0%, #8F4FFF 50.5%, #D423F9 100%)); 
+  mask: 
+    linear-gradient(#000 0 0) exclude, 
+    linear-gradient(#000 0 0) content-box;
+}
+
+.progress-page-rocket-icon {
+  @apply  text-green-primary hover:cursor-pointer transition-all duration-300 hover:scale-125;
+}
+
+.mdxeditor-toolbar {
+  background-color: transparent;
+}
+
+li[role="checkbox"]:before {
+  border: 22px blue;
+}
+
+.pitchdeck-image {
+    background: url('/images/project/pitchdeck_roadmap_without_labels.webp');
+    background-size: 100%;
+}
+
+.secondary-purple-button {
+  @apply font-mono text-lg text-white transition-all duration-300 bg-gradient-white-purple rounded-2xl;
+}
+
+.secondary-green-button {
+  @apply border-2 border-green-primary text-green-primary hover:bg-green-primary hover:text-dark-primary rounded-2xl text-lg transition-all duration-500  disabled:opacity-40 disabled:cursor-not-allowed disabled:bg-transparent;
+}
+
+.secondary-red-button {
+  @apply border-2 border-red-500 bg-red-500/10 text-red-500 uppercase hover:enabled:bg-red-500 hover:enabled:text-black transition-all duration-300;
+}
+
+.wallet-adapter-button.wallet-adapter-button-trigger {
+  border: 2px #1effd6 solid;
+  @apply !border-green-primary !text-green-primary !bg-transparent hover:!bg-green-primary hover:!text-dark-primary !rounded-2xl !text-lg !transition-all !duration-500  disabled:!opacity-40 disabled:!cursor-not-allowed disabled:!bg-transparent !w-full !justify-center;
+}
+
+.wallet-adapter-button.wallet-adapter-button-trigger .wallet-adapter-button-start-icon {
+  display: none;
 }

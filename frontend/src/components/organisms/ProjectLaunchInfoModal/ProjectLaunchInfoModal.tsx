@@ -20,7 +20,8 @@ import { Link } from 'react-router-dom';
 import { resolveImage } from '../../../utils/file.utils';
 import ProgressBar from '../../molecules/ProgressBar/ProgressBar';
 import { AppRoutes } from '../../../types/enums/app-routes.enum';
-import Image from 'components/atoms/Image/Image';
+import Avatar from 'components/molecules/Avatar';
+import { AvatarSize } from 'components/molecules/Avatar/Avatar';
 
 export interface ProjectLaunchInfoModalProps extends ModalProps {
   projectLaunch: ProjectLaunch;
@@ -36,6 +37,8 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
 }) => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0 });
   const [projectDocuments, setProjectDocuments] = useState<(File | undefined)[]>([]);
+  console.log('projectLaunch', projectLaunch)
+  const projectLaunchTeam = JSON.parse(projectLaunch?.team || '[]');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -78,21 +81,25 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
   }, []);
 
   return (
-    <Modal title={title} onClose={onClose} className='max-w-[1024px]'>
-      <div className='px-10 pt-4 pb-8'>
+    <Modal title={title} onClose={onClose} className='max-w-[1124px] max-h-[90%]'>
+      <div className='px-10 pt-4 pb-8 text-white'>
         <div className='flex justify-end gap-3 mb-4'>
-          <button type='button'>
-            <StarIcon className='size-5' />
+          <button type='button' className='hover:text-green-primary transition-all duration-300'>
+            <StarIcon className='size-6' />
           </button>
-          <button type='button'>
-            <ShareIcon className='size-5' />
+          <button type='button' className='hover:text-green-primary transition-all duration-300'>
+            <ShareIcon className='size-6' />
           </button>
         </div>
         <div className='grid md:grid-cols-2 gap-5'>
           <div className='flex flex-col flex-1 justify-between'>
             <div className='flex flex-col'>
               <div className='flex items-center mb-5'>
-                <Image
+                <Avatar
+                  src={projectLaunch.logo ? resolveImage(projectLaunch.logo) : undefined}
+                  isEditable={false}
+                />
+                {/* <Image
                   src={projectLaunch.logo ? resolveImage(projectLaunch.logo) : undefined}
                   emptySrcFallback={
                     <div className='w-[6em] aspect-square rounded-xl object-cover bg-stone-200 flex items-center justify-center'>
@@ -100,16 +107,16 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
                     </div>
                   }
                   className='w-[6em] aspect-square rounded-xl object-cover'
-                />
+                /> */}
                 <div className='flex flex-col ms-5'>
                   <h4 className='font-medium text-2xl font-sans'>{projectLaunch.name}</h4>
                 </div>
               </div>
               {!projectLaunch.isFundraised ? (
                 <>
-                  <div className='flex gap-2'>
-                    <span className='font-bold font-sans text-lg mt-[5px]'>Time left:</span>
-                    <span className='font-medium font-sans text-[22px]'>
+                  <div className='space-x-2'>
+                    <span className='font-bold  text-lg mt-[5px]'>Time left:</span>
+                    <span className='font-medium text-lg'>
                       {timeLeft.days < 10 && '0'}
                       {timeLeft.days}d • {timeLeft.hours < 10 && '0'}
                       {timeLeft.hours}h • {timeLeft.minutes < 10 && '0'}
@@ -145,7 +152,7 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
             <div className='grid min-[568px]:grid-cols-2 gap-2 mt-5'>
               <Link
                 to={AppRoutes.DetailsUser.replace(':id', projectLaunch.author.id)}
-                className='inline-flex  border-2 border-stone-200 items-center p-2 rounded-xl hover:bg-stone-100 transition-all duration-300'
+                className='inline-flex before:rounded-xl border-gradient-primary items-center p-2 rounded-xl transition-all duration-300 hover:bg-grey-tertiary'
               >
                 {projectLaunch.author.avatar ? (
                   <img
@@ -159,7 +166,9 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
                   </div>
                 )}
                 <div className='inline-flex flex-col ms-2'>
-                  <span className='font-sans font-semibold'>{projectLaunch.author.username}</span>
+                  <span className='font-sans font-semibold text-white'>
+                    {projectLaunch.author.username}
+                  </span>
                   {(projectLaunch.author.firstName || projectLaunch.author.lastName) && (
                     <span className='text-xs font-bold font-sans text-nowrap'>
                       (
@@ -169,13 +178,13 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
                       )
                     </span>
                   )}
-                  <span className='font-mono text-stone-500 text-xs mt-1'>Author</span>
+                  <span className='text-stone-500 text-xs mt-1'>Author</span>
                 </div>
               </Link>
               {projectLaunch.approver ? (
                 <Link
                   to={AppRoutes.DetailsUser.replace(':id', projectLaunch.approver.id)}
-                  className='inline-flex  border-2 border-stone-200 items-center p-2 rounded-xl hover:bg-stone-100 transition-all duration-300'
+                  className='inline-flex before:rounded-xl border-gradient-primary items-center p-2 rounded-xl transition-all duration-300 hover:bg-grey-tertiary'
                 >
                   {projectLaunch.approver.avatar ? (
                     <img
@@ -214,24 +223,24 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
             </div>
           </div>
           <div className='flex flex-col h-full flex-1 justify-between'>
-            <div className='shadow-[0_0_7px_0px_silver] mb-5 font-medium font-sans rounded-lg px-8 py-5 w-full flex flex-col text-lg gap-y-2'>
+            <div className='border-gradient-primary before:rounded-2xl text-white mb-5 font-medium rounded-lg px-8 py-5 w-full flex flex-col text-lg gap-y-2'>
               <div className='grid grid-cols-[1fr_130px]'>
-                <span>Deal structure</span>
+                <span className='font-mono'>Deal structure</span>
                 <span>Token</span>
               </div>
               <div className='grid grid-cols-[1fr_130px]'>
-                <span>Funding goal</span>
+                <span className='font-mono'>Funding goal</span>
                 <span>
                   <span className='me-[2px]'>$</span>
                   {Number(projectLaunch.fundraiseAmount).toLocaleString('uk')}
                 </span>
               </div>
               <div className='grid grid-cols-[1fr_130px]'>
-                <div>Round name</div>
+                <div className='font-mono'>Round name</div>
                 <span>{JSON.parse(projectLaunch.roundDetails).round} round</span>
               </div>
               <div className='grid grid-cols-[1fr_130px]'>
-                <div className='w-1/2'>Valuation</div>
+                <div className='w-1/2 font-mono'>Valuation</div>
                 <span>
                   <span className='me-[2px]'>$</span>
                   {Number(JSON.parse(projectLaunch.roundDetails).valuation).toLocaleString('uk')}
@@ -242,6 +251,7 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
               progress={projectLaunch.fundraiseProgress}
               goal={projectLaunch.fundraiseAmount}
               deadline={projectLaunch.fundraiseDeadline}
+              variant='tiny'
             />
           </div>
         </div>
@@ -273,7 +283,7 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
           {projectLaunch.businessAnalystReview ? (
             <p className='font-serif whitespace-pre-wrap'>{projectLaunch.businessAnalystReview}</p>
           ) : (
-            <p className='font-mono text-stone-500 text-sm font-medium'>
+            <p className='font-mono text-gray-300 text-base'>
               Business analyst has not given the review for this project launch yet
             </p>
           )}
@@ -282,43 +292,41 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
         <h3 className='font-serif font-semibold text-2xl my-10'>Team</h3>
         <div className='mb-10'>
           <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-3'>
-            {!projectLaunch.team?.length && (
+            {!projectLaunch.team?.length ? (
               <span className='text-sm text-gray-500 font-mono'>
                 No information about team members was added for this project
               </span>
-            )}
-            {projectLaunch.team.map((member: any, index: number) => (
-              <div
-                className='border rounded-2xl p-3 flex justify-start items-start relative'
-                key={index}
-              >
-                <Link to={member.linkedInUrl} className='absolute top-2 left-2'>
-                  <LinkedInIcon className='size-4 text-neutral-600' />
-                </Link>
-                <Image
-                  src={member.image ? resolveImage(member.image) : undefined}
-                  emptySrcFallback={
-                    <div className='me-4 rounded-full w-[40%] aspect-square object-cover max-w-[128px] bg-stone-200 flex items-center justify-center'>
-                      <UserCircleIcon className='size-12 text-stone-500' />
-                    </div>
-                  }
-                  className='me-4 rounded-full w-[40%] aspect-square object-cover max-w-[128px]'
-                />
-                <div className='flex flex-col flex-1'>
-                  <h5 className='font-bold'>{member.name}</h5>
-                  <p className='font-semibold text-sm text-zinc-800'>{member.position}</p>
-                  <span className='border-b border-black w-full my-2' />
-                  <p className='text-xs whitespace-pre-wrap'>{member.bio}</p>
+            ) : (
+              projectLaunchTeam.map((member: any, index: number) => (
+                <div
+                  className='border-gradient-primary before:rounded-xl text-white rounded-2xl p-3 flex justify-start items-start relative'
+                  key={index}
+                >
+                  <Link to={member.linkedInUrl} className='absolute top-2 right-4'>
+                    <LinkedInIcon className='size-4 text-gray-200 hover:text-green-primary transition-all duration-300' />
+                  </Link>
+                  <Avatar
+                    usersAvatar
+                    avatarSize={AvatarSize.Medium}
+                    src={member.image ? resolveImage(member.image) : undefined}
+                    isEditable={false}
+                  />
+                  <div className='flex flex-col flex-1 text-start ml-4'>
+                    <h5 className='font-bold'>{member.name}</h5>
+                    <p className='font-semibold text-sm'>{member.position}</p>
+                    <hr className='border-b border-white h-full w-0 my-0.5' />
+                    <p className='text-xs whitespace-pre-wrap'>{member.bio}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
         <hr />
         <h3 className='font-serif font-semibold text-2xl my-10'>Data room</h3>
         <div className='mb-10'>
           {!projectLaunch.projectDocuments?.length && (
-            <span className='text-sm text-gray-500 font-mono'>
+            <span className='text-base text-gray-300 font-mono'>
               No documents have been added for this project.
             </span>
           )}
@@ -374,7 +382,7 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
         <div>
           <h3 className='font-bold font-serif text-xl mb-5 mt-5'>Round details</h3>
           <div className='grid md:grid-cols-2'>
-            <div className='bg-neutral-100 px-10 py-5 font-medium rounded-lg'>
+            <div className='px-10 py-5 font-medium rounded-lg border-gradient-primary before:rounded-xl text-white'>
               <div className='flex'>
                 <div className='w-1/2'>Ticket size: </div>
                 <div className='w-1/2 text-end'>
@@ -485,7 +493,7 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
                     </Button>
                   )}
                   <div className='flex gap-2 mt-5'>
-                    <span className='font-bold font-sans text-xl'>Time left:</span>
+                    <span className='font-bold text-xl'>Time left:</span>
                     <span className='font-medium font-sans text-xl'>
                       {timeLeft.days < 10 && '0'}
                       {timeLeft.days}d • {timeLeft.hours < 10 && '0'}

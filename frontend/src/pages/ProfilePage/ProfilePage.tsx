@@ -22,6 +22,7 @@ import { ProposalStatusEnum } from 'types/enums/proposal-status.enum';
 import { CommandType } from 'utils/dao.utils';
 import Image from 'components/atoms/Image/Image';
 import Spinner from 'components/atoms/Spinner/Spinner';
+import Avatar from 'components/molecules/Avatar';
 
 const ProfilePage: FC = () => {
   const { authenticatedUser, fetchLatestAuthInfo, signOut } = useAuth();
@@ -104,21 +105,11 @@ const ProfilePage: FC = () => {
           )}
         <div className='flex mt-3 px-6 flex-col justify-start align-center'>
           <h3 className='px-2 text-3xl font-serif mb-10'>User profile</h3>
-          <div className='flex flex-col max-w-[1440px] w-full bg-white shadow-[0_0_15px_-7px_gray] rounded-xl'>
+          <div className='flex flex-col max-w-[1440px] w-full rounded-xl text-white'>
             <div className='flex items-center justify-between px-10 py-5'>
               <div className='flex items-center gap-4'>
-                {authenticatedUser.avatar ? (
-                  <img
-                    src={resolveImage(authenticatedUser.avatar)}
-                    alt='User profile image'
-                    className='w-[64px] rounded-full aspect-square object-cover'
-                  />
-                ) : (
-                  <div className='flex items-center justify-center bg-gray-300 w-[64px] rounded-full aspect-square'>
-                    <UserIcon className='size-8' />
-                  </div>
-                )}
-                <span className='font-sans font-semibold text-2xl'>
+                <Avatar usersAvatar src={resolveImage(authenticatedUser.avatar!)} />
+                <span className='font-semibold text-2xl'>
                   {authenticatedUser.username}
                 </span>
               </div>
@@ -129,35 +120,26 @@ const ProfilePage: FC = () => {
                 >
                   Edit
                 </Button>
-                <Button
-                  className='inline-flex text-lg font-sans font-medium border-transparent bg-neutral-400 hover:bg-transparent border-2 hover:border-neutral-400 hover:text-neutral-400 text-white px-10 py-1 transition-[0.3s_ease] rounded-full'
-                  onClick={async () => {
-                    await signOut();
-                    location.replace(AppRoutes.SignIn);
-                  }}
-                >
-                  Sign Out
-                </Button>
               </div>
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>User ID</h3>
+              <h3 className='font-semibold text-xl mb-1.5'>User ID</h3>
               <span className='font-mono'>{authenticatedUser.id}</span>
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Wallet ID</h3>
+              <h3 className=' font-semibold text-xl mb-1.5'>Wallet ID</h3>
               <span className='font-mono'>{authenticatedUser.walletId}</span>
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Email</h3>
+              <h3 className='font-semibold text-xl mb-1.5'>Email</h3>
               <span className='font-mono'>{authenticatedUser.email}</span>
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>First name</h3>
+              <h3 className='font-semibold text-xl mb-1.5'>First name</h3>
               {authenticatedUser.firstName?.trim() ? (
                 <span className='font-mono whitespace-pre-wrap'>{authenticatedUser.firstName}</span>
               ) : (
@@ -166,7 +148,7 @@ const ProfilePage: FC = () => {
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Last name</h3>
+              <h3 className='ffont-semibold text-xl mb-1.5'>Last name</h3>
               {authenticatedUser.lastName?.trim() ? (
                 <span className='font-mono whitespace-pre-wrap'>{authenticatedUser.lastName}</span>
               ) : (
@@ -175,12 +157,12 @@ const ProfilePage: FC = () => {
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Role</h3>
+              <h3 className='font-semibold text-xl mb-1.5'>Role</h3>
               <span className='font-mono'>{authenticatedUser.role.join(', ')}</span>
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Bio</h3>
+              <h3 className='font-semibold text-xl mb-1.5'>Bio</h3>
               {authenticatedUser.bio?.trim() ? (
                 <span className='font-mono whitespace-pre-wrap'>{authenticatedUser.bio}</span>
               ) : (

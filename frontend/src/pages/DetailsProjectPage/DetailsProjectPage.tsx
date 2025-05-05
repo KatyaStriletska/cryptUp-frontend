@@ -134,7 +134,6 @@ const DetailsProjectPage: FC = () => {
     }
   };
   const handleClaim = async () => {
-    // TODO ТУТ ТРЕБА ПОМІНЯТИ!!!!!
     if (
       !wallet.connected ||
       !wallet.publicKey ||

@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router';
 import Navbar from '../molecules/Navbar/Navbar';
 import { AppRoutes } from '../../types/enums/app-routes.enum';
+import Footer from 'components/molecules/Footer';
 
 export interface NavbarLink {
   name: string;
@@ -33,11 +34,12 @@ const links: NavbarLink[] = [
 
 const PageWithNavigationTemplate = () => {
   return (
-    <div className='flex justify-center relative w-full'>
-      <div className='flex flex-col relative min-h-screen w-full max-w-[1440px]'>
-        <Navbar links={links} />
+    <div className='flex flex-col  bg-dark-primary'>
+      <Navbar links={links} className='sticky top-0 z-50 flex justify-center w-full py-2' />
+      <main className=''>
         <Outlet />
-      </div>
+      </main>
+      <Footer className='inline-flex relative h-[20px] w-full mt-[100px] p-10 justify-around bg-dark-secondary' />
     </div>
   );
 };
