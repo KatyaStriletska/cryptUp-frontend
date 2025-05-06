@@ -1,5 +1,6 @@
 import axios, { HttpStatusCode } from 'axios';
 import Spinner from 'components/atoms/Spinner/Spinner';
+import TextInput from 'components/atoms/TextInput';
 import AverageRevenuePerUserChart, {
   AverageRevenuePerUserChartData,
 } from 'components/molecules/AverageRevenuePerUserChart/AverageRevenuePerUserChart';
@@ -502,10 +503,10 @@ const BusinessAnalystDashboard: FC<BusinessAnalystDashboardProps> = ({ ...props 
     <div className='grid min-[1440px]:grid-cols-[1fr_2.5fr] gap-10 flex-1 min-h-[80vh]' {...props}>
       <div className='flex flex-col flex-1 gap-4'>
         <div className='flex'>
-          <input
+          <TextInput
             type='text'
             id='find_dashboard_project'
-            className='border bg-stone-200 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono w-full'
+            className='w-full !p-1.5'
             placeholder='Search by name...'
             defaultValue=''
             onChange={event => setSearch(event.target.value || '')}
@@ -519,7 +520,7 @@ const BusinessAnalystDashboard: FC<BusinessAnalystDashboardProps> = ({ ...props 
                   key={projectLaunch.id}
                   project={projectLaunch}
                   variant='tiny'
-                  className='flex flex-col justify-between items-start bg-white py-3.5 px-3.5 rounded-xl shadow-[0_0_15px_-7px_gray]'
+                  className='flex flex-col justify-between items-start text-white bg-gradient-white-purple py-3.5 px-3.5 rounded-xl'
                 />
               ))}
             </div>
@@ -529,24 +530,24 @@ const BusinessAnalystDashboard: FC<BusinessAnalystDashboardProps> = ({ ...props 
       <div className='flex flex-col flex-1 gap-5'>
         <div className='grid lg:grid-cols-[1fr_2fr] gap-5 h-1/2'>
           <TotalUsersChart
-            className='flex flex-col rounded-xl border p-3 bg-white shadow-[0_0_15px_-7px_gray] flex-1'
+            className='flex flex-col rounded-xl p-3 bg-gradient-white-purple text-white flex-1'
             onStatisticsPeriodChanged={handleTotalUsersChartStatisticsPeriodChanged}
             data={totalUsersChartData}
           />
           <TotalInvestmentsChart
-            className='flex flex-col rounded-xl border p-3 bg-white shadow-[0_0_15px_-7px_gray] flex-1'
+            className='flex flex-col rounded-xl p-3 bg-gradient-white-purple text-white flex-1'
             onStatisticsPeriodChanged={handleTotalInvestmentsChartStatisticsPeriodChanged}
             data={totalInvestmentsChartData}
           />
         </div>
         <div className='grid lg:grid-cols-[2fr_1fr] gap-5 h-1/2'>
           <GeneralChart
-            className='flex flex-col rounded-xl border p-3 bg-white shadow-[0_0_15px_-7px_gray] flex-1'
+            className='flex flex-col rounded-xl p-3 bg-gradient-white-purple text-white flex-1'
             onStatisticsPeriodChanged={handleGeneralChartStatisticsPeriodChanged}
             data={generalChartData}
           />
           <AverageRevenuePerUserChart
-            className='flex flex-col rounded-xl border p-3 bg-white shadow-[0_0_15px_-7px_gray] flex-1'
+            className='flex flex-col rounded-xl p-3 bg-gradient-white-purple text-white flex-1'
             onStatisticsPeriodChanged={handleAverageRevenuePerUserChartStatisticsPeriodChanged}
             data={averageRevenuePerUserChartData}
           />

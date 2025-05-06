@@ -97,22 +97,22 @@ const Milestone: FC<MilestoneProps> = ({ milestone, projectLaunch }) => {
             onClose={() => setIsRemoveMilestoneModalVisible(false)}
             className='max-w-[596px]'
           >
-            <div className='px-10 py-8 flex flex-col'>
-              <p className='font-mono'>
+            <div className='px-6 py-8 flex flex-col'>
+              <p className='text-white'>
                 Are you sure you want to delete this milestone? You will not be able to restore the
                 milestone after performing this operation.
               </p>
               <div className='mt-8 flex gap-4'>
-                <button
+                <Button
                   type='button'
-                  className='inline-flex text-center justify-center items-center bg-red-500 hover:bg-red-400 text-white rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+                  className='inline-flex text-center justify-center items-center rounded-2xl py-2 px-10 font-medium text-lg'
                   onClick={() => deleteMilestone()}
                 >
                   Delete
-                </button>
+                </Button>
                 <button
                   type='button'
-                  className='inline-flex text-center justify-center items-center text-zinc-700 border-2 border-zinc-900 hover:text-zinc-900 hover:bg-slate-100 rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+                  className='inline-flex text-center justify-center items-center secondary-green-button rounded-2xl py-2 px-10 font-medium text-lg'
                   onClick={() => setIsRemoveMilestoneModalVisible(false)}
                 >
                   Cancel
@@ -180,36 +180,36 @@ const Milestone: FC<MilestoneProps> = ({ milestone, projectLaunch }) => {
           />,
           document.getElementById('root')!,
         )}
-      <div className='flex flex-col border rounded-md'>
-        <div className='flex p-4 items-start justify-between'>
+      <div className='flex flex-col border-gradient-primary before:rounded-2xl rounded-md text-white'>
+        <div className='flex p-6 items-start justify-between'>
           <div className='flex flex-col gap-y-1'>
             <div className='flex gap-1'>
-              <span className='font-sans font-semibold'>Milestone ID:</span>
-              <span className='font-mono'>{milestone.id}</span>
+              <span className='font-semibold'>Milestone ID:</span>
+              <span>{milestone.id}</span>
             </div>
             <div className='flex gap-1'>
-              <span className='font-sans font-semibold whitespace-nowrap'>
+              <span className='font-semibold whitespace-nowrap'>
                 Merged pull request URL:
               </span>
-              <span className='font-mono'>
+              <span>
                 <a
                   href={milestone.mergedPullRequestUrl}
                   target='_blank'
-                  className='text-blue-600 border-b border-blue-600 hover:border-none transition-[0.3s_ease]'
+                  className='text-blue-400 border-b border-blue-600 hover:border-none transition-[0.3s_ease]'
                 >
                   {milestone.mergedPullRequestUrl}
                 </a>
               </span>
             </div>
             <div className='flex gap-1'>
-              <span className='font-sans font-semibold whitespace-nowrap'>
+              <span className='font-semibold whitespace-nowrap'>
                 Aproval transaction hash:
               </span>
-              <span className='font-mono overflow-x-auto with-scrollbar-sm whitespace-nowrap max-w-[600px]'>
+              <span className='overflow-x-auto with-scrollbar-sm whitespace-nowrap max-w-[600px]'>
                 {milestone.transactionApprovalHash ? (
                   <a
                     href={`https://explorer.solana.com/tx/${milestone.transactionApprovalHash}?cluster=devnet`}
-                    className='font-mono text-blue-600 transition-all duration-300 underline hover:no-underline'
+                    className='text-blue-00 transition-all duration-300 underline hover:no-underline'
                     target='_blank'
                   >
                     {`https://explorer.solana.com/tx/${milestone.transactionApprovalHash}?cluster=devnet`}
@@ -220,7 +220,7 @@ const Milestone: FC<MilestoneProps> = ({ milestone, projectLaunch }) => {
               </span>
             </div>
             <div className='flex gap-1'>
-              <span className='font-sans font-semibold'>Status:</span>
+              <span className='font-semibold'>Status:</span>
               {!milestone.isFinal ? (
                 <span className='font-medium text-white rounded-xl bg-yellow-500 px-3'>
                   Under review
@@ -234,8 +234,8 @@ const Milestone: FC<MilestoneProps> = ({ milestone, projectLaunch }) => {
               )}
             </div>
             <div className='flex gap-1'>
-              <span className='font-sans font-semibold'>Created at:</span>
-              <span className='font-mono'>{new Date(milestone.createdAt).toLocaleString()}</span>
+              <span className='font-semibold'>Created at:</span>
+              <span>{new Date(milestone.createdAt).toLocaleString()}</span>
             </div>
           </div>
           <div className='flex gap-2'>
@@ -253,7 +253,7 @@ const Milestone: FC<MilestoneProps> = ({ milestone, projectLaunch }) => {
             {authenticatedUser?.role.includes(UserRoleEnum.BusinessAnalyst) &&
               !milestone.isFinal && (
                 <Button
-                  className='inline-flex border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300 rounded-full font-sans font-medium'
+                  className='inline-flex px-10 py-1.5 rounded-full'
                   onClick={() => setIsApproveMilestoneModalVisible(true)}
                 >
                   Approve
@@ -263,18 +263,18 @@ const Milestone: FC<MilestoneProps> = ({ milestone, projectLaunch }) => {
               authenticatedUser.id === projectLaunch?.author.id &&
               !milestone.isFinal && (
                 <>
-                  <Button
-                    className='inline-flex p-1.5 border rounded-lg hover:bg-neutral-100 transition-[0.3s_ease] text-yellow-600'
+                  <button
+                    className='inline-flex justify-center items-center rounded-lg transition-[0.3s_ease]'
                     onClick={() => setIsEditMilestoneModalVisible(true)}
                   >
-                    <EditIcon className='size-4' />
-                  </Button>
-                  <Button
-                    className='inline-flex p-1.5 border rounded-lg hover:bg-neutral-100 transition-[0.3s_ease] text-red-600'
+                    <EditIcon className='size-6 text-white duration-300 transition-all hover:text-green-primary' />
+                  </button>
+                  <button
+                    className='ml-1 inline-flex justify-center items-center rounded-lg transition-[0.3s_ease]'
                     onClick={() => setIsRemoveMilestoneModalVisible(true)}
                   >
-                    <RemoveIcon className='size-4' />
-                  </Button>
+                    <RemoveIcon className='size-6 text-white duration-300 transition-all hover:text-red-500' />
+                  </button>
                 </>
               )}
           </div>

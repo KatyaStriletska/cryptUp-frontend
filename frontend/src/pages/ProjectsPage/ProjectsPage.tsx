@@ -20,6 +20,11 @@ const ProjectsPage: FC = () => {
   const [isLaunchProjectModalVisible, setIsLaunchProjectModalVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const { authenticatedUser } = useAuth();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
   useEffect(() => {
     if (authenticatedUser) {
       if (authenticatedUser.role.includes(UserRoleEnum.BusinessAnalyst)) {

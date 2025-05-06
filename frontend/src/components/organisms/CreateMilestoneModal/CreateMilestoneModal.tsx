@@ -4,6 +4,10 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hooks';
 import { createMilestone, selectErrors, setError } from '../../../redux/slices/milestone.slice';
 import { Project } from '../../../types/project.types';
 import { CreateMilestoneDto } from '../../../types/milestone.types';
+import Label from 'components/atoms/Label';
+import TextInput from 'components/atoms/TextInput';
+import TextareaInput from 'components/atoms/TextareaInput';
+import Button from 'components/atoms/Button/Button';
 
 export interface CreateMilestoneModalProps extends ModalProps {
   project: Project;
@@ -74,18 +78,14 @@ const CreateMilestoneModal: FC<CreateMilestoneModalProps> = ({
             {state.error}
           </span>
         )}
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-2 text-white'>
           <div className='flex flex-col'>
-            <label
-              htmlFor='create_milestone_merged_pull_request_url'
-              className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-            >
+            <Label htmlFor='create_milestone_merged_pull_request_url'>
               Merged pull request URL
-            </label>
-            <input
-              type='text'
+            </Label>
+            <TextInput
               id='create_milestone_merged_pull_request_url'
-              className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono'
+              className='!p-2'
               placeholder='https://github.com/project/pull/1'
               defaultValue={state.data.mergedPullRequestUrl}
               onChange={event =>
@@ -98,21 +98,16 @@ const CreateMilestoneModal: FC<CreateMilestoneModalProps> = ({
             />
           </div>
           <div className='flex flex-col'>
-            <label
-              htmlFor='create_milestone_description'
-              className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-            >
-              Description
-            </label>
-            <textarea
+            <Label htmlFor='create_milestone_description'>Description</Label>
+            <TextareaInput
               id='create_milestone_description'
-              className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono min-h-[150px] whitespace-pre-wrap'
+              className='mt-1 min-h-[150px] whitespace-pre-wrap'
               placeholder='Milestone description'
               defaultValue={state.data.description}
-              onChange={event =>
+              onChange={value =>
                 setState({
                   ...state,
-                  data: { ...state.data, description: event.target.value },
+                  data: { ...state.data, description: value },
                   error: null,
                 })
               }
@@ -120,15 +115,15 @@ const CreateMilestoneModal: FC<CreateMilestoneModalProps> = ({
           </div>
         </div>
         <div className='flex gap-4 mt-10'>
-          <button
+          <Button
             type='submit'
-            className='inline-flex text-center justify-center items-center bg-zinc-900 border-2 border-transparent hover:border-zinc-900 hover:bg-transparent hover:text-zinc-900 text-white rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+            className='rounded-2xl font-medium'
           >
             Create
-          </button>
+          </Button>
           <button
             type='button'
-            className='inline-flex text-center justify-center items-center text-zinc-700 border-2 border-zinc-900 hover:text-zinc-900 hover:bg-slate-100 rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+            className='inline-flex text-center justify-center items-center secondary-green-button rounded-2xl transition-all duration-300 py-2 px-10 font-medium text-lg'
             onClick={onClose}
           >
             Close

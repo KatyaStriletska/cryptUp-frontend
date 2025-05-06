@@ -21,6 +21,7 @@ import { selectMessages } from '../../redux/slices/message.slice';
 import { Chat } from '../../types/chat.types';
 import Spinner from '../../components/atoms/Spinner/Spinner';
 import Title from 'components/atoms/Title';
+import TextInput from 'components/atoms/TextInput';
 
 type MessageCenterPageFilters = 'all' | 'favourite' | 'archived';
 
@@ -49,6 +50,10 @@ const MessageCenterPage: FC = () => {
       default:
         return new Intl.DateTimeFormat('en-US', { dateStyle: 'short' }).format(date);
     }
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
   }, []);
 
   useEffect(() => {
@@ -343,21 +348,21 @@ const MessageCenterPage: FC = () => {
     <div className='flex flex-col py-5 px-6 flex-1 min-h-screen'>
       <Title>Message Center</Title>
       <div className='flex justify-between items-center mb-14'>
-        <div className='flex gap-1 rounded-full p-2 border bg-white'>
+        <div className='flex gap-1 rounded-full p-2 bg-purple-dark text-white'>
           <span
-            className={`font-medium px-5 py-1 rounded-full cursor-pointer transition-all duration-300 ${filters === 'all' ? 'bg-zinc-900 text-white hover:bg-zinc-700' : 'hover:bg-stone-100'}`}
+            className={`font-medium px-5 py-1 rounded-full cursor-pointer transition-all duration-300 ${filters === 'all' ? 'bg-[#4f16b4]' : 'hover:bg-[#4f16b490]'}`}
             onClick={() => setFilters('all')}
           >
             All
           </span>
           <span
-            className={`font-medium px-5 py-1 rounded-full cursor-pointer transition-all duration-300 ${filters === 'favourite' ? 'bg-zinc-900 text-white hover:bg-zinc-700' : 'hover:bg-stone-100'}`}
+            className={`font-medium px-5 py-1 rounded-full cursor-pointer transition-all duration-300 ${filters === 'favourite' ? 'bg-[#4f16b4]' : 'hover:bg-[#4f16b490]'}`}
             onClick={() => setFilters('favourite')}
           >
             Favourite
           </span>
           <span
-            className={`font-medium px-5 py-1 rounded-full cursor-pointer transition-all duration-300 ${filters === 'archived' ? 'bg-zinc-900 text-white hover:bg-zinc-700' : 'hover:bg-stone-100'}`}
+            className={`font-medium px-5 py-1 rounded-full cursor-pointer transition-all duration-300 ${filters === 'archived' ? 'bg-[#4f16b4]' : 'hover:bg-[#4f16b490]'}`}
             onClick={() => setFilters('archived')}
           >
             Archived
@@ -367,13 +372,13 @@ const MessageCenterPage: FC = () => {
       <div className='flex flex-1 relative'>
         <div className='grid grid-cols-[425px_1fr] gap-4 absolute top-0 left-0 right-0 bottom-0'>
           <div className='relative'>
-            <div className='flex flex-col flex-1 pb-3 bg-white rounded-xl border absolute top-0 left-0 right-0 bottom-0'>
+            <div className='flex flex-col flex-1 pb-3 text-white bg-gradient-white-purple rounded-xl before:rounded-xl h-full absolute top-0 left-0 right-0 bottom-0'>
               {hasChatListLoaded ? (
                 <>
                   <div className='flex p-3'>
-                    <input
+                    <TextInput
                       type='text'
-                      className='border rounded-full w-full px-3 py-1.5 text-stone-600 placeholder:text-stone-400 !ring-0 !border-none bg-stone-100'
+                      className='!p-1.5'
                       placeholder='Search...'
                       defaultValue={search}
                       onChange={event => setSearch(event.target.value || '')}
@@ -382,7 +387,7 @@ const MessageCenterPage: FC = () => {
                   <div className='h-full w-full ps-3 rounded-xl flex flex-col gap-2 relative overflow-y-scroll with-scrollbar'>
                     {!displayedChats.length && (
                       <div className='flex flex-1 border-2 border-dashed border-stone-200 rounded-xl items-center justify-center'>
-                        <span className='font-mono text-center text-stone-400'>
+                        <span className='text-center text-gray-200'>
                           The list of chats is empty
                         </span>
                       </div>
@@ -500,24 +505,24 @@ const MessageCenterPage: FC = () => {
                 </>
               ) : (
                 <div className='flex flex-col items-center justify-center flex-1'>
-                  <Spinner className='size-8 text-gray-200 animate-spin fill-zinc-900' />
-                  <span className='mt-2 font-mono text-stone-600 text-sm'>Loading</span>
+                  <Spinner className='size-8' />
+                  <span className='mt-2 font-mono text-gray-200 text-sm'>Loading</span>
                 </div>
               )}
             </div>
           </div>
-          <div className='flex flex-col bg-white rounded-xl border'>
+          <div className='flex flex-col bg-gradient-white-purple rounded-xl'>
             {!id && hasChatListLoaded && (
               <div className='flex flex-col flex-1 items-center justify-center rounded-xl m-3 border-2 border-dashed border-stone-200'>
-                <span className='font-mono text-stone-400'>No chat has been opened</span>
+                <span className='text-gray-200'>No chat has been opened</span>
               </div>
             )}
             {hasChatListLoaded ? (
               <Outlet />
             ) : (
               <div className='flex flex-col flex-1 items-center justify-center'>
-                <Spinner className='size-8 text-gray-200 animate-spin fill-zinc-900' />
-                <span className='mt-2 font-mono text-stone-600 text-sm'>Loading</span>
+                <Spinner className='size-8' />
+                <span className='mt-2 text-gray-200 text-sm'>Loading</span>
               </div>
             )}
           </div>

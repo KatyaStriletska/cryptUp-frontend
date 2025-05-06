@@ -10,6 +10,8 @@ import axios from 'axios';
 import cookies from 'js-cookie';
 import { SignInMethod } from '../../types/auth.types';
 import * as jose from 'jose';
+import TextInput from 'components/atoms/TextInput';
+import Button from 'components/atoms/Button/Button';
 
 export interface SignInFormState {
   data: {
@@ -77,6 +79,10 @@ const SignInPage: FC = () => {
       },
     );
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   useEffect(() => {
     if (!state.isLoaded) {
@@ -155,27 +161,28 @@ const SignInPage: FC = () => {
         <div className='flex-1 flex flex-col items-center justify-center w-full'>
           <img src='/logo.png' className='w-[10em] mb-12' />
           <form
-            className='max-w-xl flex flex-col w-full bg-white border p-10 rounded-xl'
+            className='max-w-xl flex flex-col w-full text-white p-10 rounded-xl'
             onSubmit={handleSubmit}
           >
-            <h3 className='w-full font-bold text-2xl text-zinc-900 mb-1'>
-              Sign in to your account
-            </h3>
-            <p className='text mb-4 text-neutral-500 font-medium'>
-              Enter with email and password or continue with Google or Wallet
-            </p>
+            <h5 className='text-3xl text-center text-white'>
+              Sign in or{' '}
+              <Link to={AppRoutes.SignUp} className='underline'>
+                Create account
+              </Link>
+            </h5>
+
+            <div className='flex flex-col gap-4 mb-4 mt-10'>
             {state.error && (
-              <span className='p-2 mb-2 bg-rose-100 border border-rose-200 rounded-md font-mono text-sm inline-flex'>
+              <span className='mb-6 inline-flex items-center justify-between px-3 py-2 text-red-500 border border-red-200 rounded-lg bg-red-50'>
                 {state.error}
               </span>
             )}
-            <div className='flex flex-col gap-4 my-4'>
-              <input
-                className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono'
+              <TextInput
+                className='!p-4 py-px rounded-[20px] !text-4xl !font-mono !font-normal'
                 type='email'
                 id='sign_in_email'
                 defaultValue={state.data.email}
-                placeholder='Email'
+                placeholder='E-mail'
                 onChange={event =>
                   setState({
                     ...state,
@@ -184,8 +191,8 @@ const SignInPage: FC = () => {
                   })
                 }
               />
-              <input
-                className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono'
+              <TextInput
+                className='!p-4 py-px rounded-[20px] !text-4xl !font-mono !font-normal'
                 type='password'
                 id='sign_in_password'
                 defaultValue={state.data.password}
@@ -199,15 +206,12 @@ const SignInPage: FC = () => {
                 }
               />
             </div>
-            <button
-              type='submit'
-              className='mt-4 text-lg inline-flex text-center justify-center items-center border-2 border-transparent hover:border-zinc-900 hover:bg-transparent hover:text-zinc-900 bg-zinc-900 text-white transition-all duration-300 rounded-full px-10 py-3 font-medium'
-            >
+            <Button type='submit' uppercase className='mt-4 !rounded-2xl !text-4xl' size='lg'>
               Sign in
-            </button>
-            <div className='flex items-center justify-center my-10 h-[2px] bg-zinc-400 rounded-lg mx-0.5'>
-              <span className='bg-white px-2 rounded-full text-sm text-zinc-600 font-medium text-center'>
-                OR
+            </Button>
+            <div className='flex items-center justify-center my-10 h-0 bg-zinc-400 rounded-lg mx-0.5'>
+              <span className='text-white text-2xl min-[1920px]:text-3xl text-center my-10'>
+                or
               </span>
             </div>
             <div className='flex flex-col gap-3'>
@@ -216,24 +220,18 @@ const SignInPage: FC = () => {
               </WalletMultiButton>
               <button
                 type='button'
-                className='text-lg inline-flex text-center justify-center items-center border-2 border-zinc-900 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300 rounded-full px-10 py-3 font-medium'
+                className='text-lg inline-flex text-center justify-center items-center secondary-green-button  px-10 py-2 font-medium'
                 onClick={handleSignInWithGoogle}
               >
                 <GoogleIcon className='size-5 me-2' />
                 Continue with Google
               </button>
             </div>
-            <span className='block mt-8 text-center'>
-              Do not have a registered account yet?{' '}
-              <Link to={AppRoutes.SignUp} className='text-blue-500'>
-                Sign up
-              </Link>
-            </span>
           </form>
         </div>
       </div>
       <div className='md:left-20 bottom-20 absolute w-full md:w-auto inline-flex justify-center'>
-        <img src='/solana-black-logo.png' className='w-72' />
+        <img src='/solana-white-logo.png' className='w-72' />
       </div>
     </div>
 

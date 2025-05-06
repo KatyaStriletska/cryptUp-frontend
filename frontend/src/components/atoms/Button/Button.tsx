@@ -11,6 +11,7 @@ interface ButtonProps {
     disabled?: boolean;
     isLoading?: boolean;
     spinnerSize?: 'sm' | 'md' | 'lg';
+    title?: string;
 }
 
 const getSizeClasses = (size: string) => {
@@ -40,6 +41,7 @@ const Button: React.FC<ButtonProps> = ({
     disabled = false,
     isLoading = false,
     spinnerSize = 'sm',
+    ...props
 }) => {
     return (
     <button
@@ -49,6 +51,7 @@ const Button: React.FC<ButtonProps> = ({
             ${getSizeClasses(size)} ${uppercase ? 'uppercase font-[900]' : ''} 
             ${(disabled || isLoading) ? 'opacity-40 cursor-not-allowed' : ''} ${className}`}
         disabled={(disabled || isLoading)}
+        {...props}
     >
         {isLoading ? <Spinner size={spinnerSize} className='' centerScreen={false} /> : children}
     </button>

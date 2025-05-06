@@ -20,6 +20,7 @@ export interface TextInputProps {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   step?: number;
   min?: number;
+  readOnly?: boolean;
 }
 
 const TextInput: React.FC<TextInputProps> = ({

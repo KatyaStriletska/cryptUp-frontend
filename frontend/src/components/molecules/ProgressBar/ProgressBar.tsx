@@ -42,7 +42,7 @@ const ProgressBar: FC<ProgressBarProps> = ({
         <div className='w-full h-full bg-grey-tertiary rounded-full'>
         <div
           className={`h-full flex justify-center items-center text-white font-mono bg-[length:200%_200%] bg-[0%_0%] 
-            bg-primary-gradient font-bold rounded-full ${variant === 'tiny' ? 'text-base' : 'text-lg'} text-lg py-0.5`}
+            bg-primary-gradient font-bold rounded-full ${variant === 'tiny' ? 'text-base' : 'text-lg'} py-0.5`}
           style={{ width: `${getWidth(((progress / goal) * 100))}%` }}
         >
             <div>{((progress / goal) * 100).toFixed(0)}%</div>

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ChangeEvent, KeyboardEventHandler, LegacyRef, ReactNode } from 'react';
 
 interface TextareaInputProps {
   id?: string;
@@ -11,11 +11,18 @@ interface TextareaInputProps {
   titleClassName?: string;
   wrapperClassName?: string;
   onChange?: (value: string) => void;
+  onInput?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onKeyDown?: (event: any) => KeyboardEventHandler<HTMLTextAreaElement>;
   hintText?: ReactNode;
   hintClassName?: string;
   errorHighlight?: boolean;
   disabled?: boolean;
   value?: string;
+  rows?: number;
+  ref?: LegacyRef<HTMLTextAreaElement>;
+  specifiedHeight?: boolean;
+  autoFocus?: boolean;
+
 }
 
 const TextareaInput: React.FC<TextareaInputProps> = ({
@@ -30,7 +37,11 @@ const TextareaInput: React.FC<TextareaInputProps> = ({
   titleClassName = '',
   wrapperClassName = '',
   onChange = () => { },
+  onInput = () => { },
+  onKeyDown = () => { },
+  specifiedHeight = true,
   disabled = false,
+  ...props
 }) => {
   const titleDefaultClassName =
     titleType === 'fancy'
@@ -46,16 +57,19 @@ const TextareaInput: React.FC<TextareaInputProps> = ({
 
       {/* Textarea input */}
       <div
-        className={`w-full h-48 border-gradient-primary rounded-[20px] before:rounded-[20px] ${wrapperClassName}`}
+        className={`w-full ${specifiedHeight ? 'h-48' : ''} border-gradient-primary rounded-[20px] before:rounded-[20px] ${wrapperClassName}`}
       >
         <textarea
           id={id}
           placeholder={placeholder}
           defaultValue={defaultValue}
           onChange={e => onChange(e.target.value)}
+          onInput={e => onInput(e as ChangeEvent<HTMLTextAreaElement>)}
           className={`w-full h-full px-4 py-2 text-white outline-none resize-none bg-transparent ${inputClassName}`}
           disabled={disabled}
+          onKeyDown={onKeyDown}
           {...(value && { value })}
+          {...props}
         />
       </div>
     </div>

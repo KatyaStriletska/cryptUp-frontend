@@ -9,7 +9,7 @@ export interface DashboardUnlockProps extends HTMLAttributes<HTMLDivElement> {
 const DashboardUnlock: FC<DashboardUnlockProps> = ({ projectLaunch, ...props }) => {
   return (
     <div
-      className='flex bg-white rounded-xl shadow-[0_0_15px_-7px_grey] p-3 items-center gap-3 justify-between'
+      className='flex text-white bg-gradient-white-purple rounded-xl shadow-[0_0_15px_-7px_grey] p-3 items-center gap-3 justify-between'
       {...props}
     >
       <div className='flex flex-col'>

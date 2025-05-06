@@ -4,6 +4,8 @@ import { ProjectLaunch } from '../../../types/project-launch.types';
 import { useAuth } from '../../../hooks/auth.hooks';
 import { useAppDispatch } from '../../../hooks/redux.hooks';
 import { updateProjectLaunch } from '../../../redux/slices/project-launch.slice';
+import TextareaInput from 'components/atoms/TextareaInput';
+import Button from 'components/atoms/Button/Button';
 
 export interface ApproveProjectLaunchModalProps extends ModalProps {
   projectLaunch: ProjectLaunch;
@@ -51,35 +53,35 @@ const ApproveProjectLaunchModal: FC<ApproveProjectLaunchModalProps> = ({
 
   return (
     <Modal title={title} onClose={onClose} className='max-w-[596px]'>
-      <form className='flex flex-col px-10 py-8' onSubmit={handleSubmit}>
-        <p className='font-mono mb-8 text-justify'>
+      <form className='flex flex-col px-6 py-8' onSubmit={handleSubmit}>
+        <p className='text-white mb-8 text-justify'>
           Are you sure you want to approve this project launch? If so, leave the project launch
           review as a business analyst. You will also be shown as an approver in the project launch
           info.
         </p>
-        <textarea
+        <TextareaInput
           id='approve_project_launch_review'
-          className='border border-stone-400 p-3 rounded-lg whitespace-pre-wrap text-stone-800 placeholder:text-stone-400 min-h-[170px] font-sans'
+          className='min-h-[170px]'
           defaultValue={state.data.review}
           placeholder='Project launch review ...'
-          onChange={event =>
+          onChange={value =>
             setState({
               ...state,
-              data: { ...state.data, review: event.target.value },
+              data: { ...state.data, review: value },
               error: null,
             })
           }
         />
         <div className='flex gap-4 mt-8'>
-          <button
+          <Button
             type='submit'
-            className='inline-flex text-center justify-center items-center border-2 border-transparent bg-zinc-900 hover:border-zinc-900 hover:bg-transparent hover:text-zinc-900 text-white rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+            className='rounded-xl'
           >
             Approve
-          </button>
+          </Button>
           <button
             type='button'
-            className='inline-flex text-center justify-center items-center text-zinc-700 border-2 border-zinc-900 hover:text-zinc-900 hover:bg-slate-100 rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+            className='secondary-green-button p-2 px-10 py-2'
             onClick={onClose}
           >
             Cancel

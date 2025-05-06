@@ -134,8 +134,8 @@ const StartupOrInvestorDashboard: FC<StartupOrInvestorDashboardProps> = ({ ...pr
   return isLoaded ? (
     <div className='grid min-[1440px]:grid-cols-[1fr_1.66fr_1.2fr] gap-10 flex-1' {...props}>
       <div className='flex flex-col gap-5 flex-1'>
-        <div className='rounded-xl px-4 py-3 shadow-[0_0_15px_-7px_grey] flex justify-between items-center bg-white flex-1'>
-          <h4 className='font-sans font-semibold'>Participations</h4>
+        <div className='rounded-xl px-4 py-3 flex justify-between items-center bg-gradient-white-purple flex-1 text-white'>
+          <h4 className='font-semibold'>Participations</h4>
           <span className='font-mono text-xl font-light'>
             {
               investedProjectLaunches
@@ -194,9 +194,11 @@ const StartupOrInvestorDashboard: FC<StartupOrInvestorDashboardProps> = ({ ...pr
       </div>
       <div className='flex flex-col gap-5'>
         <div className='grid min-[1440px]:grid-cols-[1fr_1.2fr] gap-5'>
-          <div className='flex flex-col shadow-[0_0_15px_-7px_grey] bg-white p-3 rounded-xl'>
-            <h3 className='font-semibold text-sm'>My own funds invested</h3>
-            <InformationCircleIcon className='size-4 text-stone-500 mt-2' />
+          <div className='flex flex-col justify-between bg-gradient-white-purple p-3 rounded-xl text-white'>
+            <div className='flex items-center gap-2'>
+              <h3 className='font-semibold text-sm'>My own funds invested</h3>
+              <InformationCircleIcon className='size-5 text-gray-300' />
+            </div>
             <div className='flex mt-2 justify-between items-end'>
               <h3 className='text-2xl font-serif'>
                 $
@@ -218,11 +220,13 @@ const StartupOrInvestorDashboard: FC<StartupOrInvestorDashboardProps> = ({ ...pr
               <ChartBarIcon className='size-4 fill-stone-300 text-stone-300 m-1' />
             </div>
           </div>
-          <div className='flex flex-col shadow-[0_0_15px_-7px_grey] bg-white p-3 rounded-xl'>
-            <h3 className='font-semibold text-sm'>Amount of funds invested on platform</h3>
-            <div className='flex items-center mt-2 gap-1 cursor-pointer'>
-              <p className='font-mono text-xs'>Last year</p>
-              <ArrowDropDown className='size-4 text-stone-600 mt-0.5' />
+          <div className='flex flex-col text-white bg-gradient-white-purple p-3 rounded-xl justify-between'>
+            <div>
+              <h3 className='font-semibold text-sm'>Amount of funds invested on platform</h3>
+              <div className='flex items-center mt-2 gap-1 cursor-pointer'>
+                <p className='font-mono text-xs'>Last year</p>
+                <ArrowDropDown className='size-4 text-gray-300 mt-0.5' />
+              </div>
             </div>
             <div className='flex mt-2 justify-between items-end'>
               <h3 className='text-2xl font-serif'>
@@ -246,7 +250,7 @@ const StartupOrInvestorDashboard: FC<StartupOrInvestorDashboardProps> = ({ ...pr
           </div>
         </div>
         <IncomeChart
-          className='flex flex-col rounded-xl border p-3 bg-white shadow-[0_0_15px_-7px_gray] flex-1'
+          className='flex flex-col rounded-xl border-gradient-primary before:rounded-xl p-3 bg-gradient-white-purple text-white flex-1'
           onStatisticsPeriodChanged={handleIncomeChartStatisticsPeriodChanged}
           data={incomeChartData}
         />
@@ -258,7 +262,7 @@ const StartupOrInvestorDashboard: FC<StartupOrInvestorDashboardProps> = ({ ...pr
               {lockedProjectLaunches.map(projectLaunch => (
                 <DashboardUnlock
                   key={projectLaunch.id}
-                  className='flex bg-white rounded-xl shadow-[0_0_15px_-7px_grey] p-3 items-center gap-3 justify-between'
+                  className='flex text-white bg-gradient-white-purple rounded-xl p-3 items-center gap-3 justify-between'
                   projectLaunch={projectLaunch}
                 />
               ))}

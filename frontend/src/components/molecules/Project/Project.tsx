@@ -30,6 +30,7 @@ import ApproveProjectLaunchModal from '../../organisms/ApproveProjectLaunchModal
 // import Image from 'components/atoms/Image/Image';
 import EditProjectLaunchModal from 'components/organisms/EditProjectLaunchModal/EditProjectLaunchModal';
 import Avatar from '../Avatar';
+import { AvatarSize } from '../Avatar/Avatar';
 
 export interface ProjectProps extends HTMLAttributes<HTMLDivElement> {
   project: ProjectLaunch;
@@ -75,8 +76,10 @@ export const Project: FC<ProjectProps> = ({
           >
             <div className='py-7 px-3 flex flex-col'>
               <p className='font-mono text-white'>
-                Are you sure you want to delete this project?  <span className='font-semibold'>You will not be able to restore the
-                project after performing this operation.</span>
+                Are you sure you want to delete this project?{' '}
+                <span className='font-semibold'>
+                  You will not be able to restore the project after performing this operation.
+                </span>
               </p>
               <div className='mt-8 flex justify-center items-center gap-4'>
                 <Button className='rounded-2xl' onClick={() => deleteProject()}>
@@ -154,6 +157,7 @@ export const Project: FC<ProjectProps> = ({
               <Avatar
                 isEditable={false}
                 src={projectLaunch.logo ? resolveImage(projectLaunch.logo) : undefined}
+                avatarSize={variant === 'tiny' ? AvatarSize.Medium : AvatarSize.Large}
               />
               {/* <Image
                 src={projectLaunch.logo ? resolveImage(projectLaunch.logo) : undefined}
@@ -197,13 +201,13 @@ export const Project: FC<ProjectProps> = ({
                     )}
                     <button
                       type='button'
-                      className={`h-full rounded-full hover:bg-neutral-100 transition-all duration-300 aspect-square ${variant === 'tiny' ? 'w-[26px] ms-1' : 'w-[32px] ms-2'} inline-flex items-center justify-center`}
+                      className={`h-full rounded-full transition-all duration-300 aspect-square w-[32px] inline-flex items-center justify-center hover:text-green-primary text-white ${variant === 'tiny' ? 'w-[26px] ms-1' : 'w-[32px] ms-2'} inline-flex items-center justify-center`}
                     >
                       <StarIcon className={variant === 'tiny' ? 'size-5' : 'size-6'} />
                     </button>
                     <button
                       type='button'
-                      className={`rounded-full hover:bg-neutral-100 transition-all duration-300 aspect-square ${variant === 'tiny' ? 'w-[26px]' : 'w-[32px]'} inline-flex items-center justify-center`}
+                      className={`h-full rounded-full transition-all duration-300 aspect-square w-[32px] inline-flex items-center justify-center hover:text-green-primary text-white ${variant === 'tiny' ? 'w-[26px]' : 'w-[32px]'} inline-flex items-center justify-center`}
                     >
                       <ShareIcon className={variant === 'tiny' ? 'size-4' : 'size-5'} />
                     </button>
@@ -212,7 +216,7 @@ export const Project: FC<ProjectProps> = ({
                       authenticatedUser.role.includes(UserRoleEnum.Startup) && (
                         <div className='relative'>
                           <button
-                            className='transition-all inline-flex items-center justify-center'
+                            className='h-full rounded-full aspect-square w-[32px] hover:text-green-primary text-white transition-all  duration-300 inline-flex items-center justify-center'
                             onClick={() => setIsSettingsDropdownVisible(true)}
                           >
                             <DotsIcon className='size-7' />
@@ -220,10 +224,10 @@ export const Project: FC<ProjectProps> = ({
                           {isSettingsDropdownVisible && (
                             <div
                               ref={settingsDropdownRef}
-                              className='absolute bg-grey-secondary mt-1 right-0 shadow p-1 rounded-md flex flex-col z-50'
+                              className='absolute backdrop-blur-xl bg-grey-primary  mt-1 right-0 shadow p-1 rounded-md flex flex-col z-50 text-white'
                             >
                               <button
-                                className='inline-flex items-center hover:bg-neutral-100 px-2 py-1 rounded-md font-medium'
+                                className='inline-flex items-center hover:bg-grey-primary px-2 py-1 rounded-md font-medium'
                                 onClick={() => {
                                   setIsRemoveProjectModalVisible(true);
                                   setIsSettingsDropdownVisible(false);
@@ -234,7 +238,7 @@ export const Project: FC<ProjectProps> = ({
                               </button>
                               {!projectLaunch.isFundraised && (
                                 <button
-                                  className='inline-flex items-center hover:bg-neutral-100 px-2 py-1 rounded-md font-medium'
+                                  className='inline-flex items-center hover:bg-grey-primary px-2 py-1 rounded-md font-medium'
                                   onClick={() => {
                                     setIsEditProjectModalVisible(true);
                                     setIsSettingsDropdownVisible(false);
@@ -255,16 +259,16 @@ export const Project: FC<ProjectProps> = ({
                 <div className='grid auto-cols-max gap-2 items-start'>
                   {projectLaunch.isFundraised &&
                     projectLaunch.approver !== null &&
-                    projectLaunch.project && (
+                     (
                       <Link
-                        to={AppRoutes.DetailsProject.replace(':id', projectLaunch.project.id)}
+                        to={AppRoutes.DetailsProject.replace(':id', projectLaunch.project!.id)}
                         className={`inline-flex text-center justify-center items-center font-medium font-sans hover:border-transparent hover:bg-zinc-900 bg-transparent border-2 border-zinc-900 text-zinc-900 hover:text-white transition-all duration-300 rounded-full ${variant === 'tiny' ? 'text-sm px-4 py-0.5' : 'text-lg px-10 py-1'}`}
                       >
                         Details
                       </Link>
                     )}
                   <Button
-                    className={`inline-flex text-center justify-center items-center font-medium text-white transition-all duration-300 rounded-full ${variant === 'tiny' ? 'text-sm px-4 py-0.5' : 'text-lg px-10 py-1'}`}
+                    className={`inline-flex text-center justify-center items-center font-medium text-white  rounded-full ${variant === 'tiny' ? 'text-sm px-2 py-0.5' : 'text-lg px-10 py-1'}`}
                     onClick={() => setIsShowProjectLaunchInfoModalVisible(true)}
                   >
                     Launch info
@@ -276,7 +280,7 @@ export const Project: FC<ProjectProps> = ({
                           role => role === UserRoleEnum.BusinessAnalyst,
                         ) && (
                           <Button
-                            className={`inline-flex text-center justify-center items-center font-medium font-sans hover:border-transparent hover:bg-zinc-900 bg-transparent border-2 border-zinc-900 text-zinc-900 hover:text-white transition-all duration-300 rounded-full ${variant === 'tiny' ? 'text-sm px-4 py-0.5' : 'text-lg px-10 py-1'}`}
+                            className={`rounded-full ${variant === 'tiny' ? 'text-sm px-4 py-0.5' : 'text-lg px-10 py-1'}`}
                             onClick={() => setIsApproveProjectLaunchModalVisible(true)}
                           >
                             Approve
@@ -286,23 +290,25 @@ export const Project: FC<ProjectProps> = ({
                         role => role === UserRoleEnum.Investor || role === UserRoleEnum.Startup,
                       ) &&
                         projectLaunch.approver !== null && (
-                          <Button
-                            disabled={!projectLaunch.dao}
-                            className={`inline-flex text-center justify-center items-center font-medium font-sans enabled:hover:border-transparent enabled:hover:bg-zinc-900 bg-transparent border-2 border-zinc-900 text-zinc-900 disabled:border-zinc-400 disabled:text-zinc-400 enabled:hover:text-white transition-all duration-300 rounded-full gap-2 disabled:bg-opacity-30 disabled:cursor-pointer relative group/invest-button ${variant === 'tiny' ? 'text-sm px-4 py-0.5' : 'text-lg px-10 py-1'}`}
-                            onClick={() => setIsCreateProjectLaunchInvestmentModalVisible(true)}
-                          >
-                            {!projectLaunch.dao && (
-                              <>
-                                <LockIcon className='size-4 stroke-2' />
-                                <div className='group-hover/invest-button:flex hidden absolute w-[125%] z-50 bg-white rounded-xl text-zinc-600 text-xs bottom-full mb-3 shadow-[0_0_15px_-7px_grey] p-2 before:content-[""] before:flex before:w-[16px] before:aspect-square before:bg-white before:shadow-[0_0_30px_-15px_grey] before:absolute before:rotate-45 before:top-full before:-translate-y-[80%] before:-z-50 before:left-1/2 before:-translate-x-1/2'>
+                          <div className='inline-flex mt-4 w-full'>
+                            <div className='group/invest-button relative h-auto w-full'>
+                              <Button
+                                disabled={!projectLaunch.dao}
+                                className='inline-flex text-center items-center gap-2 font-medium justify-center text-white px-5 py-2 rounded-full w-full h-full text-lg disabled:cursor-pointer'
+                                onClick={() => setIsCreateProjectLaunchInvestmentModalVisible(true)}
+                              >
+                                {!projectLaunch.dao && <LockIcon className='size-5 stroke-2' />}{' '}
+                                Invest Now
+                              </Button>
+                              {!projectLaunch.dao && (
+                                <div className='group-hover/invest-button:flex hidden absolute w-[115%] z-50 bg-[#4f16b4] group-hover:!opacity-80  rounded-xl text-gray-300 text-xs bottom-full mb-3 shadow-[0_0_15px_-7px_grey] p-2 before:content-[""] before:flex before:w-[16px] before:aspect-square before:bg-[#4f16b4] before:shadow-[0_0_30px_-15px_grey] before:absolute before:rotate-45 before:top-full before:-translate-y-[80%] before:-z-50 before:left-1/2 before:-translate-x-1/2'>
                                   The investment opportunity is temporarily unavailable due to the
                                   creation of a DAO for this project on Solana Blockchain. Please
                                   try again later
                                 </div>
-                              </>
-                            )}
-                            Invest now
-                          </Button>
+                              )}
+                            </div>
+                          </div>
                         )}
                     </>
                   )}
@@ -417,19 +423,19 @@ export const Project: FC<ProjectProps> = ({
           </div>
         </div>
         {variant === 'extended' && (
-          <div className='grid w-full gap-2 grid-flow-col auto-cols-fr'>
-            {projectLaunch.isFundraised &&
+          <div className='grid w-full gap-6 grid-flow-col auto-cols-fr'>
+            {
               projectLaunch.approver !== null &&
-              projectLaunch.project && (
+              (
                 <Link
-                  to={AppRoutes.DetailsProject.replace(':id', projectLaunch.project.id)}
-                  className='inline-flex text-center justify-center items-center font-medium font-sans text-lg hover:border-transparent hover:bg-zinc-900 bg-transparent border-2 border-zinc-900 text-zinc-900 hover:text-white px-10 py-1 transition-all duration-300 rounded-full'
+                  to={AppRoutes.DetailsProject.replace(':id', projectLaunch.project!.id)}
+                  className='inline-flex justify-center items-center text-white bg-primary-gradient bg-[length:200%_200%] bg-[0%_0%] hover:bg-[100%_100%] font-mono transition-all duration-1000 px-10 py-3 text-lg rounded-full'
                 >
                   Details
                 </Link>
               )}
             <Button
-              className='inline-flex text-center justify-center items-center font-medium text-white text-lg px-10 py-1 transition-all duration-300 rounded-full'
+              className='rounded-full'
               onClick={() => setIsShowProjectLaunchInfoModalVisible(true)}
             >
               Launch info
@@ -439,7 +445,7 @@ export const Project: FC<ProjectProps> = ({
                 {!projectLaunch.approver &&
                   authenticatedUser?.role.find(role => role === UserRoleEnum.BusinessAnalyst) && (
                     <Button
-                      className='inline-flex text-center justify-center items-center font-medium font-sans text-lg border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1 transition-all duration-300 rounded-full'
+                      className='rounded-full'
                       onClick={() => setIsApproveProjectLaunchModalVisible(true)}
                     >
                       Approve
@@ -449,23 +455,25 @@ export const Project: FC<ProjectProps> = ({
                   role => role === UserRoleEnum.Investor || role === UserRoleEnum.Startup,
                 ) &&
                   projectLaunch.approver !== null && (
-                    <Button
-                      disabled={!projectLaunch.dao}
-                      className='inline-flex text-center justify-center gap-2 items-center font-medium font-sans text-lg border-transparent bg-zinc-900 enabled:hover:bg-transparent border-2 enabled:hover:border-zinc-900 enabled:hover:text-zinc-900 text-white px-10 py-1 transition-all duration-300 rounded-full disabled:bg-opacity-30 disabled:cursor-pointer relative group/invest-button'
-                      onClick={() => setIsCreateProjectLaunchInvestmentModalVisible(true)}
-                    >
-                      {!projectLaunch.dao && (
-                        <>
-                          <LockIcon className='size-4 stroke-2' />
-                          <div className='group-hover/invest-button:flex hidden absolute w-[125%] z-50 bg-white rounded-xl text-zinc-600 text-xs bottom-full mb-3 shadow-[0_0_15px_-7px_grey] p-2 before:content-[""] before:flex before:w-[16px] before:aspect-square before:bg-white before:shadow-[0_0_30px_-15px_grey] before:absolute before:rotate-45 before:top-full before:-translate-y-[80%] before:-z-50 before:left-1/2 before:-translate-x-1/2'>
+                    <div className='inline-flex h-full'>
+                      <div className='group/invest-button relative h-auto w-full'>
+                        <Button
+                          disabled={!projectLaunch.dao}
+                          className='w-full inline-flex text-center items-center gap-2 font-medium justify-center text-white px-5 py-2 rounded-full h-full text-lg disabled:cursor-pointer'
+                          onClick={() => setIsCreateProjectLaunchInvestmentModalVisible(true)}
+                        >
+                          {!projectLaunch.dao && <LockIcon className='size-5 stroke-2' />} Invest
+                          Now
+                        </Button>
+                        {!projectLaunch.dao && (
+                          <div className='group-hover/invest-button:flex hidden absolute w-[115%] z-50 bg-[#4f16b4] group-hover:!opacity-80  rounded-xl text-gray-300 text-xs bottom-full mb-3 shadow-[0_0_15px_-7px_grey] p-2 before:content-[""] before:flex before:w-[16px] before:aspect-square before:bg-[#4f16b4] before:shadow-[0_0_30px_-15px_grey] before:absolute before:rotate-45 before:top-full before:-translate-y-[80%] before:-z-50 before:left-1/2 before:-translate-x-1/2'>
                             The investment opportunity is temporarily unavailable due to the
                             creation of a DAO for this project on Solana Blockchain. Please try
                             again later
                           </div>
-                        </>
-                      )}
-                      Invest now
-                    </Button>
+                        )}
+                      </div>
+                    </div>
                   )}
               </>
             )}

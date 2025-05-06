@@ -13,6 +13,9 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import { AppRoutes } from '../../types/enums/app-routes.enum';
 import { useAuth } from '../../hooks/auth.hooks';
 import Spinner from 'components/atoms/Spinner/Spinner';
+import Title from 'components/atoms/Title';
+import Avatar from 'components/molecules/Avatar';
+import Button from 'components/atoms/Button/Button';
 
 const DetailsUserPage: FC = () => {
   const [notFound, setNotFound] = useState(false);
@@ -23,6 +26,10 @@ const DetailsUserPage: FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { authenticatedUser } = useAuth();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   useEffect(() => {
     if (id)
@@ -61,28 +68,25 @@ const DetailsUserPage: FC = () => {
     user && (
       <>
         <div className='flex mt-3 px-6 flex-col justify-start align-center'>
-          <h3 className='px-2 text-3xl font-serif mb-10'>User details</h3>
-          <div className='flex flex-col max-w-[1440px] w-full bg-white shadow-[0_0_15px_-7px_gray] rounded-xl'>
+          <Title>User profile</Title>
+          <div className='flex flex-col mx-auto max-w-[1440px] w-full rounded-xl text-white'>
             <div className='flex items-center justify-between px-10 py-5'>
               <div className='flex items-center gap-4'>
-                {user.avatar ? (
-                  <img
-                    src={resolveImage(user.avatar)}
-                    alt='User profile image'
-                    className='w-[64px] rounded-full aspect-square object-cover'
-                  />
-                ) : (
-                  <div className='flex items-center justify-center bg-gray-300 w-[64px] rounded-full aspect-square'>
-                    <UserIcon className='size-8' />
-                  </div>
-                )}
-                <span className='font-sans font-semibold text-2xl'>{user.username}</span>
+                <Avatar
+                  isEditable={false}
+                  usersAvatar
+                  src={resolveImage(user.avatar!)}
+                />
+                <div className='flex flex-col gap-4'>
+                  <p className='font-semibold text-3xl'>{user.username}</p>
+                  <p className='text-xl'>{user.email}</p>
+                </div>
               </div>
               <div className='flex gap-2'>
                 {user.id !== authenticatedUser?.id && (
-                  <button
+                  <Button
                     type='button'
-                    className='inline-flex text-lg font-sans font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1 transition-[0.3s_ease] rounded-full'
+                    className='rounded-full'
                     onClick={() =>
                       navigate(AppRoutes.MessageCenter.concat('/new-chat'), {
                         state: {
@@ -101,23 +105,24 @@ const DetailsUserPage: FC = () => {
                     }
                   >
                     Message
-                  </button>
+                  </Button>
                 )}
               </div>
             </div>
-            <hr />
+            <hr className='mt-10' />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>User ID</h3>
+              <h3 className='font-semibold text-xl mb-1.5'>User ID</h3>
               <span className='font-mono'>{user.id}</span>
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Email</h3>
-              <span className='font-mono'>{user.email}</span>
+              <h3 className=' font-semibold text-xl mb-1.5'>Wallet ID</h3>
+              <span className='font-mono'>{user.walletId}</span>
             </div>
             <hr />
+            <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>First name</h3>
+              <h3 className='font-semibold text-xl mb-1.5'>First name</h3>
               {user.firstName?.trim() ? (
                 <span className='font-mono whitespace-pre-wrap'>{user.firstName}</span>
               ) : (
@@ -126,7 +131,7 @@ const DetailsUserPage: FC = () => {
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Last name</h3>
+              <h3 className='font-semibold text-xl mb-1.5'>Last name</h3>
               {user.lastName?.trim() ? (
                 <span className='font-mono whitespace-pre-wrap'>{user.lastName}</span>
               ) : (
@@ -135,12 +140,12 @@ const DetailsUserPage: FC = () => {
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Role</h3>
+              <h3 className='font-semibold text-xl mb-1.5'>Role</h3>
               <span className='font-mono'>{user.role.join(', ')}</span>
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Bio</h3>
+              <h3 className='font-semibold text-xl mb-1.5'>Bio</h3>
               {user.bio?.trim() ? (
                 <span className='font-mono whitespace-pre-wrap'>{user.bio}</span>
               ) : (
@@ -150,11 +155,11 @@ const DetailsUserPage: FC = () => {
           </div>
         </div>
         <div className='my-10 px-6'>
-          <h4 className='px-2 text-3xl font-serif mb-10'>User projects</h4>
+          <Title className='text-3xl'>User projects</Title>
           {projects.length > 0 ? (
             <div className='grid lg:grid-cols-2 gap-10 mt-5 auto-rows-fr'>
               {projects.map(project => (
-                <Project key={project.id} project={project} variant='short' />
+                <Project key={project.id} project={project} variant='tiny' />
               ))}
             </div>
           ) : (

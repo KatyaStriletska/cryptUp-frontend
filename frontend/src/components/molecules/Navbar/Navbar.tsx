@@ -3,7 +3,7 @@ import { FC, HTMLAttributes, useEffect, useRef, useState } from 'react';
 import { NavbarLink } from '../../templates/PageWithNavigationTemplate';
 import { v4 as uuid } from 'uuid';
 import { AppRoutes } from '../../../types/enums/app-routes.enum';
-import { BurgerMenuIcon, ExitIcon, UserCircleIcon, UserIcon } from '../../atoms/Icons/Icons';
+import { BurgerMenuIcon, ExitIcon, ProfileIcon, UserCircleIcon, UserIcon } from '../../atoms/Icons/Icons';
 import { useAuth } from '../../../hooks/auth.hooks';
 import Button from '../../atoms/Button/Button';
 
@@ -201,45 +201,43 @@ export const Navbar: FC<NavbarProps> = ({ links, showLogo = true, ...props }) =>
         </div>
 
         {/* {authenticatedUser ? ( */}
-          <>
-            <div className='flex min-w-[150px] space-x-10 items-center text-white'>
+        <>
+          <div className='flex min-w-[150px] space-x-10 items-center text-white'>
             {links.map(link => (
-          <NavLink
-            key={uuid()}
-            to={link.to}
-            className={({ isActive, isPending }) =>
-              isActive
-                ? 'py-1.5 text-2xl font-serif font-bold mx-4 transition-[0.3s_ease]'
-                : isPending
-                  ? 'py-1.5 text-2xl font-serif mx-4 transition-[0.3s_ease]'
-                  : 'py-1.5 text-2xl font-serif mx-4 transition-[0.3s_ease]'
-            }
-          >
-            {link.name}
-          </NavLink>
-        ))}
-        {authenticatedUser && (
-          <Link
-            to={AppRoutes.Profile}
-            className='flex items-center justify-center bg-gray-400 font-sans ps-5 me-3 text-white rounded-full'
-          >
-            <span>{authenticatedUser.username}</span>
-            <span className='ms-2 rounded-full bg-gray-500 p-2.5'>
-              <UserIcon className='size-4' />
-            </span>
-          </Link>
-        )}
-              <button
-                onClick={() => {
-                  signOut();
-                  navigate(AppRoutes.SignIn);
-                }}
-                className='inline-flex text-center items-center justify-center rounded-xl ring-1 ring-green-primary px-5 py-2 text-green-primary font-[900] text-lg hover:bg-green-primary hover:text-dark-primary transition-all duration-300'
+              <NavLink
+                key={uuid()}
+                to={link.to}
+                className={({ isActive }) =>
+                  isActive
+                    ? 'text-lg font-bold mx-4 transition-[0.3s_ease] relative text-green-primary after:bottom-0 after:left-0  after:bg-green-primary after:h-[2px] after:absolute after:w-full'
+                    : 'text-lg mx-4 transition-[0.3s_ease] relative after:bg-white after:absolute after:h-[2px] after:w-0 after:bottom-0 after:left-0 hover:after:w-full after:transition-all after:duration-300'
+                }
               >
-                {/* {formatMessage({ id: 'navbar.logout' })} */} Sign out
-              </button>
-            </div>
-          </>
+                {link.name}
+              </NavLink>
+            ))}
+          </div>
+          <div className='flex items-center gap-6'>
+            {authenticatedUser && (
+              <Link
+                to={AppRoutes.Profile}
+                className='transition-all duration-300 hover:scale-110'
+                title={'Profile'}
+              >
+                <ProfileIcon className='size-12 xl:size-16' />
+              </Link>
+            )}
+            <button
+              onClick={() => {
+                signOut();
+                navigate(AppRoutes.SignIn);
+              }}
+              className='inline-flex text-center items-center justify-center rounded-xl ring-1 ring-green-primary px-5 py-2 text-green-primary font-[900] text-lg hover:bg-green-primary hover:text-dark-primary transition-all duration-300'
+            >
+              {/* {formatMessage({ id: 'navbar.logout' })} */} Sign out
+            </button>
+          </div>
+        </>
       </div>
     </div>
   );

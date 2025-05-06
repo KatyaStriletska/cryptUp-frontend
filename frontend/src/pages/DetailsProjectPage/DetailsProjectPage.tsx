@@ -24,6 +24,7 @@ import ProjectLaunchInfoModal from '../../components/organisms/ProjectLaunchInfo
 import useWeb3Auth from '../../hooks/web3auth.hooks';
 import Spinner from 'components/atoms/Spinner/Spinner';
 import { startVesting, startVestingForStartup } from 'redux/slices/nft.slice';
+import Title from 'components/atoms/Title';
 
 const DetailsProjectPage: FC = () => {
   const { id } = useParams();
@@ -35,11 +36,15 @@ const DetailsProjectPage: FC = () => {
     useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [wasProjectSubmitted, setWasProjectSubmitted] = useState(false);
-  const [isCreateMilestoneModalVisible, setIsCreateMilestoneModalVisible] = useState(true);
+  const [isCreateMilestoneModalVisible, setIsCreateMilestoneModalVisible] = useState(false);
   const { authenticatedUser } = useAuth();
   const wallet = useWallet();
   const { connection } = useConnection();
   const { connectWallet } = useWeb3Auth();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -237,10 +242,11 @@ const DetailsProjectPage: FC = () => {
             />,
             document.getElementById('root')!,
           )}
-        <div className='flex flex-col items-center justify-center px-6 py-10'>
-          <div className='shadow-[0_0_15px_-7px_gray] w-full max-w-[1440px] rounded-xl bg-white'>
+        <div className='flex flex-col items-center justify-center px-6'>
+          <Title>Project details</Title>
+          <div className='w-full max-w-[1440px] rounded-xl bg-gradient-white-purple text-white'>
             <div className='flex justify-between items-center px-10 py-8'>
-              <h3 className='font-serif text-2xl'>Project details</h3>
+              <h3 className='font-bold text-3xl'>{project.projectLaunchName}</h3>
               <div className='flex items-center'>
                 {authenticatedUser?.id === project.projectLaunch.author.id &&
                   authenticatedUser.role.includes(UserRoleEnum.Startup) && (
@@ -251,14 +257,14 @@ const DetailsProjectPage: FC = () => {
                             {project.milestones.filter(milestone => milestone.isFinal).length ===
                             project.milestoneNumber ? (
                               <Button
-                                className='me-2 bg-emerald-500 hover:bg-emerald-600 inline-flex border-transparent border-2 text-white px-10 py-1.5 transition-all duration-300 rounded-full font-sans font-medium'
+                                className='me-4 inline-flex border-transparent rounded-full'
                                 onClick={() => setIsSubmitProjectModalVisible(true)}
                               >
                                 Submit project
                               </Button>
                             ) : (
                               <Button
-                                className='me-2 bg-emerald-500 inline-flex border-transparent border-2 text-white px-10 py-1.5 transition-all duration-300 rounded-full font-sans font-medium opacity-30'
+                                className='me-4 inline-flex border-transparent rounded-full'
                                 disabled
                                 title='Submission of the project is not yet possible, as not all milestones have been submitted'
                               >
@@ -270,14 +276,14 @@ const DetailsProjectPage: FC = () => {
                     </>
                   )}
                 <Button
-                  className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300 font-sans rounded-full'
+                  className='rounded-full me-4'
                   onClick={() => setIsShowProjectLaunchInfoModalVisible(true)}
                 >
                   Launch info
                 </Button>
                 <Link
                   to={AppRoutes.Home}
-                  className='inline-flex border-transparent bg-stone-400 hover:bg-transparent border-2 hover:border-stone-600 hover:text-stone-600 text-white px-10 py-1.5 transition-all duration-300 rounded-full font-sans font-medium'
+                  className='me-4 inline-flex justify-center items-center secondary-green-button font-mono transition-all duration-1000 px-10 py-3 text-lg rounded-full'
                 >
                   Back
                 </Link>
@@ -317,25 +323,25 @@ const DetailsProjectPage: FC = () => {
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Project ID</h3>
-              <span className='font-mono'>{project.id}</span>
+              <h3 className='font-semibold text-xl mb-1.5'>Project ID</h3>
+              <span>{project.id}</span>
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Project name</h3>
-              <span className='font-mono'>{project.projectLaunchName}</span>
+              <h3 className='font-semibold text-xl mb-1.5'>Project name</h3>
+              <span>{project.projectLaunchName}</span>
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Description</h3>
-              <span className='font-mono whitespace-pre-wrap'>
+              <h3 className='font-semibold text-xl mb-1.5'>Description</h3>
+              <span className='whitespace-pre-wrap'>
                 {project.projectLaunchDescription}
               </span>
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Milestones number</h3>
-              <span className='font-mono'>{project.milestoneNumber}</span>
+              <h3 className='font-semibold text-xl mb-1.5'>Milestones number</h3>
+              <span>{project.milestoneNumber}</span>
             </div>
             <hr />
             {project.projectLaunch?.dao && (
@@ -346,7 +352,7 @@ const DetailsProjectPage: FC = () => {
                   </h3>
                   <a
                     href={`https://explorer.solana.com/address/${project.projectLaunch.dao.multisigPda}/anchor-account?cluster=devnet`}
-                    className='font-mono text-blue-500 hover:underline transition-all duration-300'
+                    className='font-mono text-blue-400 hover:underline transition-all duration-300'
                     target='_blank'
                   >{`https://explorer.solana.com/address/${project.projectLaunch.dao.multisigPda}/anchor-account?cluster=devnet`}</a>
                 </div>
@@ -357,11 +363,11 @@ const DetailsProjectPage: FC = () => {
               <h3 className='font-sans font-semibold text-xl mb-1.5'>Status</h3>
               <span className='font-sans inline-flex'>
                 {project.isFinal ? (
-                  <span className='font-medium text-white rounded-full bg-emerald-500 px-5 py-1.5'>
+                  <span className='text-white rounded-full bg-emerald-500 px-5 py-1'>
                     Submitted
                   </span>
                 ) : (
-                  <span className='font-medium text-white rounded-full bg-yellow-500 px-5 py-1.5'>
+                  <span className='text-white rounded-full bg-yellow-500 px-5 py-1'>
                     In process
                   </span>
                 )}
@@ -371,15 +377,15 @@ const DetailsProjectPage: FC = () => {
             {project.dataAccount?.accountHash && (
               <>
                 <div className='px-10 py-5'>
-                  <h3 className='font-sans font-semibold text-xl mb-1.5'>Data account hash</h3>
-                  <span className='font-mono'>{project.dataAccount.accountHash}</span>
+                  <h3 className=' font-semibold text-xl mb-1.5'>Data account hash</h3>
+                  <span>{project.dataAccount.accountHash}</span>
                 </div>
                 <hr />
               </>
             )}
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Created at</h3>
-              <span className='font-mono'>{new Date(project.createdAt).toLocaleString()}</span>
+              <h3 className='font-semibold text-xl mb-1.5'>Created at</h3>
+              <span>{new Date(project.createdAt).toLocaleString()}</span>
             </div>
           </div>
           <MilestonesGrid

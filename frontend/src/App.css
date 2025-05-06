@@ -146,7 +146,7 @@ li[role="checkbox"]:before {
 }
 
 .secondary-red-button {
-  @apply border-2 border-red-500 bg-red-500/10 text-red-500 uppercase hover:enabled:bg-red-500 hover:enabled:text-black transition-all duration-300;
+  @apply border-2 border-red-500 bg-red-500/10 text-red-500 hover:enabled:bg-red-500 hover:enabled:text-black transition-all duration-300;
 }
 
 .wallet-adapter-button.wallet-adapter-button-trigger {

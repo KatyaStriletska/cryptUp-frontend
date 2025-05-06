@@ -24,6 +24,10 @@ import Spinner from 'components/atoms/Spinner/Spinner';
 import { ProjectLaunch } from 'types/project-launch.types';
 import axios from 'axios';
 import Label from 'components/atoms/Label';
+import Avatar from 'components/molecules/Avatar';
+import TextInput from 'components/atoms/TextInput';
+import TextareaInput from 'components/atoms/TextareaInput';
+import SelectInput from 'components/atoms/SelectInput';
 
 export interface EditProjectLaunchModalProps extends ModalProps {
   projectLaunch: ProjectLaunch;
@@ -369,71 +373,37 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
   };
 
   return (
-    <Modal title={title} onClose={onClose} className='max-w-[768px]'>
+    <Modal title={title} onClose={onClose} className='max-w-[868px] !max-h-[90%]'>
       {!state.isLoading ? (
         <>
-          <form ref={formRef} className='flex flex-col' onSubmit={onSubmit}>
+          <form ref={formRef} className='flex flex-col text-white' onSubmit={onSubmit}>
             <div className='flex flex-col mx-10 mt-8 mb-14'>
               {state.error && (
-                <span className='bg-rose-100 border border-rose-200 p-2 rounded-md mb-5'>
+                <span className='bg-rose-100 border border-red-500 text-red-500 p-2 rounded-md mb-5'>
                   {state.error}
                 </span>
               )}
-              <h3 className='text-2xl mb-5 text-zinc-900 sm:col-span-2 font-sans font-semibold'>
-                General info
-              </h3>
+              <h3 className='text-2xl mb-5 sm:col-span-2 font-semibold'>General info</h3>
               <div className='grid sm:grid-cols-[180px_1fr] gap-8 mb-5 sm:mb-10'>
                 <div className='flex flex-col'>
                   <div className='mt-9 mb-10'>
-                    {state.data.image ? (
-                      <img
-                        src={
-                          state.data.image instanceof File
-                            ? URL.createObjectURL(state.data.image)
-                            : ''
-                        }
-                        alt='Project launch image'
-                        className='rounded-xl aspect-square object-cover'
-                      />
-                    ) : (
-                      <div className='bg-neutral-200 flex items-center justify-center aspect-square rounded-lg'>
-                        <EmptyLogoIcon className='stroke-2 text-neutral-500' />
-                      </div>
-                    )}
+                    <Avatar
+                      onImageChange={file =>
+                        setState({
+                          ...state,
+                          data: { ...state.data, image: file! },
+                        })
+                      }
+                    />
                   </div>
-                  <label
-                    htmlFor='launch_project_logo'
-                    className='cursor-pointer border-2 border-dashed font-sans font-medium rounded-full text-zinc-900 border-zinc-900 inline-flex py-2 text-center justify-center items-center hover:border-solid hover:bg-zinc-900 hover:text-white transition-all duration-300'
-                  >
-                    Upload logo
-                  </label>
-                  <input
-                    type='file'
-                    name='project-logo'
-                    id='launch_project_logo'
-                    className='border p-2 rounded-md mb-5 hidden font-sans'
-                    accept='image/*'
-                    onChange={event =>
-                      setState({
-                        ...state,
-                        data: { ...state.data, image: event.target.files?.[0] || null },
-                      })
-                    }
-                  />
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='launch_project_name'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
-                    Name
-                  </label>
-                  <input
-                    type='text'
+                  <Label htmlFor='launch_project_name'>Name</Label>
+                  <TextInput
                     id='launch_project_name'
-                    className='border border-stone-400 p-3 rounded-lg font-sans text-stone-800 placeholder:text-stone-400 mb-5 sm:mb-3'
+                    value={state.data.name}
                     placeholder='New project'
-                    defaultValue={state.data.name}
+                    className='!py-2'
                     onChange={event =>
                       setState({
                         ...state,
@@ -442,21 +412,16 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                       })
                     }
                   />
-                  <label
-                    htmlFor='launch_project_description'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
-                    Description
-                  </label>
-                  <textarea
+                  <Label className='mt-3' htmlFor='launch_project_description'>Description</Label>
+                  <TextareaInput
                     id='launch_project_description'
-                    className='border border-stone-400 resize-none p-3 rounded-lg whitespace-pre-wrap text-stone-800 placeholder:text-stone-400 min-h-[170px] font-sans'
                     defaultValue={state.data.description}
                     placeholder='Project description'
-                    onChange={event =>
+                    className='w-full min-h-[110px] resize-none mt-1'
+                    onChange={value =>
                       setState({
                         ...state,
-                        data: { ...state.data, description: event.target.value },
+                        data: { ...state.data, description: value },
                         error: null,
                       })
                     }
@@ -465,19 +430,14 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
               </div>
               <div className='grid sm:grid-cols-2 gap-x-8 gap-y-5'>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='launch_project_milestones_number'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
-                    Number of milestones
-                  </label>
-                  <input
-                    type='number'
+                  <Label htmlFor='launch_project_milestones_number'>Number of milestones</Label>
+
+                  <TextInput
                     id='launch_project_milestones_number'
-                    className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-sans'
-                    defaultValue={state.data.milestoneNumber}
-                    min={0}
+                    type='number'
+                    value={state.data.milestoneNumber}
                     placeholder='10'
+                    className='!py-2'
                     onChange={event =>
                       setState({
                         ...state,
@@ -493,19 +453,13 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   />
                 </div>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='launch_project_fundraise_amount'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
-                    Fundraise amount (in USD)
-                  </label>
-                  <input
-                    type='number'
+                  <Label htmlFor='launch_project_fundraise_amount'>Fundraise amount (in USD)</Label>
+                  <TextInput
                     id='launch_project_fundraise_amount'
-                    className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-sans'
-                    defaultValue={state.data.fundraiseAmount}
-                    min={0}
-                    placeholder='100000'
+                    type='number'
+                    value={state.data.fundraiseAmount}
+                    placeholder='10'
+                    className='!py-2'
                     onChange={event =>
                       setState({
                         ...state,
@@ -521,19 +475,14 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   />
                 </div>
                 <div className='flex flex-col sm:col-span-2'>
-                  <label
-                    htmlFor='launch_project_fundraise_deadline'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
-                    Fundraise deadline
-                  </label>
-                  <input
+                  <Label htmlFor='launch_project_fundraise_deadline'>Fundraise deadline</Label>
+                  <TextInput
                     type='datetime-local'
                     id='launch_project_fundraise_deadline'
-                    className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-dark font-sans font-medium'
+                    className='!py-2 text-white before:text-white'
                     defaultValue={
                       state.data.fundraiseDeadline
-                        ? new Date(state.data.fundraiseDeadline).toISOString().slice(0, 19)
+                        ? state.data.fundraiseDeadline.toISOString().slice(0, 19)
                         : undefined
                     }
                     onChange={event =>
@@ -553,24 +502,42 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
               </div>
             </div>
             <hr />
-            <div className='flex flex-col mx-10 my-14'>
-              <h3 className='text-2xl mb-5 text-zinc-900 sm:col-span-2 font-sans font-semibold'>
-                Team
-              </h3>
+            <div className='flex flex-col mx-10 my-14 text-white'>
+              <h3 className='text-2xl mb-5  sm:col-span-2 font-semibold'>Team</h3>
               <div className='flex flex-col items-start'>
                 {state.data.team.length > 0 ? (
-                  state.data.team.map((member: any, index: number) => (
-                    <div key={index} className='flex flex-col mb-5 w-full'>
-                      <div className='grid grid-cols-[64px_1fr] gap-4 items-center'>
-                        <div className='flex flex-col'>
+                  state.data.team.map((member, index) => (
+                    <div
+                      key={index}
+                      className='flex flex-col mb-5 w-full border-gradient-primary p-10 before:rounded-[20px] !text-white'
+                    >
+                      <div className='flex items-center  justify-between mb-5'>
+                        <h4 className='text-xl font-semibold'>Team member {index + 1}</h4>
+
+                        <div>
+                          <button
+                            className='p-3 rounded-full secondary-red-button aspect-square'
+                            type='button'
+                            onClick={() =>
+                              setState({
+                                ...state,
+                                data: {
+                                  ...state.data,
+                                  team: state.data.team.filter(m => m !== member),
+                                },
+                              })
+                            }
+                          >
+                            <RemoveIcon className='size-7' />
+                          </button>
+                        </div>
+                      </div>
+                      <div className='grid grid-cols-[150px_1fr] gap-4 items-center'>
+                        {/* <div className='flex flex-col'>
                           {state.data.team[index].image ? (
                             <img
-                              src={
-                                state.data.team[index].image instanceof File
-                                  ? URL.createObjectURL(state.data.team[index].image)
-                                  : ''
-                              }
-                              alt='Project launch team mebmer image'
+                              src={URL.createObjectURL(state.data.team[index].image!)}
+                              alt='Project launch team member image'
                               className='aspect-square rounded-full object-cover'
                             />
                           ) : (
@@ -578,19 +545,28 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                               <UserCircleIcon className='stroke-2 size-8 text-neutral-500' />
                             </div>
                           )}
+                        </div> */}
+                        <div>
+                          <Avatar
+                            onImageChange={file =>
+                              setState({
+                                ...state,
+                                data: {
+                                  ...state.data,
+                                  team: state.data.team.map((m, i) =>
+                                    i === index ? { ...m, image: file! } : m,
+                                  ),
+                                },
+                              })
+                            }
+                          />
                         </div>
-                        <div className='grid sm:grid-cols-2 gap-4 items-center'>
+                        <div className='grid sm:grid-cols-1 gap-4 items-center'>
                           <div className='flex flex-col mb-2'>
-                            <label
-                              htmlFor={`launch_project_team_${index}_name`}
-                              className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                            >
-                              Name:
-                            </label>
-                            <input
-                              type='text'
+                            <Label htmlFor={`launch_project_team_${index}_name`}>Name:</Label>
+                            <TextInput
                               id={`launch_project_team_${index}_name`}
-                              className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-sans'
+                              className='!py-2'
                               placeholder='John Doe'
                               defaultValue={member.name}
                               onChange={event =>
@@ -598,7 +574,7 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                                   ...state,
                                   data: {
                                     ...state.data,
-                                    team: state.data.team.map((m: any, i: number) =>
+                                    team: state.data.team.map((m, i) =>
                                       i === index
                                         ? {
                                             ...m,
@@ -613,16 +589,12 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                             />
                           </div>
                           <div className='flex flex-col mb-2'>
-                            <label
-                              htmlFor={`launch_project_team_${index}_position`}
-                              className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                            >
+                            <Label htmlFor={`launch_project_team_${index}_position`}>
                               Position:
-                            </label>
-                            <input
-                              type='text'
+                            </Label>
+                            <TextInput
                               id={`launch_project_team_${index}_position`}
-                              className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-sans'
+                              className='!py-2'
                               placeholder='CEO'
                               defaultValue={member.position}
                               onChange={event =>
@@ -630,7 +602,7 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                                   ...state,
                                   data: {
                                     ...state.data,
-                                    team: state.data.team.map((m: any, i: number) =>
+                                    team: state.data.team.map((m, i) =>
                                       i === index
                                         ? {
                                             ...m,
@@ -648,27 +620,22 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                       </div>
                       <div className='grid'>
                         <div className='flex flex-col'>
-                          <label
-                            htmlFor={`launch_project_team_${index}_bio`}
-                            className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                          >
-                            Bio:
-                          </label>
-                          <textarea
+                          <Label htmlFor={`launch_project_team_${index}_bio`}>Bio:</Label>
+                          <TextareaInput
                             id={`launch_project_team_${index}_bio`}
-                            className='border border-stone-400 resize-none p-3 rounded-lg whitespace-pre-wrap text-stone-800 placeholder:text-stone-400 min-h-[100px] mb-4 font-sans'
+                            className='w-full min-h-[110px] resize-none mt-1 mb-4'
                             defaultValue={member.bio}
                             placeholder='Web developer'
-                            onChange={event =>
+                            onChange={value =>
                               setState({
                                 ...state,
                                 data: {
                                   ...state.data,
-                                  team: state.data.team.map((m: any, i: number) =>
+                                  team: state.data.team.map((m, i) =>
                                     i === index
                                       ? {
                                           ...m,
-                                          bio: event.target.value,
+                                          bio: value,
                                         }
                                       : m,
                                   ),
@@ -681,16 +648,12 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                       </div>
                       <div className='grid grid-cols-[1fr_52px] sm:grid-cols-[1fr_200px_52px] items-end gap-4'>
                         <div className='flex flex-col col-span-2 sm:col-span-1'>
-                          <label
-                            htmlFor={`launch_project_team_${index}_linkedIn_url`}
-                            className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                          >
+                          <Label htmlFor={`launch_project_team_${index}_linkedIn_url`}>
                             LinkedIn URL:{' '}
-                          </label>
-                          <input
-                            type='text'
+                          </Label>
+                          <TextInput
                             id={`launch_project_team_${index}_linkedIn_url`}
-                            className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-sans'
+                            className='!py-2'
                             placeholder='https://www.linkedin.com/in/a958252262616/'
                             defaultValue={member.linkedInUrl}
                             onChange={event =>
@@ -698,7 +661,7 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                                 ...state,
                                 data: {
                                   ...state.data,
-                                  team: state.data.team.map((m: any, i: number) =>
+                                  team: state.data.team.map((m, i) =>
                                     i === index
                                       ? {
                                           ...m,
@@ -712,51 +675,6 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                             }
                           />
                         </div>
-                        <div>
-                          <label
-                            htmlFor={`launch_project_team_${index}_image`}
-                            className='cursor-pointer text-center justify-center items-center inline-flex border-transparent border-dashed hover:border-zinc-900 bg-zinc-900 text-white hover:bg-transparent border-2 hover:text-zinc-900 px-10 py-3 transition-all duration-300 rounded-full font-medium w-full'
-                          >
-                            Upload photo
-                          </label>
-                          <input
-                            type='file'
-                            name='team-images'
-                            id={`launch_project_team_${index}_image`}
-                            className='hidden'
-                            accept='image/*'
-                            onChange={event =>
-                              setState({
-                                ...state,
-                                data: {
-                                  ...state.data,
-                                  team: state.data.team.map((m: any, i: number) =>
-                                    i === index
-                                      ? { ...m, image: event?.target.files?.[0] || null }
-                                      : m,
-                                  ),
-                                },
-                              })
-                            }
-                          />
-                        </div>
-                        <div>
-                          <Button
-                            className='p-3 text-white rounded-full bg-red-500 hover:bg-red-400 aspect-square transition-all duration-300'
-                            type='button'
-                            onClick={() =>
-                              setState({
-                                ...state,
-                                data: {
-                                  ...state.data,
-                                  team: state.data.team.filter((m: any) => m !== member),
-                                },
-                              })
-                            }
-                          >
-                            <RemoveIcon className='size-7' />
-                          </Button>
-                        </div>
                       </div>
                     </div>
                   ))
@@ -765,8 +683,8 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                     No team member has been added yet
                   </span>
                 )}
-                <Button
-                  className='rounded-full p-3 text-stone-500 mt-5 border-2 border-stone-600 hover:bg-stone-500 hover:border-stone-500 transition-all duration-300 hover:text-white'
+                <button
+                  className='p-3 secondary-green-button flex items-center gap-2 mt-4'
                   type='button'
                   onClick={() =>
                     setState({
@@ -786,21 +704,20 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                     })
                   }
                 >
+                  <div>Add team member</div>
                   <PlusIcon className='stroke-2 size-7' />
-                </Button>
+                </button>
               </div>
             </div>
             <hr />
-            <div className='flex flex-col mx-10 my-14'>
-              <h3 className='text-2xl mb-5 text-zinc-900 sm:col-span-2 font-sans font-semibold'>
-                Documents
-              </h3>
+            <div className='flex flex-col mx-10 my-14 text-white'>
+              <h3 className='text-2xl mb-5  sm:col-span-2 font-semibold'>Documents</h3>
               <div className='flex flex-col items-start'>
                 {(state.data.documents?.length ?? 0) > 0 ? (
                   state.data.documents?.map((document, index) => (
                     <div
                       key={index}
-                      className='flex bg-stone-100 px-2 py-1 rounded-lg items-center w-full mb-2 text-stone-800'
+                      className='flex bg-grey-tertiary backdrop-blur-xl px-2 py-2 rounded-lg items-center w-full mb-4 text-white'
                     >
                       <div className='me-3'>
                         {document.type.startsWith('image') ? (
@@ -814,9 +731,9 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                       <span className='rounded-md text-sm w-full font-sans font-medium'>
                         {document.name}
                       </span>
-                      <Button
+                      <button
                         type='button'
-                        className='p-1 rounded-md text-red-400 hover:text-red-600 transition-all duration-300 ms-2 text-center items-center flex justify-center'
+                        className='p-1.5 secondary-red-button rounded-full ms-2 text-center items-center flex justify-center'
                         onClick={() =>
                           setState({
                             ...state,
@@ -828,7 +745,7 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                         }
                       >
                         <RemoveIcon className='size-5' />
-                      </Button>
+                      </button>
                     </div>
                   ))
                 ) : (
@@ -836,7 +753,7 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                 )}
                 <label
                   htmlFor='project_launch_documents'
-                  className='cursor-pointer mt-5 inline-flex border-dashed border-zinc-900 hover:bg-zinc-900 hover:text-white hover:bg-transparent hover:border-transparent border-2 text-zinc-900 px-10 py-2 transition-all duration-300 rounded-full font-medium'
+                  className='cursor-pointer mt-5 inline-flex secondary-green-button p-2'
                 >
                   Upload files
                 </label>
@@ -862,71 +779,53 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
               </div>
             </div>
             <hr />
-            <div className='flex flex-col mx-10 my-8'>
-              <h3 className='text-2xl mb-5 text-zinc-900 sm:col-span-2 font-sans font-semibold'>
+            <div className='flex flex-col mx-10 my-8 text-white'>
+              <h3 className='text-2xl mb-5  sm:col-span-2 font-semibold'>
                 Business model and tokenomics
               </h3>
-              <label
-                htmlFor='launch_project_tokenomics'
-                className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-              >
-                Tokenomics
-              </label>
-              <textarea
+              <Label htmlFor='launch_project_tokenomics'>Tokenomics</Label>
+              <TextareaInput
                 id='launch_project_tokenomics'
-                className='border border-stone-400 p-3 resize-none rounded-lg whitespace-pre-wrap text-stone-800 placeholder:text-stone-400 min-h-[150px] font-sans mb-5'
+                className='min-h-[150px] mb-5 mt-1'
                 defaultValue={state.data.tokenomics}
-                placeholder='New project Tokenomics'
-                onChange={event =>
+                placeholder='New project tokenomics'
+                onChange={value =>
                   setState({
                     ...state,
-                    data: { ...state.data, tokenomics: event.target.value },
+                    data: { ...state.data, tokenomics: value },
                     error: null,
                   })
                 }
               />
-              <label
-                htmlFor='launch_project_business_model'
-                className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-              >
-                Business model
-              </label>
-              <textarea
+              <Label htmlFor='launch_project_business_model'>Business model</Label>
+              <TextareaInput
                 id='launch_project_business_model'
-                className='border border-stone-400 p-3 resize-none rounded-lg whitespace-pre-wrap text-stone-800 placeholder:text-stone-400 min-h-[150px] font-sans'
+                className='mt-1 min-h-[150px]'
                 defaultValue={state.data.businessModel}
-                placeholder='New project Business model'
-                onChange={event =>
+                placeholder='New project business model'
+                onChange={value =>
                   setState({
                     ...state,
-                    data: { ...state.data, businessModel: event.target.value },
+                    data: { ...state.data, businessModel: value },
                     error: null,
                   })
                 }
               />
             </div>
             <hr />
-            <div className='flex flex-col mx-10 my-8'>
-              <h3 className='text-2xl mb-5 text-zinc-900 sm:col-span-2 font-sans font-semibold'>
-                Round details
-              </h3>
+            <div className='flex flex-col mx-10 my-8 text-white'>
+              <h3 className='text-2xl mb-5  sm:col-span-2 font-semibold'>Round details</h3>
               <div className='grid sm:grid-cols-2 gap-8'>
                 <div className='flex flex-col'>
-                  <label
-                    htmlFor='launch_project_round_details_ticket_size'
-                    className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-                  >
-                    Ticket size
-                  </label>
+                  <Label htmlFor='launch_project_round_details_ticket_size'>Ticket size</Label>
                   <div className='grid grid-cols-[1fr_20px_1fr] gap-1'>
                     <div className='flex'>
-                      <input
+                      <TextInput
                         type='number'
                         id='launch_project_round_details_ticket_size_from'
-                        className='border border-stone-400 p-3 rounded-lg font-sans text-stone-800 placeholder:text-stone-400 w-full'
+                        className='!p-2'
                         placeholder='From'
-                        min={0}
-                        defaultValue={state.data.roundDetails.ticketSize.from}
+                        value={state.data.roundDetails.ticketSize.from}
                         onChange={event =>
                           setState({
                             ...state,
@@ -947,13 +846,12 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                     </div>
                     <div className='flex justify-center items-center'>-</div>
                     <div className='flex'>
-                      <input
+                      <TextInput
                         type='number'
                         id='launch_project_round_details_ticket_size_to'
-                        className='border border-stone-400 p-3 rounded-lg font-sans text-stone-800 placeholder:text-stone-400 w-full'
+                        className='!p-2'
                         placeholder='To'
-                        min={0}
-                        defaultValue={state.data.roundDetails.ticketSize.to}
+                        value={state.data.roundDetails.ticketSize.to}
                         onChange={event =>
                           setState({
                             ...state,
@@ -976,8 +874,7 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                 </div>
                 <div className='flex flex-col'>
                   <Label htmlFor='launch_project_round_details_round'>Round</Label>
-                  <select
-                    className='border border-stone-400 p-3 rounded-lg font-sans text-stone-800 placeholder:text-stone-400 font-semibold bg-transparent'
+                  <SelectInput
                     value={state.data.roundDetails.round}
                     onChange={event =>
                       setState({
@@ -992,18 +889,28 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                         error: null,
                       })
                     }
-                  >
-                    <option value='seed'>Seed</option>
-                    <option value='pre-seed'>Pre-seed</option>
-                    <option value='private'>Private</option>
-                  </select>
+                    options={[
+                      {
+                        value: 'seed',
+                        label: 'Seed',
+                      },
+                      {
+                        value: 'pre-seed',
+                        label: 'Pre-seed',
+                      },
+                      {
+                        value: 'private',
+                        label: 'Private',
+                      },
+                    ]}
+                  />
                 </div>
                 <div className='flex flex-col'>
                   <Label htmlFor='launch_project_round_details_deal_structure'>
                     Deal structure
                   </Label>
-                  <select
-                    className='border border-stone-400 p-3 rounded-lg font-sans text-stone-800 placeholder:text-stone-400 font-semibold bg-transparent'
+                  <SelectInput
+                    className='outline-none font-[600] text-lg !p-2'
                     value={state.data.roundDetails.dealStructure}
                     onChange={event =>
                       setState({
@@ -1018,23 +925,30 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                         error: null,
                       })
                     }
-                  >
-                    <option value='SAFT'>SAFT</option>
-                    <option value='SAFE'>SAFE</option>
-                  </select>
+                    options={[
+                      {
+                        value: 'SAFT',
+                        label: 'SAFT',
+                      },
+                      {
+                        value: 'SAFE',
+                        label: 'SAFE',
+                      },
+                    ]}
+                  />
                 </div>
                 <div className='flex flex-col'>
                   <Label htmlFor='launch_project_round_details_token_price'>
                     Token price (in USD)(Optional)
                   </Label>
-                  <input
+                  <TextInput
                     type='number'
                     id='launch_project_round_details_token_price'
-                    className='border border-stone-400 p-3 rounded-lg font-sans text-stone-800 placeholder:text-stone-400'
+                    className='!p-2'
                     placeholder='0.01'
                     step={0.01}
                     min={0}
-                    defaultValue={state.data.roundDetails.tokenPrice}
+                    value={state.data.roundDetails.tokenPrice}
                     onChange={event =>
                       setState({
                         ...state,
@@ -1054,13 +968,13 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   <Label htmlFor='launch_project_round_details_valuation'>
                     Valuation (in USD)(Optional)
                   </Label>
-                  <input
+                  <TextInput
                     type='number'
                     id='launch_project_round_details_valuation'
-                    className='border border-stone-400 p-3 rounded-lg font-sans text-stone-800 placeholder:text-stone-400'
+                    className='!p-2'
                     placeholder='100000'
                     min={0}
-                    defaultValue={state.data.roundDetails.valuation}
+                    value={state.data.roundDetails.valuation}
                     onChange={event =>
                       setState({
                         ...state,
@@ -1080,13 +994,13 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   <Label htmlFor='launch_project_round_details_token_price'>
                     Unlock at TGE (in %)(Optional)
                   </Label>
-                  <input
+                  <TextInput
                     type='number'
                     id='launch_project_round_details_unlock_at_tge'
-                    className='border border-stone-400 p-3 rounded-lg font-sans text-stone-800 placeholder:text-stone-400'
+                    className='!p-2'
                     placeholder='5'
                     min={0}
-                    defaultValue={state.data.roundDetails.unlockAtTGE}
+                    value={state.data.roundDetails.unlockAtTGE}
                     onChange={event =>
                       setState({
                         ...state,
@@ -1108,14 +1022,14 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   <Label htmlFor='launch_project_round_details_lockup'>
                     Lockup (Months)(Optional)
                   </Label>
-                  <input
+                  <TextInput
                     type='number'
                     id='launch_project_round_details_lockup'
-                    className='border border-stone-400 p-3 rounded-lg font-sans text-stone-800 placeholder:text-stone-400'
+                    className='!p-2'
                     placeholder='1'
                     min={0}
                     step={0.5}
-                    defaultValue={state.data.roundDetails.lockup}
+                    value={state.data.roundDetails.lockup}
                     onChange={event =>
                       setState({
                         ...state,
@@ -1135,14 +1049,14 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   <Label htmlFor='launch_project_round_details_vesting'>
                     Vesting (Months)(Optional)
                   </Label>
-                  <input
+                  <TextInput
                     type='number'
                     id='launch_project_round_details_vesting'
-                    className='border border-stone-400 p-3 rounded-lg font-sans text-stone-800 placeholder:text-stone-400'
+                    className='!p-2'
                     placeholder='1'
                     min={0}
                     step={0.5}
-                    defaultValue={state.data.roundDetails.vesting}
+                    value={state.data.roundDetails.vesting}
                     onChange={event =>
                       setState({
                         ...state,
@@ -1161,20 +1075,17 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
               </div>
             </div>
             <div className='mx-10 mb-8'>
-              <button
-                type='submit'
-                className='inline-flex text-center justify-center items-center bg-zinc-900 text-white font-sans font-medium rounded-full py-3 text-xl w-full hover:bg-zinc-700 transition-all duration-300'
-              >
-                Save changes
-              </button>
+              <Button type='submit' className='rounded-2xl w-full font-semibold text-xl'>
+                Launch
+              </Button>
             </div>
           </form>
           {children}
         </>
       ) : (
         <div className='px-10 py-8 flex flex-col items-center justify-center min-h-[300px] gap-5'>
-          <Spinner className='size-12 text-gray-200 animate-spin fill-zinc-900' />
-          <p className='text-center font-mono'>
+          <Spinner className='size-12' />
+          <p className='text-center text-white'>
             We are proceeding the updating of project launch. You may need to perform some
             additional steps and it may take some time to process your request
           </p>

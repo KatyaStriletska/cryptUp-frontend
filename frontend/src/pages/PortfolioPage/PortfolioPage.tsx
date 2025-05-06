@@ -16,6 +16,10 @@ export const PortfolioPage: FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
+  useEffect(() => {
     if (authenticatedUser) {
       dispatch(
         fetchAllProjectLaunches(
@@ -36,17 +40,17 @@ export const PortfolioPage: FC = () => {
         {projects.length > 0 ? (
           <ProjectGrid projects={projects} />
         ) : (
-          <div className='flex flex-col flex-1 items-center justify-center px-10 py-8 rounded-2xl border-[3px] border-dashed border-stone-300'>
-            <p className='font-mono m-0 text-lg text-stone-400'>
+          <div className='flex flex-col flex-1 items-center justify-center px-10 py-8 rounded-2xl border-[3px] border-dashed border-stone-300 min-h-[500px]'>
+            <p className='font-mono m-0 text-lg text-gray-300'>
               You have not invested into any of projects yet
             </p>
           </div>
         )}
       </div>
       ) : (
-      <div className='max-w-[1440px] flex flex-col items-center justify-center flex-1 gap-5 w-full'>
-        <Spinner className='size-12 text-gray-200 animate-spin fill-zinc-900' />
-        <p className='text-center font-mono'>Loading the portfolio page for you</p>
+      <div className='max-w-[1440px] mx-auto flex flex-col items-center justify-center flex-1 gap-5 w-full'>
+        <Spinner className='size-12 text-gray-200 animate-spin' />
+        <p className='text-center text-white'>Loading the portfolio page for you</p>
       </div>
       )}
     </div>

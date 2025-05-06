@@ -69,7 +69,7 @@ const ProposalDetails: FC<ProposalDetailsProps> = ({ isVisible, children, data, 
             <li className='flex justify-between'>
               <span className='text-sm'>Proposal link</span>
               <a
-                className='font-semibold text-sm text-blue-500 cursor-pointer'
+                className='font-semibold text-sm text-blue-400 cursor-pointer'
                 href={data.transactionLink}
               >
                 {data.transactionLink}
@@ -79,7 +79,7 @@ const ProposalDetails: FC<ProposalDetailsProps> = ({ isVisible, children, data, 
               <span className='text-sm'>Project link</span>
               <Link
                 to={AppRoutes.DetailsProject.replace(':id', data.projectId)}
-                className='font-semibold text-sm text-blue-500 cursor-pointer'
+                className='font-semibold text-sm text-blue-400 cursor-pointer'
               >
                 {data.projectId}
               </Link>

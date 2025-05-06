@@ -10,6 +10,10 @@ import { GoogleIcon } from '../../components/atoms/Icons/Icons';
 import cookies from 'js-cookie';
 import * as jose from 'jose';
 import axios from 'axios';
+import Label from 'components/atoms/Label';
+import TextInput from 'components/atoms/TextInput';
+import SelectInput from 'components/atoms/SelectInput';
+import Button from 'components/atoms/Button/Button';
 
 interface CreateAccountFormState {
   data: {
@@ -101,6 +105,10 @@ const SignUpPage: FC = () => {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
+  useEffect(() => {
     if (wallet.publicKey) {
       setState({ ...state, data: { ...state.data, walletId: wallet.publicKey.toBase58() } });
     } else {
@@ -140,11 +148,11 @@ const SignUpPage: FC = () => {
       <div className='flex flex-col items-center justify-center flex-1 py-10'>
         <img src='/logo.png' className='w-[10em] mb-12' />
         <form
-          className='flex flex-col max-w-3xl w-full bg-white border p-10 rounded-xl'
+          className='flex flex-col max-w-3xl w-full text-white border-gradient-primary before:rounded-2xl p-10 rounded-xl'
           onSubmit={onSubmit}
         >
-          <h3 className='w-full font-bold text-2xl text-zinc-900 mb-1'>Create account</h3>
-          <p className='text mb-4 text-neutral-500 font-medium'>
+          <h3 className='w-full font-bold text-2xl mb-1'>Create account</h3>
+          <p className='text mb-4 text-gray-300 font-medium'>
             Fill in all the fields to complete the new account registration process
           </p>
           {state.error && (
@@ -154,34 +162,23 @@ const SignUpPage: FC = () => {
           )}
           <div className='flex flex-col gap-4 my-4'>
             <div className='flex flex-col'>
-              <label
-                htmlFor='create_account_walletId'
-                className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-              >
-                Wallet ID:
-              </label>
+              <Label htmlFor='create_account_walletId'>Wallet ID:</Label>
               <div className='grid sm:grid-cols-[1fr_200px] gap-4 items-center'>
-                <input
+                <TextInput
                   type='text'
                   id='create_account_walletId'
                   defaultValue={state.data.walletId}
                   readOnly
-                  disabled
-                  className='border disabled:bg-neutral-100 border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono'
+                  className='!p-3 rounded-lg'
                 />
                 <WalletMultiButton>Choose a wallet</WalletMultiButton>
               </div>
             </div>
             <div className='flex flex-col'>
-              <label
-                htmlFor='create_account_email'
-                className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-              >
-                Email:
-              </label>
-              <input
+              <Label htmlFor='create_account_email'>Email:</Label>
+              <TextInput
                 disabled={state.withGoogle}
-                className='disabled:bg-neutral-100 border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono'
+                className='!p-3 rounded-lg'
                 type='email'
                 id='create_account_email'
                 placeholder='example@gmail.com'
@@ -196,14 +193,9 @@ const SignUpPage: FC = () => {
               />
             </div>
             <div className='flex flex-col'>
-              <label
-                htmlFor='create_account_username'
-                className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-              >
-                Username:
-              </label>
-              <input
-                className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono'
+              <Label htmlFor='create_account_username'>Username:</Label>
+              <TextInput
+                className='!py-3'
                 type='text'
                 id='create_account_username'
                 defaultValue={state.data.username}
@@ -218,13 +210,8 @@ const SignUpPage: FC = () => {
               />
             </div>
             <div className='flex flex-col'>
-              <label
-                htmlFor='create_account_role'
-                className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-              >
-                Role:
-              </label>
-              <select
+              <Label htmlFor='create_account_role'>Role:</Label>
+              <SelectInput
                 id='create_account_role'
                 value={state.data.role}
                 onChange={event =>
@@ -234,31 +221,24 @@ const SignUpPage: FC = () => {
                     error: null,
                   })
                 }
-                className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono'
-              >
-                {Object.values(UserRoleEnum).map((item, index) => (
-                  <option key={index} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+                className='py-3'
+                options={Object.values(UserRoleEnum).map(item => ({
+                  value: item,
+                  label: item,
+                }))}
+              />
             </div>
           </div>
           <div className='flex flex-col'>
-            <label
-              htmlFor='create_account_password'
-              className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-            >
-              Password (Optional):
-            </label>
-            <span className='text-sm font-sans mb-3 inline-flex font-medium text-stone-400 mx-0.5 text-justify'>
+            <Label htmlFor='create_account_password'>Password (Optional):</Label>
+            <span className='text-sm text-gray-300 mt-2 mb-3'>
               If you want to have an opportunity to sign in with email and password you have to fill
               in this field. You will also be able to set or change it on your profile page later.
               The password should be at least 8 characters long and contain at least one latin
               letter, one digit and one special symbol.
             </span>
-            <input
-              className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono'
+            <TextInput
+              className='!p-3'
               type='password'
               id='create_account_password'
               defaultValue={state.data.password}
@@ -272,20 +252,20 @@ const SignUpPage: FC = () => {
               }
             />
           </div>
-          <button
+          <Button
             type='submit'
-            className='text-lg mt-8 inline-flex text-center justify-center items-center border-2 border-transparent hover:border-zinc-900 hover:bg-transparent hover:text-zinc-900 bg-zinc-900 text-white transition-all duration-300 rounded-full px-10 py-3 font-medium'
+            className='text-lg mt-8 inline-flex text-center justify-center items-center rounded-full px-10 py-3 font-bold'
           >
             Create account
-          </button>
-          <div className='flex items-center justify-center my-8 h-[2px] bg-zinc-400 rounded-lg mx-0.5'>
-            <span className='bg-white px-2 rounded-full text-sm text-zinc-600 font-medium text-center'>
-              OR
-            </span>
+          </Button>
+          <div className='flex items-center justify-center my-8 h-[0px] bg-zinc-400 rounded-lg mx-0.5'>
+          <span className='text-white text-2xl min-[1920px]:text-3xl text-center my-10'>
+                or
+              </span>
           </div>
           <button
             type='button'
-            className='text-lg inline-flex text-center justify-center items-center border-2 border-zinc-900 text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all duration-300 rounded-full px-10 py-3 font-medium'
+            className='text-xl font-medium inline-flex text-center justify-center items-center secondary-green-button transition-all duration-300 rounded-full px-10 py-3'
             onClick={handleSignUpWithGoogle}
           >
             <GoogleIcon className='size-5 me-3' />
@@ -296,13 +276,13 @@ const SignUpPage: FC = () => {
             <Link
               to={AppRoutes.SignIn}
               state={{ walletDisconnect: true }}
-              className='text-blue-500'
+              className='text-white underline underline-offset-2'
             >
               Sign in
             </Link>
           </span>
         </form>
-        <img src='/solana-black-logo.png' className='w-40 mt-10' />
+        <img src='/solana-white-logo.png' className='w-40 mt-10' />
       </div>
     </div>
   );

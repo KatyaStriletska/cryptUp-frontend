@@ -8,8 +8,6 @@ import {
   fetchAllProjectLaunches,
   selectProjectLaunches,
 } from '../../redux/slices/project-launch.slice';
-import { UserIcon } from '../../components/atoms/Icons/Icons';
-import { AppRoutes } from '../../types/enums/app-routes.enum';
 import { Project } from '../../components/molecules/Project/Project';
 import { resolveImage } from '../../utils/file.utils';
 import { Proposal as ProposalType } from 'types/proposal.types';
@@ -23,6 +21,8 @@ import { CommandType } from 'utils/dao.utils';
 import Image from 'components/atoms/Image/Image';
 import Spinner from 'components/atoms/Spinner/Spinner';
 import Avatar from 'components/molecules/Avatar';
+import Title from 'components/atoms/Title';
+import { EditIcon } from 'components/atoms/Icons/Icons';
 
 const ProfilePage: FC = () => {
   const { authenticatedUser, fetchLatestAuthInfo, signOut } = useAuth();
@@ -32,6 +32,10 @@ const ProfilePage: FC = () => {
   const [areProjectLaunchesLoaded, setAreProjectLaunchesLoaded] = useState(false);
   const projects = useAppSelector(selectProjectLaunches);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   useEffect(() => {
     if (authenticatedUser) {
@@ -104,25 +108,30 @@ const ProfilePage: FC = () => {
             document.getElementById('root')!,
           )}
         <div className='flex mt-3 px-6 flex-col justify-start align-center'>
-          <h3 className='px-2 text-3xl font-serif mb-10'>User profile</h3>
-          <div className='flex flex-col max-w-[1440px] w-full rounded-xl text-white'>
+          <Title>User profile</Title>
+          <div className='flex flex-col mx-auto max-w-[1440px] w-full rounded-xl text-white'>
             <div className='flex items-center justify-between px-10 py-5'>
               <div className='flex items-center gap-4'>
-                <Avatar usersAvatar src={resolveImage(authenticatedUser.avatar!)} />
-                <span className='font-semibold text-2xl'>
-                  {authenticatedUser.username}
-                </span>
+                <Avatar
+                  isEditable={false}
+                  usersAvatar
+                  src={resolveImage(authenticatedUser.avatar!)}
+                />
+                <div className='flex flex-col gap-4'>
+                  <p className='font-semibold text-3xl'>{authenticatedUser.username}</p>
+                  <p className='text-xl'>{authenticatedUser.email}</p>
+                </div>
               </div>
               <div className='flex gap-4'>
                 <Button
-                  className='inline-flex text-lg font-sans font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1 transition-[0.3s_ease] rounded-full'
+                  className='inline-flex text-lg font-mono font-medium border-transparent px-10 py-1 rounded-xl'
                   onClick={() => setIsEditProfileModalVisible(true)}
                 >
-                  Edit
+                  Update info
                 </Button>
               </div>
             </div>
-            <hr />
+            <hr className='mt-10' />
             <div className='px-10 py-5'>
               <h3 className='font-semibold text-xl mb-1.5'>User ID</h3>
               <span className='font-mono'>{authenticatedUser.id}</span>
@@ -133,10 +142,6 @@ const ProfilePage: FC = () => {
               <span className='font-mono'>{authenticatedUser.walletId}</span>
             </div>
             <hr />
-            <div className='px-10 py-5'>
-              <h3 className='font-semibold text-xl mb-1.5'>Email</h3>
-              <span className='font-mono'>{authenticatedUser.email}</span>
-            </div>
             <hr />
             <div className='px-10 py-5'>
               <h3 className='font-semibold text-xl mb-1.5'>First name</h3>
@@ -148,7 +153,7 @@ const ProfilePage: FC = () => {
             </div>
             <hr />
             <div className='px-10 py-5'>
-              <h3 className='ffont-semibold text-xl mb-1.5'>Last name</h3>
+              <h3 className='font-semibold text-xl mb-1.5'>Last name</h3>
               {authenticatedUser.lastName?.trim() ? (
                 <span className='font-mono whitespace-pre-wrap'>{authenticatedUser.lastName}</span>
               ) : (
@@ -172,7 +177,7 @@ const ProfilePage: FC = () => {
           </div>
         </div>
         <div className='my-10 px-6'>
-          <h4 className='px-2 text-3xl font-serif mb-10'>Proposals</h4>
+          <Title className='text-3xl'>Proposals</Title>
           {proposals.length > 0 ? (
             <div className='grid gap-5'>
               {structuredClone(proposals)
@@ -352,7 +357,7 @@ const ProfilePage: FC = () => {
           )}
         </div>
         <div className='my-10 px-6'>
-          <h4 className='px-2 text-3xl font-serif mb-10'>My projects</h4>
+          <Title className='!text-3xl'>My projects</Title>
           {projects.length > 0 ? (
             <div className='grid lg:grid-cols-2 gap-10 mt-5 auto-rows-fr'>
               {projects.map(project => (

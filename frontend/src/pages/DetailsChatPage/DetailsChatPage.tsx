@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, LegacyRef, useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.hooks';
 import {
@@ -41,6 +41,7 @@ import { createPortal } from 'react-dom';
 import Modal from '../../components/molecules/Modal/Modal';
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../types/enums/app-routes.enum';
+import TextareaInput from 'components/atoms/TextareaInput';
 
 const DetailsChatPage: FC = () => {
   const { id } = useParams();
@@ -591,6 +592,10 @@ const DetailsChatPage: FC = () => {
   );
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
+  useEffect(() => {
     observeMessages(messagesContainerRef.current);
 
     return () => {
@@ -662,21 +667,21 @@ const DetailsChatPage: FC = () => {
               onClose={() => setRemoveModalVisibleForMessage(null)}
               className='max-w-xl'
             >
-              <div className='px-10 py-8'>
-                <p className='text-mono'>
+              <div className='px-6 py-8'>
+                <p className='text-mono text-white'>
                   Are you sure you want to delete selected message? This action is irreversible.
                 </p>
                 <div className='mt-8 flex gap-4'>
                   <button
                     type='button'
-                    className='inline-flex text-center justify-center items-center bg-red-500 hover:bg-red-400 text-white rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+                    className='inline-flex text-center justify-center items-center rounded-2xl  py-2 px-10 font-medium text-lg'
                     onClick={() => handleRemoveMessage(removeMessageModalVisibleForMessage)}
                   >
                     Delete
                   </button>
                   <button
                     type='button'
-                    className='inline-flex text-center justify-center items-center text-zinc-700 border-2 border-zinc-900 hover:text-zinc-900 hover:bg-slate-100 rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+                    className='inline-flex text-center justify-center items-center secondary-green-button rounded-full py-2 px-10 font-medium text-lg'
                     onClick={() => setRemoveModalVisibleForMessage(null)}
                   >
                     Cancel
@@ -688,7 +693,7 @@ const DetailsChatPage: FC = () => {
           )}
         <button
           type='button'
-          className='flex items-center rounded-t-xl gap-3 px-5 py-3 border-b transition-all duration-300 hover:bg-stone-50'
+          className='flex items-center rounded-t-xl gap-3 px-5 py-3 border-b transition-all duration-300'
         >
           <span className='aspect-square'>
             {chat.image || (!chat.isGroup && anotherChatMember?.avatar) ? (
@@ -698,15 +703,15 @@ const DetailsChatPage: FC = () => {
                 className='w-[32px] rounded-full aspect-square object-cover'
               />
             ) : (
-              <span className='inline-flex items-center justify-center bg-stone-300 w-[32px] rounded-full aspect-square'>
+              <span className='inline-flex items-center justify-center bg-stone-300 w-[32px] rounded-full aspect-square text-gray-300'>
                 <span className='text-sm font-bold text-stone-600'>
                   {(chat.name ||
-                    `${anotherChatMember?.username} ${anotherChatMember?.firstName && anotherChatMember?.lastName ? `(${anotherChatMember?.firstName} ${anotherChatMember?.lastName})` : ``}`)[0].toUpperCase()}
+                    `${anotherChatMember?.username} ${anotherChatMember?.firstName && anotherChatMember?.lastName ? `(${anotherChatMember?.firstName} ${anotherChatMember?.lastName}) sss` : ``}`)[0].toUpperCase()}
                 </span>
               </span>
             )}
           </span>
-          <span className='font-semibold text-lg'>
+          <span className='font-semibold text-lg text-gray-300'>
             {chat.name ||
               `${anotherChatMember?.username} ${anotherChatMember?.firstName && anotherChatMember?.lastName ? `(${anotherChatMember?.firstName} ${anotherChatMember?.lastName})` : ``}`}
           </span>
@@ -755,7 +760,7 @@ const DetailsChatPage: FC = () => {
         <div className='flex flex-col flex-1 relative'>
           <div
             ref={messagesContainerRef}
-            className='absolute top-0 bottom-0 left-0 right-0 overflow-y-scroll flex flex-col-reverse with-scrollbar ps-5 pe-2 py-3 gap-0.5 bg-neutral-50'
+            className='absolute top-0 bottom-0 left-0 right-0 overflow-y-scroll flex flex-col-reverse with-scrollbar ps-5 pe-2 py-3 gap-0.5 text-neutral-50'
             onScroll={event => {
               if ((event.target as any).scrollTop > -10) {
                 setTimeout(() => {
@@ -1064,7 +1069,7 @@ const DetailsChatPage: FC = () => {
               <div className='flex'>
                 <button
                   type='button'
-                  className='p-2 hover:bg-stone-200 rounded-lg transition-all duration-300'
+                  className='p-2 rounded-lg transition-all duration-300'
                   onClick={() => {
                     setEditedMessage(null);
                     setRepliedMessage(null);
@@ -1073,26 +1078,27 @@ const DetailsChatPage: FC = () => {
                     }
                   }}
                 >
-                  <CloseIcon className='size-3 text-stone-600' />
+                  <CloseIcon className='size-4 text-white transition-all duration-300 hover:text-green-primary' />
                 </button>
               </div>
             </div>
           )}
           <div className='flex w-full items-center'>
             <button type='button' className='p-3'>
-              <PaperClipIcon className='size-5' />
+              <PaperClipIcon className='size-6 text-white transition-all duration-300 hover:text-green-primary' />
             </button>
-            <textarea
-              ref={textareaRef}
+            <TextareaInput
+              ref={textareaRef as LegacyRef<HTMLTextAreaElement>}
               rows={1}
-              className='resize-none my-3 max-h-[100px] overflow-y-auto with-scrollbar text-stone-600 placeholder:text-stone-400 !ring-0 !border-none w-full whitespace-pre-wrap'
+              className='resize-none my-3 !max-h-[100px] !h-auto overflow-y-auto with-scrollbar !w-[95%] whitespace-pre-wrap'
               placeholder='Write a message...'
               onInput={handleInput}
-              onKeyDown={handleTextareaKeyDown}
+              specifiedHeight={false}
+              onKeyDown={handleTextareaKeyDown as any}
               autoFocus
             />
             <button type='submit' className='p-3'>
-              <PaperAirplaneIcon className='size-5' />
+              <PaperAirplaneIcon className='size-6 text-white transition-all duration-300 hover:text-green-primary' />
             </button>
           </div>
         </form>
