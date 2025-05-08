@@ -15,7 +15,6 @@ import {
   RemoveIcon,
   VideoIcon,
 } from '../../atoms/Icons/Icons';
-import { UserRoleEnum } from '../../../types/enums/user-role.enum';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { USDC_MINT, createVaultTx, programId } from '../../../utils/venture-launch.utils';
 import useWeb3Auth from '../../../hooks/web3auth.hooks';
@@ -25,6 +24,7 @@ import TextInput from 'components/atoms/TextInput';
 import TextareaInput from 'components/atoms/TextareaInput';
 import Avatar from 'components/molecules/Avatar';
 import SelectInput from 'components/atoms/SelectInput';
+import cookies from 'js-cookie';
 
 export interface LaunchProjectModalProps extends ModalProps {}
 
@@ -45,6 +45,7 @@ interface LaunchProjectModalState {
     }[];
     businessModel?: string;
     tokenomics?: string;
+    externalId?: string;
     roundDetails: {
       ticketSize: {
         from?: number;
@@ -73,6 +74,7 @@ const initialState: LaunchProjectModalState = {
     image: undefined,
     team: [],
     businessModel: undefined,
+    externalId: '',
     tokenomics: undefined,
     roundDetails: {
       ticketSize: {
@@ -92,7 +94,7 @@ const initialState: LaunchProjectModalState = {
   isLoading: false,
 };
 
-const LaunchProjectModal: FC<LaunchProjectModalProps> = ({ title, onClose, children }) => {
+const LaunchProjectModal: FC<LaunchProjectModalProps> = ({ title, onClose, children, ...props }) => {
   const { authenticatedUser } = useAuth();
   const [state, setState] = useState(initialState);
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -104,6 +106,19 @@ const LaunchProjectModal: FC<LaunchProjectModalProps> = ({ title, onClose, child
 
   useEffect(() => {
     dispatch(setError({ createProjectLaunch: null }));
+
+    const projectCookieName = 'project-to-migrate';
+    const projectDataCookie = cookies.get(projectCookieName) || '';
+    if (projectDataCookie) {
+      cookies.remove(projectCookieName, { path: '/', domain: import.meta.env.VITE_COOKIE_DOMAIN_NAME });
+      const projectDataAsObject = JSON.parse(projectDataCookie);
+      state.data.name = projectDataAsObject.name;
+      state.data.description = projectDataAsObject.description;
+      state.data.externalId = projectDataAsObject.id;
+      setState({
+        ...state
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -227,6 +242,8 @@ const LaunchProjectModal: FC<LaunchProjectModalProps> = ({ title, onClose, child
         formData.append('project-documents', document);
       });
 
+      console.log('state.data', state.data)
+
       Object.entries({
         ...state.data,
         team: state.data.team?.map(member => ({ ...member, image: member.image?.name || '' })),
@@ -264,6 +281,7 @@ const LaunchProjectModal: FC<LaunchProjectModalProps> = ({ title, onClose, child
               {
                 onSuccess: () => {
                   setState({ ...state, isLoading: false });
+                  props.onProcess?.();
                   onClose?.();
                 },
                 onError: () =>
@@ -274,7 +292,7 @@ const LaunchProjectModal: FC<LaunchProjectModalProps> = ({ title, onClose, child
                       'Cannot create project launch. The launch with such name already exists for this user or the invalid data was provided',
                   }),
               },
-              authenticatedUser.role.includes(UserRoleEnum.BusinessAnalyst),
+              true,
             ),
           );
         } catch (error: any) {
@@ -293,6 +311,7 @@ const LaunchProjectModal: FC<LaunchProjectModalProps> = ({ title, onClose, child
       onClose={onClose}
       className='max-w-[868px] !max-h-[90%]'
       closeOnOutsideClick={false}
+      {...props}
     >
       {!state.isLoading ? (
         <>

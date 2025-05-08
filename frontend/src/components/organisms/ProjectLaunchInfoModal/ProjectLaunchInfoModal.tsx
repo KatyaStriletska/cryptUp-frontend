@@ -12,7 +12,6 @@ import {
   PlanetIcon,
   ShareIcon,
   StarIcon,
-  UserCircleIcon,
   UserIcon,
   VideoIcon,
 } from '../../atoms/Icons/Icons';
@@ -112,19 +111,27 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
                   className='w-[6em] aspect-square rounded-xl object-cover'
                 /> */}
                 <div className='flex flex-col ms-5'>
-                  <h4 className='font-medium text-2xl font-sans'>{projectLaunch.name}</h4>
+                  <h4 className='font-medium text-2xl '>{projectLaunch.name}</h4>
                 </div>
               </div>
               {!projectLaunch.isFundraised ? (
                 <>
-                  <div className='space-x-2'>
-                    <span className='font-bold  text-lg mt-[5px]'>Time left:</span>
-                    <span className='font-medium text-lg'>
-                      {timeLeft.days < 10 && '0'}
-                      {timeLeft.days}d • {timeLeft.hours < 10 && '0'}
-                      {timeLeft.hours}h • {timeLeft.minutes < 10 && '0'}
-                      {timeLeft.minutes}m
-                    </span>
+                  <div className='space-y-2'>
+                    <div className='space-x-2'>
+                      <span className='font-bold  text-lg mt-[5px]'>Time left:</span>
+                      <span className='font-medium text-lg'>
+                        {timeLeft.days < 10 && '0'}
+                        {timeLeft.days}d • {timeLeft.hours < 10 && '0'}
+                        {timeLeft.hours}h • {timeLeft.minutes < 10 && '0'}
+                        {timeLeft.minutes}m
+                      </span>
+                    </div>
+                    <div className='space-x-2'>
+                      <span className='font-bold  text-lg mt-[5px]'>Imported from Ideaforge:</span>
+                      <span className='font-medium text-lg'>
+                        {projectLaunch.externalId ? 'Yes' : 'No'}
+                      </span>
+                    </div>
                   </div>
                   {projectLaunch.approver && !projectLaunch.isFundraised && (
                     <div className='inline-flex mt-4'>
@@ -138,11 +145,11 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
                           Now
                         </Button>
                         {!projectLaunch.dao && (
-                            <div className='group-hover/invest-button:flex hidden absolute w-[115%] z-50 bg-[#4f16b4] group-hover:!opacity-80  rounded-xl text-gray-300 text-xs bottom-full mb-3 shadow-[0_0_15px_-7px_grey] p-2 before:content-[""] before:flex before:w-[16px] before:aspect-square before:bg-[#4f16b4] before:shadow-[0_0_30px_-15px_grey] before:absolute before:rotate-45 before:top-full before:-translate-y-[80%] before:-z-50 before:left-1/2 before:-translate-x-1/2'>
-                              The investment opportunity is temporarily unavailable due to the
-                              creation of a DAO for this project on Solana Blockchain. Please try
-                              again later
-                            </div>
+                          <div className='group-hover/invest-button:flex hidden absolute w-[115%] z-50 bg-[#4f16b4] group-hover:!opacity-80  rounded-xl text-gray-300 text-xs bottom-full mb-3 shadow-[0_0_15px_-7px_grey] p-2 before:content-[""] before:flex before:w-[16px] before:aspect-square before:bg-[#4f16b4] before:shadow-[0_0_30px_-15px_grey] before:absolute before:rotate-45 before:top-full before:-translate-y-[80%] before:-z-50 before:left-1/2 before:-translate-x-1/2'>
+                            The investment opportunity is temporarily unavailable due to the
+                            creation of a DAO for this project on Solana Blockchain. Please try
+                            again later
+                          </div>
                         )}
                       </div>
                     </div>
@@ -170,12 +177,12 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
                     <UserIcon className='size-8' />
                   </div>
                 )}
-                <div className='inline-flex flex-col ms-2'>
-                  <span className='font-sans font-semibold text-white'>
+                <div className='inline-flex flex-col ms-2 truncate'>
+                  <span className=' font-semibold text-white truncate'>
                     {projectLaunch.author.username}
                   </span>
                   {(projectLaunch.author.firstName || projectLaunch.author.lastName) && (
-                    <span className='text-xs font-bold font-sans text-nowrap text-gray-300'>
+                    <span className='text-xs font-bold  text-nowrap text-gray-300'>
                       (
                       {[projectLaunch.author.firstName, projectLaunch.author.lastName]
                         .filter(item => item)
@@ -203,11 +210,11 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
                     </div>
                   )}
                   <div className='inline-flex flex-col ms-2 text-white'>
-                    <span className='font-sans font-semibold'>
+                    <span className=' font-semibold truncate'>
                       {projectLaunch.approver.username}
                     </span>
                     {(projectLaunch.approver.firstName || projectLaunch.approver.lastName) && (
-                      <span className='text-xs font-bold font-sans text-nowrap text-white'>
+                      <span className='text-xs font-bold  text-nowrap text-white'>
                         (
                         {[projectLaunch.approver.firstName, projectLaunch.approver.lastName]
                           .filter(item => item)
@@ -268,8 +275,8 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
               <div className='w-3/4 h-[40px] rounded-lg bg-neutral-200 mb-3 flex justify-center items-center'>
                 <EmptyLogoIcon className='size-5 text-neutral-400' />
               </div>
-              <h4 className='font-sans font-bold'>Partner name</h4>
-              <p className='font-sans leading-5 mt-1'>
+              <h4 className=' font-bold'>Partner name</h4>
+              <p className=' leading-5 mt-1'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               </p>
               <Link to='https://google.com' className='absolute top-2 right-2'>
@@ -480,24 +487,24 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
                 <>
                   {projectLaunch.approver && !projectLaunch.isFundraised && (
                     <div className='inline-flex mt-4'>
-                    <div className='group/invest-button relative h-auto'>
-                      <Button
-                        disabled={!projectLaunch.dao}
-                        className='inline-flex text-center items-center gap-2 font-medium justify-center text-white px-5 py-2 rounded-full max-w-[260px] text-lg disabled:cursor-pointer'
-                        onClick={() => setIsCreateProjectLaunchInvestmentModalVisible(true)}
-                      >
-                        {!projectLaunch.dao && <LockIcon className='size-5 stroke-2' />} Invest
-                        Now
-                      </Button>
-                      {!projectLaunch.dao && (
+                      <div className='group/invest-button relative h-auto'>
+                        <Button
+                          disabled={!projectLaunch.dao}
+                          className='inline-flex text-center items-center gap-2 font-medium justify-center text-white px-5 py-2 rounded-full max-w-[260px] text-lg disabled:cursor-pointer'
+                          onClick={() => setIsCreateProjectLaunchInvestmentModalVisible(true)}
+                        >
+                          {!projectLaunch.dao && <LockIcon className='size-5 stroke-2' />} Invest
+                          Now
+                        </Button>
+                        {!projectLaunch.dao && (
                           <div className='group-hover/invest-button:flex hidden absolute w-[115%] z-50 bg-[#4f16b4] group-hover:!opacity-80  rounded-xl text-gray-300 text-xs bottom-full mb-3 shadow-[0_0_15px_-7px_grey] p-2 before:content-[""] before:flex before:w-[16px] before:aspect-square before:bg-[#4f16b4] before:shadow-[0_0_30px_-15px_grey] before:absolute before:rotate-45 before:top-full before:-translate-y-[80%] before:-z-50 before:left-1/2 before:-translate-x-1/2'>
                             The investment opportunity is temporarily unavailable due to the
                             creation of a DAO for this project on Solana Blockchain. Please try
                             again later
                           </div>
-                      )}
+                        )}
+                      </div>
                     </div>
-                  </div>
                   )}
                   <div className='flex gap-2 mt-5'>
                     <span className='font-bold text-xl'>Time left:</span>

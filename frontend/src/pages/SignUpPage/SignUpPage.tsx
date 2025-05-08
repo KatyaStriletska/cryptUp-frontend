@@ -156,7 +156,7 @@ const SignUpPage: FC = () => {
             Fill in all the fields to complete the new account registration process
           </p>
           {state.error && (
-            <span className='bg-rose-100 border border-rose-200 rounded-md p-2 font-mono text-sm'>
+            <span className='bg-rose-100 border border-red-500 text-red-500 rounded-md p-2 font-mono text-sm'>
               {state.error}
             </span>
           )}
@@ -167,9 +167,9 @@ const SignUpPage: FC = () => {
                 <TextInput
                   type='text'
                   id='create_account_walletId'
-                  defaultValue={state.data.walletId}
+                  value={state.data.walletId}
                   readOnly
-                  className='!p-3 rounded-lg'
+                  className='!p-3 rounded-lg text-white'
                 />
                 <WalletMultiButton>Choose a wallet</WalletMultiButton>
               </div>

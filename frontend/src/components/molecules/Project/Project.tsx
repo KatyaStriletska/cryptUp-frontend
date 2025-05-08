@@ -1,5 +1,5 @@
 import { FC, HTMLAttributes, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { AppRoutes } from '../../../types/enums/app-routes.enum';
 import Button from '../../atoms/Button/Button';
 import {
@@ -43,6 +43,7 @@ export const Project: FC<ProjectProps> = ({
   ...props
 }) => {
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isSettingsDropdownVisible, setIsSettingsDropdownVisible] = useState(false);
   const [isRemoveProjectModalVisible, setIsRemoveProjectModalVisible] = useState(false);
   const [isEditProjectModalVisible, setIsEditProjectModalVisible] = useState(false);
@@ -53,7 +54,7 @@ export const Project: FC<ProjectProps> = ({
     setIsCreateProjectLaunchInvestmentModalVisible,
   ] = useState(false);
   const [isShowProjectLaunchInfoModalVisible, setIsShowProjectLaunchInfoModalVisible] =
-    useState(false);
+    useState(searchParams.get('migratedFromForge') === (projectLaunch as any).externalId);
   const settingsDropdownRef = useOutsideClick(() => setIsSettingsDropdownVisible(false));
   const { authenticatedUser } = useAuth();
 
@@ -129,7 +130,11 @@ export const Project: FC<ProjectProps> = ({
         createPortal(
           <ProjectLaunchInfoModal
             title='Project launch info'
-            onClose={() => setIsShowProjectLaunchInfoModalVisible(false)}
+            onClose={() => {
+              searchParams.delete('migratedFromForge');
+              setSearchParams(searchParams);
+              setIsShowProjectLaunchInfoModalVisible(false);
+            }}
             projectLaunch={projectLaunch}
             setIsCreateProjectLaunchInvestmentModalVisible={
               setIsCreateProjectLaunchInvestmentModalVisible

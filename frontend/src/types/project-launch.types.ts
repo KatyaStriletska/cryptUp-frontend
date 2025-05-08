@@ -27,6 +27,7 @@ export interface ProjectLaunch {
   cryptoTrackerAccount: string;
   businessAnalystReview: string | null;
   dao: Dao;
+  externalId?: string | null; 
 }
 
 export interface CreateProjectLaunchDto {

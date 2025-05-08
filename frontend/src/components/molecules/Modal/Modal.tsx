@@ -9,6 +9,7 @@ export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   titleClassName?: string;
   actions?: ReactNode;
   closeOnOutsideClick?: boolean;
+  allowClose?: boolean;
 }
 
 const Modal: FC<ModalProps> = ({
@@ -19,6 +20,7 @@ const Modal: FC<ModalProps> = ({
   children,
   actions,
   closeOnOutsideClick = true,
+  allowClose = true,
   ...props
 }) => {
   const ref = useOutsideClick(() => onClose?.());
@@ -54,10 +56,12 @@ const Modal: FC<ModalProps> = ({
                   {title}
                 </h3>
               )}
-              <CrossIcon
-                className='absolute right-0 transition-all duration-300 cursor-pointer size-12 hover:text-green-primary'
-                onClick={() => onClose?.()}
-              />
+              {allowClose && (
+                <CrossIcon
+                  className='absolute right-0 transition-all duration-300 cursor-pointer size-12 hover:text-green-primary'
+                  onClick={() => onClose?.()}
+                />
+              )}
             </div>
             <div className='relative flex flex-col flex-1 overflow-y-scroll pe-5 -me-5 with-scrollbar modal-content'>
               {children}

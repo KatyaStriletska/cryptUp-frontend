@@ -125,7 +125,6 @@ const projectLaunchSlice = createSlice({
 export const fetchAllProjectLaunches =
   (queryParams?: any, options?: ActionCreatorOptions) => async (dispatch: AppDispatch) => {
     dispatch(projectLaunchSlice.actions.setError({ fetchAllProjectLaunches: null }));
-    console.log("queryParams before qs:", queryParams);
 
     try {
       const query = qs.stringify(queryParams, {

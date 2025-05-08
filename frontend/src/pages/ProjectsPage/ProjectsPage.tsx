@@ -13,6 +13,9 @@ import LaunchProjectModal from '../../components/organisms/LaunchProjectModal/La
 import Spinner from 'components/atoms/Spinner/Spinner';
 import Title from 'components/atoms/Title';
 import { PlusIcon } from 'components/atoms/Icons/Icons';
+import { useSearchParams } from 'react-router-dom';
+import ConnectWalletModal from 'components/organisms/ConnectWalletModal/ConnectWalletModal';
+import cookies from 'js-cookie';
 
 const ProjectsPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +23,25 @@ const ProjectsPage: FC = () => {
   const [isLaunchProjectModalVisible, setIsLaunchProjectModalVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const { authenticatedUser } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [isConnectWalletModalVisible, setConnectWalletModalVisible] = useState<boolean>(false);
+  const migratedFromForgeParamName = 'migratedFromForge';
+
+  const checkMigrateLogic = () => {
+    if (searchParams.get(migratedFromForgeParamName)) {
+      const projectCookieName = 'project-to-migrate';
+      const projectDataCookie = cookies.get(projectCookieName) || '';
+      if (!authenticatedUser?.walletId) {
+        setConnectWalletModalVisible(true);
+      } else if (projectDataCookie) {
+        const projectDataAsObject = JSON.parse(projectDataCookie);
+
+        if (projects.every(project => project.externalId !== projectDataAsObject.id)) {
+          setIsLaunchProjectModalVisible(true);
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -45,6 +67,12 @@ const ProjectsPage: FC = () => {
     }
   }, [authenticatedUser]);
 
+  useEffect(() => {
+    if (authenticatedUser && isLoaded) {
+      checkMigrateLogic();
+    }
+  }, [authenticatedUser, isLoaded]);
+
   return isLoaded ? (
     <>
       {projects.length > 0 && authenticatedUser?.role.includes(UserRoleEnum.Startup) && (
@@ -60,6 +88,24 @@ const ProjectsPage: FC = () => {
           <LaunchProjectModal
             title='Launch new project'
             onClose={() => setIsLaunchProjectModalVisible(false)}
+            onProcess={() => {
+              searchParams.delete(migratedFromForgeParamName);
+              setSearchParams(searchParams);
+            }}
+            allowClose={!searchParams.get(migratedFromForgeParamName)}
+          />,
+          document.getElementById('root')!,
+        )}
+
+      {isConnectWalletModalVisible &&
+        createPortal(
+          <ConnectWalletModal
+            title='Connect your wallet'
+            onClose={() => setIsLaunchProjectModalVisible(false)}
+            onProcess={() => {
+              setConnectWalletModalVisible(false);
+              setIsLaunchProjectModalVisible(true);
+            }}
           />,
           document.getElementById('root')!,
         )}
