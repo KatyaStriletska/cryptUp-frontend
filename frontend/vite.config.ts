@@ -11,12 +11,11 @@ export default ({ mode }: any) => {
   return defineConfig({
     plugins: [react(), tsconfigPaths()],
     server: {
-      host: true,
-      port: Number(process.env.VITE_FRONTEND_PORT || 3000),
+      allowedHosts: true,
     },
     preview: {
       host: true,
-      port: Number(process.env.VITE_FRONTEND_PORT || 3000),
+      port: Number(process.env.VITE_FRONTEND_PORT || 3001),
     },
     ...(mode === 'production' && {
       resolve: {
