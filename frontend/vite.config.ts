@@ -12,7 +12,7 @@ export default ({ mode }: any) => {
     plugins: [react(), tsconfigPaths()],
     server: {
       host: true,
-      port: Number(process.env.VITE_FRONTEND_PORT || 3001),
+      port: Number(3001),
       allowedHosts: true,
     },
     preview: {
