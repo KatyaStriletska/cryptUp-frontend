@@ -76,7 +76,7 @@ export const fetchAllProjects =
         allowDots: true,
         commaRoundTrip: true,
       } as any);
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
       console.log("FEatch")
       const response = await axios.get(`${BASE_URL}/projects/${query ? `?${query}` : ``}`);
 
@@ -97,7 +97,7 @@ export const fetchProject =
     dispatch(projectSlice.actions.setError({ fetchProject: null }));
 
     try {
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
       const response = await axios.get(`${BASE_URL}/projects/${id}`);
 
       if (response.status === HttpStatusCode.Ok) {
@@ -119,7 +119,7 @@ export const createProject =
     dispatch(projectSlice.actions.setError({ createProject: null }));
 
     try {
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
       console.log("CreateProject")
       const response = await axios.post(`${BASE_URL}/projects`, project);
       console.log(response)
@@ -143,7 +143,7 @@ export const updateProject =
     dispatch(projectSlice.actions.setError({ updateProject: null }));
 
     try {
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
 
       const response = await axios.put(`${BASE_URL}/projects/${id}`, project);
 
@@ -166,7 +166,7 @@ export const removeProject =
     dispatch(projectSlice.actions.setError({ removeProject: null }));
 
     try {
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
 
       const response = await axios.delete(`${BASE_URL}/projects/${id}`);
 

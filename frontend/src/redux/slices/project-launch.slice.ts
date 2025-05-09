@@ -133,7 +133,7 @@ export const fetchAllProjectLaunches =
         skipNulls: true, 
         commaRoundTrip: true,
       } as any);
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
       console.log("Featch", query)
       const response = await axios.get(`${BASE_URL}/project-launches/${query ? `?${query}` : ``}`);
       console.log(response)
@@ -156,7 +156,7 @@ export const fetchProjectLaunch =
     dispatch(projectLaunchSlice.actions.setError({ fetchProjectLaunch: null }));
 
     try {
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
 
       const response = await axios.get(`${BASE_URL}/project-launches/${id}`);
 
@@ -182,7 +182,7 @@ export const createProjectLaunch =
     try {
       const milestoneNumber = Number(formData.get('milestoneNumber')?.toString() ?? 0);
       formData.delete('milestoneNumber');
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
       console.log("BASE_URL:" , BASE_URL)
       const response = await axios.post(`${BASE_URL}/project-launches`, formData, {
         headers: {
@@ -228,7 +228,7 @@ export const updateProjectLaunch =
       formData.delete('milestoneNumber');
       formData.delete('relatedProjectId');
       console.log("Deleted");
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
       console.log(`${BASE_URL}/project-launches/${id}`)
       const response = await axios.put(`${BASE_URL}/project-launches/${id}`, formData, {
         headers: {

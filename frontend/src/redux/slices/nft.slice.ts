@@ -33,7 +33,7 @@ export const fetchInvestorNft =
     dispatch(setNftError({ fetchNft: null }));
 
     try {
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
       const response = await axios.get(
         `${BASE_URL}/nft-for-vesting/${investorAddress}/${projectName}`,
         {},
@@ -79,7 +79,7 @@ export const startVesting =
       console.log(
         `[Frontend] Calling backend to prepare vesting transaction for project ${projectId}, investor ${investorAddress}`,
       );
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
       const response = await axios.post<{ serializedTransaction: string }>(
         `${BASE_URL}/projects/initiate-burn-and-vesting`,
 
@@ -179,7 +179,7 @@ export const startVestingForStartup =
       console.log(
         `[Frontend] Calling backend to prepare vesting transaction for project ${projectId}, investor ${beneficiaryAddress}`,
       );
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
       const response = await axios.post<{ serializedTransaction: string }>(
         `${BASE_URL}/projects/initiate-vesting`,
 

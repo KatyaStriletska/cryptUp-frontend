@@ -21,9 +21,8 @@ import MessageCenterPage from './pages/MessageCenterPage/MessageCenterPage';
 import DetailsChatPage from './pages/DetailsChatPage/DetailsChatPage';
 import DashboardPage from 'pages/DashboardPage/DashboardPage';
 
-const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
 
-axios.defaults.baseURL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+axios.defaults.baseURL = `${import.meta.env.VITE_BACKEND_URI}`;
 axios.defaults.withCredentials = true;
 
 const App = () => {

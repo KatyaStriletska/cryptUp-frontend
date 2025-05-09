@@ -62,7 +62,7 @@ export const loginWithWallet =
       const bs58encodedPayload = bs58.encode(new TextEncoder().encode(JSON.stringify({ message })));
       const signature = bs58.encode(signMessageResponse);
       const token = `${bs58encodedPublicKey}.${bs58encodedPayload}.${signature}`;
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
 
 
       console.log("Backend URL:", BASE_URL);
@@ -86,7 +86,7 @@ export const loginWithGoogle =
       if (!googleAccessToken) {
         throw new Error('The google access token is missing. Cannot authorize the user.');
       }
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
       const response = await axios.post(`${BASE_URL}/auth/login/google`, { googleAccessToken });
 
       if (response.status === HttpStatusCode.Created) {
@@ -108,7 +108,7 @@ export const loginWithCredentials =
       if (!email || !password) {
         throw new Error('The email or password is missing. Cannot authorize the user.');
       }    
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
 
 
       console.log("Backend URL:", BASE_URL);
@@ -141,7 +141,7 @@ export const register =
   async (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.setError({ register: null }));
     try {
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
 
       console.log("Backend URL:", BASE_URL);
 
@@ -166,7 +166,7 @@ export const fetchAuthenticatedUser =
     dispatch(authSlice.actions.setError({ fetchAuthenticatedUser: null }));
 
     try {
-      const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+      const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
 
       const response = await axios.get(`${BASE_URL}/auth/user`);
 
@@ -189,7 +189,7 @@ export const logout = (options?: ActionCreatorOptions) => async (dispatch: AppDi
   dispatch(authSlice.actions.setError({ logout: null }));
 
   try {
-    const BASE_URL = `${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}`;
+    const BASE_URL = `${import.meta.env.VITE_BACKEND_URI}`;
     const response = await axios.post(`${BASE_URL}/auth/logout`, {});
 
     localStorage.removeItem('walletName');
