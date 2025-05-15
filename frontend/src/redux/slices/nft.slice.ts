@@ -52,7 +52,7 @@ export const fetchInvestorNft =
       );
     }
   };
-export const startVesting =
+export const startVestingForInvestor =
   (
     investorAddress: string,
     projectId: string,

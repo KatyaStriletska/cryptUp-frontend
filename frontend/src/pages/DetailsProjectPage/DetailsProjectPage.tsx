@@ -23,7 +23,7 @@ import * as web3 from '@solana/web3.js';
 import ProjectLaunchInfoModal from '../../components/organisms/ProjectLaunchInfoModal/ProjectLaunchInfoModal';
 import useWeb3Auth from '../../hooks/web3auth.hooks';
 import Spinner from 'components/atoms/Spinner/Spinner';
-import { startVesting, startVestingForStartup } from 'redux/slices/nft.slice';
+import { startVestingForInvestor, startVestingForStartup } from 'redux/slices/nft.slice';
 import Title from 'components/atoms/Title';
 
 const DetailsProjectPage: FC = () => {
@@ -104,7 +104,7 @@ const DetailsProjectPage: FC = () => {
   };
 
   const handleVestingForTeam = async () => {
-    console.log('start vesting for startup');
+    console.log('start vesting for investor');
     if (project && wallet.publicKey && wallet.signTransaction) {
       dispatch(
         startVestingForStartup(wallet.publicKey.toBase58(), project.id, wallet, connection, {
@@ -121,11 +121,11 @@ const DetailsProjectPage: FC = () => {
     }
   };
 
-  const handleVesting = async () => {
-    console.log('start vesting');
+  const handleVestingForInvestor = async () => {
+    console.log('start vesting for investor');
     if (project && wallet.publicKey && wallet.signTransaction) {
       dispatch(
-        startVestingForStartup(wallet.publicKey.toBase58(), project.id, wallet, connection, {
+        startVestingForInvestor(wallet.publicKey.toBase58(), project.id, wallet, connection, {
           onSuccess: data => {
             console.log('Vesting initiated successfully! Signature:', data.signature);
           },
@@ -291,15 +291,15 @@ const DetailsProjectPage: FC = () => {
                   <>
                     <Button
                       className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300 font-sans rounded-full'
-                      onClick={() => handleVestingForTeam()}
+                      onClick={() => handleVestingForInvestor()}
                     >
-                      start vesting for investors
+                      Activate Vesting
                     </Button>
                     <Button
                       className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300 font-sans rounded-full'
                       onClick={() => handleClaim()}
                     >
-                      claim token
+                      Claim token
                     </Button>
                   </>
                 )}
@@ -307,15 +307,15 @@ const DetailsProjectPage: FC = () => {
                   <>
                     <Button
                       className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300 font-sans rounded-full'
-                      onClick={() => handleVesting()}
+                      onClick={() => handleVestingForTeam()}
                     >
-                      start vesting for team
+                      Activate Vesting
                     </Button>
                     <Button
                       className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300 font-sans rounded-full'
                       onClick={() => handleClaim()}
                     >
-                      claim token
+                      Claim token
                     </Button>
                   </>
                 )}
@@ -334,9 +334,7 @@ const DetailsProjectPage: FC = () => {
             <hr />
             <div className='px-10 py-5'>
               <h3 className='font-semibold text-xl mb-1.5'>Description</h3>
-              <span className='whitespace-pre-wrap'>
-                {project.projectLaunchDescription}
-              </span>
+              <span className='whitespace-pre-wrap'>{project.projectLaunchDescription}</span>
             </div>
             <hr />
             <div className='px-10 py-5'>
