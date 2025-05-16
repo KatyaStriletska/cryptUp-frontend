@@ -7,7 +7,7 @@ export interface ProposalDetailsSectionProps extends HTMLAttributes<HTMLDivEleme
 const ProposalDetailsSection: FC<ProposalDetailsSectionProps> = ({ title, children, ...props }) => {
   return (
     <div {...props}>
-      <h4 className='font-semibold mb-3 text-stone-800'>{title}</h4>
+      <h4 className='font-semibold mb-3'>{title}</h4>
       {children}
     </div>
   );

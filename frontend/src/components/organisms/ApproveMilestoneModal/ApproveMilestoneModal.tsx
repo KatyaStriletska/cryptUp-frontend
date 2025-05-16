@@ -7,6 +7,7 @@ import { FC, useState } from 'react';
 import { Milestone } from 'types/milestone.types';
 import * as web3 from '@solana/web3.js';
 import { updateMilestone } from 'redux/slices/milestone.slice';
+import Button from 'components/atoms/Button/Button';
 
 export interface ApproveMilestoneModalProps extends ModalProps {
   milestone: Milestone;
@@ -67,15 +68,15 @@ const ApproveMilestoneModal: FC<ApproveMilestoneModalProps> = ({
 
   return (
     <Modal title={title} onClose={() => onClose?.()} className='max-w-3xl' {...props}>
-      <div className='px-10 py-8 flex flex-col'>
+      <div className='px-10 py-8 flex flex-col text-white'>
         <div className='flex flex-col gap-5'>
           <div className='flex flex-col'>
             <h4 className='font-semibold text-lg'>Merged pull request url:</h4>
-            <p className='font-mono'>{milestone.mergedPullRequestUrl}</p>
+            <p className=''>{milestone.mergedPullRequestUrl}</p>
           </div>
           <div className='flex flex-col'>
             <h4 className='font-semibold text-lg'>Description:</h4>
-            <p className='font-mono whitespace-pre-wrap'>{milestone.description}</p>
+            <p className=' whitespace-pre-wrap'>{milestone.description}</p>
           </div>
           <div className='flex flex-col mt-5'>
             <div className='flex gap-2 items-baseline'>
@@ -94,17 +95,17 @@ const ApproveMilestoneModal: FC<ApproveMilestoneModalProps> = ({
           </div>
         </div>
         <div className='mt-8 flex gap-4'>
-          <button
+          <Button
             disabled={!state.doesUserAgree}
             type='button'
-            className='disabled:cursor-auto disabled:opacity-50 inline-flex text-center justify-center items-center border-2 border-transparent bg-zinc-900 hover:bg-transparent hover:border-zinc-900 hover:text-zinc-900 text-white rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+            className='inline-flex text-center justify-center items-center border-2 border-transparent text-white rounded-full py-2 px-10'
             onClick={() => submitMilestone()}
           >
             Approve
-          </button>
+          </Button>
           <button
             type='button'
-            className='inline-flex text-center justify-center items-center text-zinc-700 border-2 border-zinc-900 hover:text-zinc-900 hover:bg-slate-100 rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+            className='inline-flex text-center justify-center items-center secondary-green-button rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
             onClick={() => onClose?.()}
           >
             Cancel

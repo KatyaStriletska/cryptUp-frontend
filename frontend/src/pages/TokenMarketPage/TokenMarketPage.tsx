@@ -14,6 +14,7 @@ import CreateTradeTokenModal, {
 } from 'components/organisms/CreateTradeTokenModal/CreateTradeTokenModal';
 import TokenTradeProposal from 'components/molecules/TokenTrade/TokenTradeProposal';
 import Spinner from 'components/atoms/Spinner/Spinner';
+import Title from 'components/atoms/Title';
 
 interface TokenAccountInfo {
   pubkey: web3.PublicKey;
@@ -257,25 +258,13 @@ const TokenMarketPage: FC = () => {
   );
 
   return (
-    <>
-      <div className='flex justify-between items-center mb-4 px-6'>
-        <h1 className='text-2xl font-sans font-semibold text-zinc-900'>Token Market</h1>
-        <Button
-          className='inline-flex border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300 rounded-full font-sans font-medium'
-          onClick={() => {
-            setIsModalOpen(true);
-            loadProposals();
-          }}
-          disabled={isLoadingTokens || usersTokens.length === 0 || !wallet.publicKey}
-        >
-          {usersTokens.length === 0 && !isLoadingTokens
-            ? 'No "protoken" to sell'
-            : 'Create New Sell Proposal'}
-        </Button>
+    <div className='min-h-screen mx-5'>
+      <div className='flex justify-between items-center mb-4 px-6 min-h-full'>
+        <Title>Token Market</Title>
       </div>
       {isLoading && (
         <div className='max-w-[1440px] flex flex-col items-center justify-center flex-1 gap-5 w-full'>
-          <Spinner className='size-12 text-gray-200 animate-spin fill-zinc-900' />
+          <Spinner className='size-12 animate-spin text-white' />
           <p className='text-center font-mono'>Loading the active proposal for you</p>
         </div>
       )}
@@ -286,9 +275,9 @@ const TokenMarketPage: FC = () => {
       )}
 
       {!isLoadingTokens && !isLoading && !proposalError && proposals.length > 0 && (
-        <div className='shadow-[0_0_15px_-7px_gray] bg-white rounded-xl overflow-x-auto '>
-          <table className='w-full text-sm text-left text-gray-700'>
-            <thead className='text-base text-gray-700 uppercase bg-gray-50'>
+        <div className=' bg-gradient-white-purple rounded-xl overflow-x-auto text-white'>
+          <table className='w-full text-sm text-left '>
+            <thead className='text-base uppercase text-white'>
               <tr>
                 <th scope='col' className='px-6 py-3'>
                   Sell Token
@@ -334,7 +323,7 @@ const TokenMarketPage: FC = () => {
           submitError={proposalError}
         />
       )}
-    </>
+    </div>
   );
 };
 export default TokenMarketPage;

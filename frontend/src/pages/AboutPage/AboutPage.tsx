@@ -15,14 +15,14 @@ const AboutPage: FC = () => {
         </div> */}
         <div className="container mx-auto p-6 text-white">
           <section className="mb-10">
-            <Title>Venture Launch</Title>
+            <Title>Ideaforge cryptUp</Title>
 
-            <div style={{ display: 'flex', alignItems: 'center', columnGap: '10px' }}>
+            {/* <div style={{ display: 'flex', alignItems: 'center', columnGap: '10px' }}>
               <img src="https://img.shields.io/badge/build-0.1.0-brightgreen" alt="Build Badge" style={{ marginRight: '10px' }} />
               <a href="https://x.com/venture_launch" target="_blank" rel="noopener noreferrer">
                 <img src="https://img.shields.io/badge/X-follow%20us-blue" alt="X Badge" />
               </a>
-            </div>
+            </div> */}
 
             <p className="text-lg  leading-relaxed">
               In the ever-evolving landscape of startups, raising capital during the crucial pre-seed and seed stages can be a daunting challenge. Similarly, retail investors often struggle to find accessible opportunities to participate in these high-potential, early-stage investments. Enter Venture Launch, a platform designed to bridge this gap, empowering both startups and investors. By democratizing access to early-stage investments and pioneering liquid pre-markets, Venture Launch is set to transform the startup ecosystem.
@@ -35,28 +35,28 @@ const AboutPage: FC = () => {
             <div className="mb-8">
               <h3 className="text-2xl font-medium mb-2">Accessible Investment Opportunities</h3>
               <p className="">
-                VentureLaunch is committed to democratizing access to early-stage investments. Retail investors can easily participate in pre-seed and seed rounds through an intuitive user interface and streamlined onboarding process. This simplicity allows investors to explore and engage with startup opportunities effortlessly, leveling the playing field for those traditionally excluded from early-stage investments.
+                Ideaforge cryptUp is committed to democratizing access to early-stage investments. Retail investors can easily participate in pre-seed and seed rounds through an intuitive user interface and streamlined onboarding process. This simplicity allows investors to explore and engage with startup opportunities effortlessly, leveling the playing field for those traditionally excluded from early-stage investments.
               </p>
             </div>
 
             <div className="mb-8">
               <h3 className="text-2xl font-medium mb-2">Liquid Pre-Markets</h3>
               <p className="">
-                One of VentureLaunch's most innovative features is the concept of liquid pre-markets. This allows startups to offer early liquidity options for investors, providing flexibility and exit strategies through cutting-edge financial instruments and market mechanisms. By enhancing liquidity for early-stage investments, VentureLaunch offers a unique value proposition for both startups and investors.
+                One of Ideaforge cryptUp's most innovative features is the concept of liquid pre-markets. This allows startups to offer early liquidity options for investors, providing flexibility and exit strategies through cutting-edge financial instruments and market mechanisms. By enhancing liquidity for early-stage investments, Ideaforge cryptUp offers a unique value proposition for both startups and investors.
               </p>
             </div>
 
             <div className="mb-8">
               <h3 className="text-2xl font-medium mb-2">Comprehensive Due Diligence</h3>
               <p className="">
-                To ensure transparency and mitigate risks, VentureLaunch conducts thorough due diligence on participating startups. This includes comprehensive data analytics and expert evaluations, enabling investors to make informed decisions. The platform's rigorous approach to due diligence fosters trust and confidence in the investment process.
+                To ensure transparency and mitigate risks, Ideaforge cryptUp conducts thorough due diligence on participating startups. This includes comprehensive data analytics and expert evaluations, enabling investors to make informed decisions. The platform's rigorous approach to due diligence fosters trust and confidence in the investment process.
               </p>
             </div>
 
             <div className="mb-8">
               <h3 className="text-2xl font-medium mb-2">Community Engagement</h3>
               <p className="">
-                VentureLaunch is more than just a platform; it's a community. By fostering a vibrant network of entrepreneurs, investors, and industry experts, VentureLaunch facilitates collaboration and knowledge-sharing. Networking events, forums, and discussion boards encourage meaningful interactions and partnerships, enriching the overall experience for all participants.
+                Ideaforge cryptUp is more than just a platform; it's a community. By fostering a vibrant network of entrepreneurs, investors, and industry experts, Ideaforge cryptUp facilitates collaboration and knowledge-sharing. Networking events, forums, and discussion boards encourage meaningful interactions and partnerships, enriching the overall experience for all participants.
               </p>
             </div>
           </section>

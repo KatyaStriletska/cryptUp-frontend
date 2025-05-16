@@ -39,7 +39,7 @@ const Proposal: FC<ProposalProps> = ({ image, data, children, ...props }) => {
   );
 
   return (
-    <div className='flex flex-col bg-white rounded-xl shadow-[0_0_15px_-7px_gray]' {...props}>
+    <div className='flex flex-col bg-gradient-white-purple text-white rounded-xl shadow-[0_0_15px_-7px_gray]' {...props}>
       <div className='flex p-3 gap-3 items-center w-full'>
         <div className='flex'>{image}</div>
         <div className='grid grid-cols-4 text-sm w-full'>

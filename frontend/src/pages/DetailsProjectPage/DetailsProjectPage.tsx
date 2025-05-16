@@ -186,21 +186,21 @@ const DetailsProjectPage: FC = () => {
             >
               {!wasProjectSubmitted ? (
                 <div className='px-10 py-8 flex flex-col'>
-                  <p className='font-mono'>
+                  <p className='font-mono text-white'>
                     Are you sure you want to submit this submit? You will not be able to cancel this
                     operation.
                   </p>
                   <div className='mt-8 flex gap-4'>
-                    <button
+                    <Button
                       type='button'
-                      className='inline-flex text-center justify-center items-center border-2 bg-emerald-500 hover:bg-emerald-600 border-transparent text-white rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+                      className='inline-flex text-center justify-center items-center text-white rounded-full py-2 px-10  font-medium text-lg'
                       onClick={() => submitProject()}
                     >
                       Submit
-                    </button>
+                    </Button>
                     <button
                       type='button'
-                      className='inline-flex text-center justify-center items-center text-zinc-700 border-2 border-zinc-900 hover:text-zinc-900 hover:bg-slate-100 rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+                      className='inline-flex text-center justify-center items-center secondary-green-button rounded-full transition-all duration-300 py-2 px-10  font-medium text-lg'
                       onClick={() => setIsSubmitProjectModalVisible(false)}
                     >
                       Cancel
@@ -209,8 +209,8 @@ const DetailsProjectPage: FC = () => {
                 </div>
               ) : (
                 <div className='px-10 py-8 flex flex-col items-center justify-center min-h-[250px] gap-5'>
-                  <Spinner className='size-12 text-gray-200 animate-spin fill-zinc-900' />
-                  <p className='text-center font-mono'>
+                  <Spinner className='size-12 text-gray-200 animate-spin' />
+                  <p className='text-center font-mono text-white'>
                     We are proceeding your project submission. Please, complete all required steps
                     and wait for some time
                   </p>
@@ -290,13 +290,13 @@ const DetailsProjectPage: FC = () => {
                 {authenticatedUser?.role.includes(UserRoleEnum.Investor) && project.isFinal && (
                   <>
                     <Button
-                      className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300 font-sans rounded-full'
+                      className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300  rounded-full'
                       onClick={() => handleVestingForInvestor()}
                     >
                       Activate Vesting
                     </Button>
                     <Button
-                      className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300 font-sans rounded-full'
+                      className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300  rounded-full'
                       onClick={() => handleClaim()}
                     >
                       Claim token
@@ -306,13 +306,13 @@ const DetailsProjectPage: FC = () => {
                 {authenticatedUser?.role.includes(UserRoleEnum.Startup) && project.isFinal && (
                   <>
                     <Button
-                      className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300 font-sans rounded-full'
+                      className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300  rounded-full'
                       onClick={() => handleVestingForTeam()}
                     >
                       Activate Vesting
                     </Button>
                     <Button
-                      className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300 font-sans rounded-full'
+                      className='inline-flex me-4 font-medium border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300  rounded-full'
                       onClick={() => handleClaim()}
                     >
                       Claim token
@@ -345,7 +345,7 @@ const DetailsProjectPage: FC = () => {
             {project.projectLaunch?.dao && (
               <>
                 <div className='px-10 py-5'>
-                  <h3 className='font-sans font-semibold text-xl mb-1.5'>
+                  <h3 className=' font-semibold text-xl mb-1.5'>
                     Link to the DAO in Solana Explorer
                   </h3>
                   <a
@@ -358,8 +358,8 @@ const DetailsProjectPage: FC = () => {
               </>
             )}
             <div className='px-10 py-5'>
-              <h3 className='font-sans font-semibold text-xl mb-1.5'>Status</h3>
-              <span className='font-sans inline-flex'>
+              <h3 className=' font-semibold text-xl mb-1.5'>Status</h3>
+              <span className=' inline-flex'>
                 {project.isFinal ? (
                   <span className='text-white rounded-full bg-emerald-500 px-5 py-1'>
                     Submitted

@@ -86,7 +86,6 @@ const CreateMilestoneModal: FC<CreateMilestoneModalProps> = ({
             <TextInput
               id='create_milestone_merged_pull_request_url'
               className='!p-2'
-              placeholder='https://github.com/project/pull/1'
               defaultValue={state.data.mergedPullRequestUrl}
               onChange={event =>
                 setState({
@@ -102,7 +101,6 @@ const CreateMilestoneModal: FC<CreateMilestoneModalProps> = ({
             <TextareaInput
               id='create_milestone_description'
               className='mt-1 min-h-[150px] whitespace-pre-wrap'
-              placeholder='Milestone description'
               defaultValue={state.data.description}
               onChange={value =>
                 setState({

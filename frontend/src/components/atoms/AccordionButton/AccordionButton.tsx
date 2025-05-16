@@ -15,7 +15,7 @@ const AccordionButton: FC<AccordionButtonProps> = ({ onClick, children, ...props
   const [state, setState] = useState(initialState);
 
   return (
-    <Button
+    <button
       type='button'
       className='bg-stone-200 rounded-xl p-2 text-stone-600 hover:bg-stone-300 transition-all duration-300'
       {...props}
@@ -28,7 +28,7 @@ const AccordionButton: FC<AccordionButtonProps> = ({ onClick, children, ...props
         className={`size-6 transition-transform duration-300 ${state.isActive ? '-rotate-180' : ''}`}
       />
       {children}
-    </Button>
+    </button>
   );
 };
 

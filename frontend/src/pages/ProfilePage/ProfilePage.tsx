@@ -192,7 +192,7 @@ const ProfilePage: FC = () => {
                         className='w-[48px] aspect-square rounded object-cover'
                       />
                     }
-                    className='border rounded-xl bg-white shadow-[0_0_15px_-7px_grey]'
+                    className='before:rounded-xl rounded-xl bg-gradient-purple-white text-white'
                     data={{
                       type: proposal.type,
                       status: proposal.status,

@@ -2,6 +2,10 @@ import React, { FC, FormEvent, useEffect, useMemo, useState } from 'react';
 import Modal, { ModalProps } from '../../molecules/Modal/Modal';
 import { BN, web3 } from '@coral-xyz/anchor';
 import { PublicKey } from '@solana/web3.js';
+import Button from 'components/atoms/Button/Button';
+import TextInput from 'components/atoms/TextInput';
+import Label from 'components/atoms/Label';
+import SelectInput from 'components/atoms/SelectInput';
 
 interface TokenAccountInfo {
   pubkey: PublicKey;
@@ -157,31 +161,24 @@ const CreateTradeTokenModal: FC<CreateTradeTokenModalProps> = ({
           <div className='flex flex-col'>
             <label
               htmlFor='tokenAccountSelectModal'
-              className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
+              className='mb-1.5 font-semibold text-white text-lg mx-0.5'
             >
               Sell From Account
             </label>
-            <select
+            <SelectInput
               id='tokenAccountSelectModal'
               value={state.data.selectedTokenAccountPubkey}
               onChange={e => handleInputChange(e, 'selectedTokenAccountPubkey')}
-              required
-              className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono'
-            >
-              <option value='' disabled>
-                -- Select Account --
-              </option>
-              {userProTokens.map(tokenInfo => {
+              className='p-3 rounded-lg font-mono'
+              options={ [{value: '', label: 'Select Account' }, ...userProTokens.map(tokenInfo => {
                 const info = tokenInfo.account.data.parsed.info;
                 const balance = info.tokenAmount.uiAmountString;
                 const address = tokenInfo.pubkey.toBase58();
-                return (
-                  <option key={address} value={address}>
-                    Acc: ...{address.slice(-6)} (Bal: {balance})
-                  </option>
-                );
-              })}
-            </select>
+                return { value: address, label: `Acc: ...${address.slice(-6)} (Bal: {balance})` };
+              })]}
+            >
+            
+            </SelectInput>
             {selectedTokenAccountInfo && (
               <div className='mt-1 text-sm text-gray-600'>
                 Balance:{' '}
@@ -191,13 +188,8 @@ const CreateTradeTokenModal: FC<CreateTradeTokenModalProps> = ({
             )}
           </div>
           <div className='flex flex-col'>
-            <label
-              htmlFor='amountToSellModal'
-              className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-            >
-              Amount to Sell ('protoken')
-            </label>
-            <input
+            <Label htmlFor='amountToSellModal'>Amount to Sell ('protoken')</Label>
+            <TextInput
               id='amountToSellModal'
               type='number'
               value={state.data.amountToSell}
@@ -206,17 +198,12 @@ const CreateTradeTokenModal: FC<CreateTradeTokenModalProps> = ({
               required
               min='0'
               step='any'
-              className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono'
+              className=' !p-3 rounded-lg'
             />
           </div>
           <div className='flex flex-col'>
-            <label
-              htmlFor='expectedUsdcModal'
-              className='mb-1.5 font-sans font-semibold text-zinc-900 text-lg mx-0.5'
-            >
-              Expected Price (USDC)
-            </label>
-            <input
+            <Label htmlFor='expectedUsdcModal'>Expected Price (USDC)</Label>
+            <TextInput
               id='expectedUsdcModal'
               type='number'
               value={state.data.expectedUsdcAmount}
@@ -225,22 +212,22 @@ const CreateTradeTokenModal: FC<CreateTradeTokenModalProps> = ({
               required
               min='0'
               step='any'
-              className='border border-stone-400 p-3 rounded-lg text-stone-800 placeholder:text-stone-400 font-mono'
+              className=' !p-3 rounded-lg'
             />
           </div>
         </div>
 
         <div className='flex gap-4 mt-10'>
-          <button
+          <Button
             type='submit'
             disabled={isSubmitting || !!state.localValidationError}
-            className='inline-flex text-center justify-center items-center bg-zinc-900 border-2 border-transparent hover:border-zinc-900 hover:bg-transparent hover:text-zinc-900 text-white rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg disabled:opacity-60'
+            className='inline-flex text-center justify-center items-center text-white rounded-full py-2 px-10 font-sans font-medium text-lg disabled:opacity-60'
           >
             {isSubmitting ? 'Creating...' : 'Create'}
-          </button>
+          </Button>
           <button
             type='button'
-            className='inline-flex text-center justify-center items-center text-zinc-700 border-2 border-zinc-900 hover:text-zinc-900 hover:bg-slate-100 rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
+            className='inline-flex text-center justify-center items-center secondary-green-button rounded-full transition-all duration-300 py-2 px-10 font-sans font-medium text-lg'
             onClick={onClose}
             disabled={isSubmitting}
           >

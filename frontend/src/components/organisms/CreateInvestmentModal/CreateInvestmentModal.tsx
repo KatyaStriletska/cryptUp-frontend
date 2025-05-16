@@ -15,6 +15,8 @@ import { PublicKey, Transaction } from '@solana/web3.js';
 import useWeb3Auth from '../../../hooks/web3auth.hooks';
 import { createTransferInstruction, getAssociatedTokenAddress } from '@solana/spl-token';
 import Spinner from 'components/atoms/Spinner/Spinner';
+import TextInput from 'components/atoms/TextInput';
+import Button from 'components/atoms/Button/Button';
 
 export interface CreateInvestmentModalProps extends ModalProps {
   projectLaunch: ProjectLaunch;
@@ -137,17 +139,17 @@ const CreateInvestmentModal: FC<CreateInvestmentModalProps> = ({
     <Modal title={title} onClose={onClose} className='max-w-xl'>
       {!state.isLoading ? (
         <>
-          <form ref={formRef} className='flex flex-col py-8 px-10 w-full' onSubmit={onSubmit}>
+          <form ref={formRef} className='flex flex-col py-8 px-10 w-full text-white' onSubmit={onSubmit}>
             {state.error && (
-              <span className='bg-rose-100 border border-rose-200 p-2 rounded-md mb-8 font-mono text-sm'>
+              <span className='bg-rose-100 border border-red-500 text-red-500 00 p-2 rounded-md mb-8 font-mono text-sm'>
                 {state.error}
               </span>
             )}
             <div className='flex flex-col'>
-              <input
+              <TextInput
                 type='number'
                 id='create_project_launch_investment_amount'
-                className='border border-stone-400 p-3 rounded-lg text-stone-800 text-center placeholder:text-stone-400 placeholder:text-center font-mono'
+                className='!p-2 rounded-lg text-white text-center placeholder:text-stone-400 placeholder:text-center font-mono'
                 placeholder='Amount'
                 min={0.01}
                 max={1_000_000}
@@ -184,25 +186,25 @@ const CreateInvestmentModal: FC<CreateInvestmentModalProps> = ({
               <button
                 type='submit'
                 disabled
-                className='inline-flex text-center justify-center items-center bg-zinc-900 text-white font-mono rounded-full py-2.5 text-lg w-full enabled:hover:bg-zinc-700 transition-all duration-300 disabled:opacity-30'
+                className='inline-flex text-center justify-center items-center secondary-green-button font-mono rounded-full py-2.5 text-lg w-full transition-all duration-500 disabled:opacity-30 hover:disabled:bg-green-primary'
               >
                 SAFT/SAFE
               </button>
-              <button
+              <Button
                 type='submit'
                 disabled={!state.doesUserAgree}
-                className='inline-flex text-center justify-center items-center bg-zinc-900 text-white font-mono rounded-full py-2.5 text-lg w-full enabled:hover:bg-zinc-700 transition-all duration-300 disabled:opacity-30'
+                className='inline-flex text-center justify-center items-center  rounded-full py-2.5 text-lg w-full disabled:opacity-30'
               >
                 INVEST
-              </button>
+              </Button>
             </div>
           </form>
           {children}
         </>
       ) : (
         <div className='px-10 py-8 flex flex-col items-center justify-center min-h-[300px] gap-5'>
-          <Spinner className='size-12 text-gray-200 animate-spin fill-zinc-900' />
-          <p className='text-center font-mono'>
+          <Spinner className='size-12 text-white animate-spin' />
+          <p className='text-center text-white'>
             We are proceeding your investment. Please, complete all required steps and wait for some
             time
           </p>

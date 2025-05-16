@@ -181,7 +181,6 @@ const SignUpPage: FC = () => {
                 className='!p-3 rounded-lg'
                 type='email'
                 id='create_account_email'
-                placeholder='example@gmail.com'
                 defaultValue={state.data.email}
                 onChange={event =>
                   setState({
@@ -199,7 +198,6 @@ const SignUpPage: FC = () => {
                 type='text'
                 id='create_account_username'
                 defaultValue={state.data.username}
-                placeholder='venturelaunch'
                 onChange={event =>
                   setState({
                     ...state,
@@ -242,7 +240,6 @@ const SignUpPage: FC = () => {
               type='password'
               id='create_account_password'
               defaultValue={state.data.password}
-              placeholder='Password'
               onChange={event =>
                 setState({
                   ...state,

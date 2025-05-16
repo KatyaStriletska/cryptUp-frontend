@@ -30,7 +30,7 @@ const ProposalDetails: FC<ProposalDetailsProps> = ({ isVisible, children, data, 
   return (
     <div
       ref={ref}
-      className={`transition-[height] duration-300 ease-out overflow-hidden`}
+      className={`transition-[height] duration-300 ease-out overflow-hidden text-white`}
       style={
         ref?.current
           ? {
@@ -44,12 +44,12 @@ const ProposalDetails: FC<ProposalDetailsProps> = ({ isVisible, children, data, 
         <hr className='sm:col-span-2' />
         <ProposalDetailsSection
           title='Description'
-          className='sm:col-span-2 bg-stone-100 p-3 rounded-xl'
+          className='sm:col-span-2 text-white border-gradient-primary before:rounded-xl p-3'
         >
-          <p className='text-stone-600'>{data.description}</p>
+          <p className=''>{data.description}</p>
         </ProposalDetailsSection>
-        <ProposalDetailsSection title='Author' className='bg-stone-100 p-3 rounded-xl'>
-          <ul className='text-stone-600 flex flex-col gap-2'>
+        <ProposalDetailsSection title='Author' className='border-gradient-primary text-white before:rounded-xl p-3 rounded-xl'>
+          <ul className='text-white flex flex-col gap-2'>
             <li className='flex justify-between'>
               <span className='text-sm'>Author</span>
               <span className='font-semibold text-sm'>{data.author}</span>
@@ -88,18 +88,18 @@ const ProposalDetails: FC<ProposalDetailsProps> = ({ isVisible, children, data, 
         </ProposalDetailsSection>
         <ProposalDetailsSection
           title='Results'
-          className='bg-stone-100 p-3 rounded-xl flex flex-col'
+          className='border-gradient-primary before:rounded-xl p-3 rounded-xl flex flex-col text-white'
         >
-          <div className='flex gap-3 w-full flex-1'>
-            <div className='flex flex-col flex-1 items-center justify-center bg-stone-50 rounded-xl gap-1'>
+          <div className='flex gap-3 w-full flex-1 text-white'>
+            <div className='flex flex-col flex-1 items-center justify-center rounded-xl gap-1 bg-grey-tertiary'>
               <span className='font-bold text-3xl text-emerald-500'>{data.results.confirmed}</span>
               <span className='text-xs'>Confirmed</span>
             </div>
-            <div className='flex flex-col flex-1 items-center justify-center bg-stone-50 rounded-xl gap-1'>
+            <div className='flex flex-col flex-1 items-center justify-center rounded-xl gap-1 bg-grey-tertiary'>
               <span className='font-bold text-3xl text-rose-500'>{data.results.rejected}</span>
               <span className='text-xs'>Rejected</span>
             </div>
-            <div className='flex flex-col flex-1 items-center justify-center bg-stone-50 rounded-xl gap-1'>
+            <div className='flex flex-col flex-1 items-center justify-center rounded-xl gap-1 bg-grey-tertiary'>
               <span className='font-bold text-3xl'>
                 {data.results.confirmed}/{data.results.threshold}
               </span>

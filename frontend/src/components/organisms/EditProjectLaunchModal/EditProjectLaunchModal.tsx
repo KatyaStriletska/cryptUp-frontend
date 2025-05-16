@@ -402,7 +402,6 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   <TextInput
                     id='launch_project_name'
                     value={state.data.name}
-                    placeholder='New project'
                     className='!py-2'
                     onChange={event =>
                       setState({
@@ -416,7 +415,6 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   <TextareaInput
                     id='launch_project_description'
                     defaultValue={state.data.description}
-                    placeholder='Project description'
                     className='w-full min-h-[110px] resize-none mt-1'
                     onChange={value =>
                       setState({
@@ -436,7 +434,6 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                     id='launch_project_milestones_number'
                     type='number'
                     value={state.data.milestoneNumber}
-                    placeholder='10'
                     className='!py-2'
                     onChange={event =>
                       setState({
@@ -458,7 +455,6 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                     id='launch_project_fundraise_amount'
                     type='number'
                     value={state.data.fundraiseAmount}
-                    placeholder='10'
                     className='!py-2'
                     onChange={event =>
                       setState({
@@ -567,7 +563,6 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                             <TextInput
                               id={`launch_project_team_${index}_name`}
                               className='!py-2'
-                              placeholder='John Doe'
                               defaultValue={member.name}
                               onChange={event =>
                                 setState({
@@ -595,7 +590,6 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                             <TextInput
                               id={`launch_project_team_${index}_position`}
                               className='!py-2'
-                              placeholder='CEO'
                               defaultValue={member.position}
                               onChange={event =>
                                 setState({
@@ -625,7 +619,6 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                             id={`launch_project_team_${index}_bio`}
                             className='w-full min-h-[110px] resize-none mt-1 mb-4'
                             defaultValue={member.bio}
-                            placeholder='Web developer'
                             onChange={value =>
                               setState({
                                 ...state,
@@ -654,7 +647,6 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                           <TextInput
                             id={`launch_project_team_${index}_linkedIn_url`}
                             className='!py-2'
-                            placeholder='https://www.linkedin.com/in/a958252262616/'
                             defaultValue={member.linkedInUrl}
                             onChange={event =>
                               setState({
@@ -777,40 +769,6 @@ const EditProjectLaunchModal: FC<EditProjectLaunchModalProps> = ({
                   }
                 />
               </div>
-            </div>
-            <hr />
-            <div className='flex flex-col mx-10 my-8 text-white'>
-              <h3 className='text-2xl mb-5  sm:col-span-2 font-semibold'>
-                Business model and tokenomics
-              </h3>
-              <Label htmlFor='launch_project_tokenomics'>Tokenomics</Label>
-              <TextareaInput
-                id='launch_project_tokenomics'
-                className='min-h-[150px] mb-5 mt-1'
-                defaultValue={state.data.tokenomics}
-                placeholder='New project tokenomics'
-                onChange={value =>
-                  setState({
-                    ...state,
-                    data: { ...state.data, tokenomics: value },
-                    error: null,
-                  })
-                }
-              />
-              <Label htmlFor='launch_project_business_model'>Business model</Label>
-              <TextareaInput
-                id='launch_project_business_model'
-                className='mt-1 min-h-[150px]'
-                defaultValue={state.data.businessModel}
-                placeholder='New project business model'
-                onChange={value =>
-                  setState({
-                    ...state,
-                    data: { ...state.data, businessModel: value },
-                    error: null,
-                  })
-                }
-              />
             </div>
             <hr />
             <div className='flex flex-col mx-10 my-8 text-white'>

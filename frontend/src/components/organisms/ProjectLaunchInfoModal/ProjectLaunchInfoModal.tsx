@@ -156,7 +156,7 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
                   )}
                 </>
               ) : (
-                <span className='text-gray-500 text-sm font-mono'>
+                <span className='text-gray-500 text-sm '>
                   The money for this project has already been raised
                 </span>
               )}
@@ -222,12 +222,12 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
                         )
                       </span>
                     )}
-                    <span className='font-mono text-gray-300 text-xs mt-1'>Approver BA</span>
+                    <span className=' text-gray-300 text-xs mt-1'>Approver BA</span>
                   </div>
                 </Link>
               ) : (
                 <div className='rounded-xl border-2 border-dashed inline-flex items-center justify-center px-5 font-semibold text-slate-300 border-slate-200'>
-                  <span className='font-mono text-xs text-center'>
+                  <span className=' text-xs text-center'>
                     Here will be shown business analyst who approved project launch
                   </span>
                 </div>
@@ -237,22 +237,22 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
           <div className='flex flex-col h-full flex-1 justify-between'>
             <div className='border-gradient-primary before:rounded-2xl text-white mb-5 font-medium rounded-lg px-8 py-5 w-full flex flex-col text-lg gap-y-2'>
               <div className='grid grid-cols-[1fr_130px]'>
-                <span className='font-mono'>Deal structure</span>
+                <span className=''>Deal structure</span>
                 <span>Token</span>
               </div>
               <div className='grid grid-cols-[1fr_130px]'>
-                <span className='font-mono'>Funding goal</span>
+                <span className=''>Funding goal</span>
                 <span>
                   <span className='me-[2px]'>$</span>
                   {Number(projectLaunch.fundraiseAmount).toLocaleString('uk')}
                 </span>
               </div>
               <div className='grid grid-cols-[1fr_130px]'>
-                <div className='font-mono'>Round name</div>
+                <div className=''>Round name</div>
                 <span>{JSON.parse(projectLaunch.roundDetails).round} round</span>
               </div>
               <div className='grid grid-cols-[1fr_130px]'>
-                <div className='w-1/2 font-mono'>Valuation</div>
+                <div className='w-1/2 '>Valuation</div>
                 <span>
                   <span className='me-[2px]'>$</span>
                   {Number(JSON.parse(projectLaunch.roundDetails).valuation).toLocaleString('uk')}
@@ -295,7 +295,7 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
           {projectLaunch.businessAnalystReview ? (
             <p className='font-serif whitespace-pre-wrap'>{projectLaunch.businessAnalystReview}</p>
           ) : (
-            <p className='font-mono text-gray-300 text-base'>
+            <p className=' text-gray-300 text-base'>
               Business analyst has not given the review for this project launch yet
             </p>
           )}
@@ -305,7 +305,7 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
         <div className='mb-10'>
           <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-3'>
             {!projectLaunch.team?.length ? (
-              <span className='text-base text-gray-300 col-span-2 font-mono'>
+              <span className='text-base text-gray-300 col-span-2 '>
                 No information about team members was added for this project
               </span>
             ) : (
@@ -338,7 +338,7 @@ const ProjectLaunchInfoModal: FC<ProjectLaunchInfoModalProps> = ({
         <h3 className='font-semibold text-2xl my-10'>Data room</h3>
         <div className='mb-10'>
           {!projectLaunch.projectDocuments?.length && (
-            <span className='text-base text-gray-300 font-mono'>
+            <span className='text-base text-gray-300 '>
               No documents have been added for this project.
             </span>
           )}
