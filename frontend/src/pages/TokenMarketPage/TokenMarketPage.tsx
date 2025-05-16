@@ -261,6 +261,18 @@ const TokenMarketPage: FC = () => {
     <div className='min-h-screen mx-5'>
       <div className='flex justify-between items-center mb-4 px-6 min-h-full'>
         <Title>Token Market</Title>
+        <Button
+          className='inline-flex border-transparent bg-zinc-900 hover:bg-transparent border-2 hover:border-zinc-900 hover:text-zinc-900 text-white px-10 py-1.5 transition-all duration-300 rounded-full font-sans font-medium'
+          onClick={() => {
+            setIsModalOpen(true);
+            loadProposals();
+          }}
+          disabled={isLoadingTokens || usersTokens.length === 0 || !wallet.publicKey}
+        >
+          {usersTokens.length === 0 && !isLoadingTokens
+            ? 'No "protoken" to sell'
+            : 'Create New Sell Proposal'}
+        </Button>
       </div>
       {isLoading && (
         <div className='max-w-[1440px] flex flex-col items-center justify-center flex-1 gap-5 w-full'>
