@@ -30,6 +30,10 @@ const links: NavbarLink[] = [
     name: 'About',
     to: AppRoutes.About,
   },
+  {
+    name: 'Token Market',
+    to: AppRoutes.TokenMarket,
+  },
 ];
 
 const PageWithNavigationTemplate = () => {

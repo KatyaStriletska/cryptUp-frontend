@@ -12,4 +12,5 @@ export enum AppRoutes {
   About = '/about',
   Profile = '/profile',
   Dashboard = '/dashboard',
+  TokenMarket = '/token-market',
 }

@@ -50,7 +50,8 @@
     "redux-thunk": "^3.1.0",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "socket.io-client": "^4.7.5",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "vite-plugin-node-polyfills": "^0.23.0"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",

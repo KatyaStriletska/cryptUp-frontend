@@ -20,7 +20,7 @@ import DetailsUserPage from './pages/DetailsUserPage/DetailsUserPage';
 import MessageCenterPage from './pages/MessageCenterPage/MessageCenterPage';
 import DetailsChatPage from './pages/DetailsChatPage/DetailsChatPage';
 import DashboardPage from 'pages/DashboardPage/DashboardPage';
-
+import TokenMarketPage from 'pages/TokenMarketPage/TokenMarketPage';
 
 axios.defaults.baseURL = `${import.meta.env.VITE_BACKEND_URI}`;
 axios.defaults.withCredentials = true;
@@ -56,6 +56,7 @@ const Content: FC = () => {
             </Route>
             <Route path={AppRoutes.Root} element={<Navigate to={AppRoutes.Home} />} />
             <Route path={AppRoutes.About} Component={AboutPage} />
+            <Route path={AppRoutes.TokenMarket} Component={TokenMarketPage} />
           </Route>
         </Route>
         <Route path={AppRoutes.Any} Component={NotFoundPage} />
